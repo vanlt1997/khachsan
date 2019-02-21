@@ -1,0 +1,29 @@
+a.navbar-brand {
+    font-size: 35px !important;
+    margin-left: 40px !important;
+}
+@media (min-width: 768px) {
+    .p-md-5 {
+        padding: 2rem !important;
+    }
+}
+@media (min-width: 576px) {
+    .reservation {
+        margin-top: -560px !important; }
+}
+.icon_service img{
+    width: 40px;
+}
+.show_service img{
+    width: 120px;
+}
+.nav-link:hover{
+    color: red !important;
+}
+.gioithieu>img{
+    width: 100%;
+    margin: 20px;
+}
+.gioithieu-content{
+    margin: 50px;
+}

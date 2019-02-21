@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/database/migrations/2018_12_30_032242_create_type_rooms_table.php" />
+    <file url="file://$PROJECT_DIR$/database/migrations/2018_12_30_032809_create_rooms_table.php" />
+    <file url="file://$PROJECT_DIR$/database/migrations/2018_12_30_033023_create_images_table.php" />
+    <file url="file://$PROJECT_DIR$/database/migrations/2018_12_30_033057_create_services_table.php" />
+    <file url="file://$PROJECT_DIR$/database/migrations/2018_12_30_033122_create_bills_table.php" />
+    <file url="file://$PROJECT_DIR$/database/migrations/2018_12_30_033235_create_bill_type_room_table.php" />
+    <file url="file://$PROJECT_DIR$/database/migrations/2018_12_30_033301_create_customers_table.php" />
+    <file url="file://$PROJECT_DIR$/database/migrations/2018_12_30_033439_create_image_room_table.php" />
+    <file url="file://$PROJECT_DIR$/database/migrations/2018_12_30_033505_create_image_type_room_table.php" />
+  </component>
+</project>

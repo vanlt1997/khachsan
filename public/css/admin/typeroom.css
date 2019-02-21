@@ -1,0 +1,32 @@
+.img-upload{
+    margin-top: 20px;
+    text-align: center;
+}
+#list img{
+    margin: 10px;
+}
+.upload-image{
+    border: 4px dotted #b3d6f5;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 100%;
+}
+.upload-image p{
+    text-align: center;
+    margin: 0;
+}
+.upload-image p>label{
+    line-height: 100px;
+    width: 100%;
+    margin: 0;
+}
+#files{
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+label span{
+    color: red;
+    font-size: 25px;
+}

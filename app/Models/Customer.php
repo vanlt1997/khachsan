@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Customer extends Model
+{
+    public $timestamps = false;
+    protected $table = "customers";
+    protected $fillable = [
+      'name','email','phone','address','account',
+    ];
+
+    public function bill()
+    {
+        return $this->hasMany('App\Models\Bill');
+    }
+}
