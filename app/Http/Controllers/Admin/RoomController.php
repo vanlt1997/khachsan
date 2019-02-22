@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RoomRequest;
+use App\Service\ImageService;
 use App\Service\RoomService;
 use App\Service\StatusService;
 use App\Http\Controllers\Controller;
@@ -12,11 +13,13 @@ class RoomController extends Controller
 {
     protected $roomService;
     protected $statusService;
+    protected $imageService;
 
-    public function __construct(RoomService $roomService, StatusService $statusService)
+    public function __construct(RoomService $roomService, StatusService $statusService, ImageService $imageService)
     {
         $this->roomService = $roomService;
         $this->statusService = $statusService;
+        $this->imageService = $imageService;
     }
 
     public function index()
@@ -47,7 +50,8 @@ class RoomController extends Controller
     {
         $idTypeRoom = $id;
         $status = $this->statusService->getStatus();
-        return view('admin.room.form-create', compact('idTypeRoom','status'));
+        $images = $this->imageService->getImages();
+        return view('admin.room.form-create', compact('idTypeRoom', 'status', 'images'));
     }
 
     public function actionCreateRoom($id, RoomRequest $roomRequest)

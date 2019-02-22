@@ -9,7 +9,7 @@ class Device extends Model
     public $timestamps = false;
     protected $table = "devices";
     protected $fillable = [
-      'name','quantity'
+      'image_id','name','quantity'
     ];
 
     public function image()

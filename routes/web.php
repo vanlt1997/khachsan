@@ -2,22 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', 'IndexController@trangchu')->name('trang-chu');
 Route::get('gioi-thieu', 'IndexController@gioiThieu')->name('gioi-thieu');
 Route::get('lien-he', 'IndexController@lienHe')->name('lien-he');
 Route::post('lien-he', 'IndexController@guiMail')->name('lien-he');
 Route::get('uu-dai', 'IndexController@uuDai')->name('uu-dai');
+
 
 Route::group(['prefix' => 'dich-vu'], function () {
     Route::get('/', 'IndexController@dichVu')->name('dich-vu');

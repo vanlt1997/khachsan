@@ -6,7 +6,7 @@
 @section('header')
     <div class="container">
         <div class="title-header">
-            <h3 class="text-center">Loại Phòng</h3>
+            <h3 class="text-center">Room Types</h3>
         </div>
     </div>
 
@@ -17,19 +17,19 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Loại Phòng</th>
-                <th>Số Người</th>
-                <th>Số Phòng</th>
-                <th>Min Giá</th>
-                <th>Giảm Giá</th>
-                <th>Hoạt Động</th>
+                <th>Type</th>
+                <th>People Number</th>
+                <th>Price</th>
+                <th>Sale</th>
+                <th>Action</th>
             </tr>
             </thead>
         </table>
     </div>
     <div class="container" style="clear: both">
+        <a href="{{route('admin.index')}}" class="btn btn-outline-success btn-sm">Cancel</a>
         <a href="{{route('admin.type-rooms.createTypeRoom')}}" class="btn btn-sm btn-outline-info"><i
-                class="fa fa-plus-circle"></i> Thêm mới</a>
+                class="fa fa-plus-circle"></i> Add</a>
     </div>
 @endsection
 @push('scripts')
@@ -45,7 +45,6 @@
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
-                    {data: 'people', name: 'people'},
                     {data: 'number_room', name: 'number_room'},
                     {data: 'price', name: 'price'},
                     {data: 'sale', name: 'sale'},

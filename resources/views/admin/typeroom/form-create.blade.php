@@ -6,7 +6,7 @@
 @section('header')
     <div class="container">
         <div class="title-header">
-            <h3 class="text-center">Thêm Mới Loại Phòng</h3>
+            <h3 class="text-center">Add Room Type</h3>
         </div>
     </div>
 @endsection
@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="name">Tên Loại Phòng <span>&hercon;</span></label>
+                                    <label for="name">Name <span>&hercon;</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="text" name="name" class="form-control"
@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="people">Số Người/Phòng <span>&hercon;</span></label>
+                                    <label for="people">People/Room <span>&hercon;</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="people" class="form-control"
@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="bed">Số Giường Chính <span>&hercon;</span></label>
+                                    <label for="bed">Number Bed <span>&hercon;</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="bed" class="form-control"
@@ -72,7 +72,7 @@
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="extra-bed">Số Giường Phụ</label>
+                                    <label for="extra-bed">Number Extra_bed</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="extra-bed" class="form-control"
@@ -80,14 +80,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
                                     <label for="number_room">Số Phòng <span>&hercon;</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="number_room" class="form-control"
-                                           placeholder="0">
+                                           placeholder="0" value="0">
                                     <div class="error-content">
                                         @if($errors->has('number_room'))
                                             <p class="text-danger"><i
@@ -101,7 +101,7 @@
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="acreage">Diện Tích <span>&hercon;</span></label>
+                                    <label for="acreage">Acreage <span>&hercon;</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="acreage" class="form-control"
@@ -119,7 +119,7 @@
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="price">Giá/Ngày <span>&hercon;</span></label>
+                                    <label for="price">Price/Day <span>&hercon;</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="price" class="form-control"
@@ -137,7 +137,7 @@
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="sale">Giảm Giá</label>
+                                    <label for="sale">Sale</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="sale" class="form-control" placeholder="0">
@@ -147,7 +147,7 @@
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="view">Hướng Nhìn</label>
+                                    <label for="view">View</label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="view" class="form-control"
@@ -158,7 +158,7 @@
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="description">Mô Tả</label>
+                                    <label for="description">Description</label>
                                 </div>
                                 <div class="col-md-8">
                                     <textarea name="description" class="form-control" id="editor" cols="30" rows="10"
@@ -171,32 +171,35 @@
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right"></div>
                                 <div class="col-md-8">
-                                    <a href="{{route('admin.type-rooms.index')}}" class="btn btn-outline-danger">Trở về</a>
-                                    <button type="submit" class="btn btn-outline-primary">Lưu</button>
+                                    <a href="{{route('admin.type-rooms.index')}}"
+                                       class="btn btn-outline-success">Back</a>
+                                    <button type="submit" class="btn btn-outline-primary">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <div class="col-md-12">
-                                <label for="Image" class="col-form-label">Ảnh</label>
-                            </div>
-                            <div class="col-md-12">
-                                {{--<div class="upload-image">
-                                    <p>
-                                        <label for="files">Ảnh ....</label>
-                                    </p>
+                            <div class="row col-md-12">
+                                <div class="col-md-4  text-right">
+                                    <label for="Image" class="col-form-label">Images</label>
                                 </div>
-                                <input type="file" id="files" name="files[]" multiple accept="image/*"/>--}}
-                                <select name="images[]" multiple class="form-control">
-                                    @foreach($images as $img)
-                                        <option value="{{$img->id}}" onclick="showImages(this)">{{$img->url}}</option>
-                                    @endforeach
-                                </select>
-
+                                <div class="col-md-8">
+                                    <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal"
+                                            data-target="#type-rooms">Choose Images
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-md-12">
+                            {{--<div class="upload-image">
+                                <p>
+                                    <label for="files">Ảnh ....</label>
+                                </p>
+                            </div>
+                            <input type="file" id="files" name="files[]" multiple accept="image/*"/>--}}
+
+                            <div class="row col-md-12" id="images-session"></div>
+
+                            <div class="row col-md-12">
                                 <div class="img-upload">
                                     <output id="list"></output>
                                 </div>
@@ -215,6 +218,40 @@
             </form>
         </div>
     </div>
+
+    <div class="modal fade" id="type-rooms" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Choose Images</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            @foreach($images as $image)
+                                <div class="col-md-3 img-show">
+                                    <img src="{{asset('images/admin/library-images')}}/{{$image->url}}"
+                                         alt="{{$image->url}}"
+                                         id="{{$image->id}}"
+                                         class="img-thumbnail" style="width: 120px; height: 120px" onclick="chooseImages({{$image->id}})"/>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary">Choose</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{asset('js/admin/main.js')}}"></script>
     <script>
         /*function handleFileSelect(evt) {
             var files = evt.target.files;

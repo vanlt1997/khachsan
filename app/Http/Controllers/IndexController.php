@@ -18,6 +18,7 @@ class IndexController extends Controller
     {
         $this->slideBarService = $slideBarService;
         $this->serviceService = $serviceService;
+        session_start();
     }
 
     public function trangchu() {
@@ -64,4 +65,5 @@ class IndexController extends Controller
     public function chiTietLoaiPhong($name){
 
     }
+
 }

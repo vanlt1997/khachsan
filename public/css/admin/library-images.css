@@ -6,10 +6,20 @@
 }
 .button-library{
     padding: 20px;
+    margin-left: 15px;
+}
+.list-images{
+    padding: 50px 20px;
+    background-color: white;
+    border: 2px solid #00a7d0;
+    border-radius: 5px;
+    height: 600px;
+    overflow: auto;
 }
 .img-show{
     position: relative;
     margin-bottom: 20px;
+    height: 230px;
 }
 .img-show img{
     width: 170px;
@@ -33,5 +43,11 @@
     position: absolute;
     top: -2px;
     left: 5px;
+}
+
+.img-show:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+    cursor: pointer;
 }
 
