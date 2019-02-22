@@ -22,20 +22,21 @@
                         <input type="file" name="image" id="image" accept="image/*" id="imgInp"
                                onchange="loadFile(event)">
                     </div>
-                    <div class="col-md-12 text-center button-library">
+                    <div class="col-md-12 button-library">
                         <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                     </div>
                 </div>
             </form>
             <div class="col-md-6 show-image">
-                <img src="#" id="output" alt="" width="100px" >
+                <img src="#" id="output" alt="" width="100px">
             </div>
         </div>
-        <div class="row col-md-12">
+        <div class="row col-md-12 list-images">
             @if($images)
                 @foreach($images as $image)
                     <div class="col-md-2 img-show">
-                        <img src="{{asset('images/admin/library-images')}}/{{$image->url}}" alt="{{$image->url}}" class="img-thumbnail"/>
+                        <img src="{{asset('images/admin/library-images')}}/{{$image->url}}" alt="{{$image->url}}"
+                             class="img-thumbnail"/>
                         <form method="post" action="{{route('admin.library-images.delete', $image->id)}}">
                             @csrf
                             <button type="submit" class="btn btn-sm"><span>x</span></button>

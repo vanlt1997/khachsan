@@ -63,13 +63,13 @@
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">Giờ mở cửa</h2>
                     <ul class="list-unstyled">
-                        <li><a class="py-2 d-block">Thứ 2: <span>08: - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 3: <span>08: - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 4: <span>08: - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 5: <span>08: - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 6: <span>08: - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 7: <span>08: - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Chủ Nhật: <span>08: - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Thứ 2: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Thứ 3: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Thứ 4: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Thứ 5: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Thứ 6: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Thứ 7: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Chủ Nhật: <span>08:00 - 22:00</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -86,10 +86,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-
-                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> By Lê Thị Vân - CNTT3 - K56 - MSV: 151202806
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> By Lê Thị Vân - CNTT3 - K56 - MSV: 151202806</p>
             </div>
         </div>
     </div>
