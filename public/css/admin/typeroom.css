@@ -61,14 +61,14 @@ label span{
 .img-choosed {
     transform: scale(0.9);
     transition-duration: 0.3s;
+    position: relative;
 }
 
 .img-choosed::before {
     content: '\2713';
     color: white;
-    position: relative;
-    top: 26px;
-    float: right;
+    position: absolute;
+    right: 9px;
     background: greenyellow;
     width: 25px;
     text-align: center;
