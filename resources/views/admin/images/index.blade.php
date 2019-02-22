@@ -14,7 +14,7 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="row col-md-12" style="margin-bottom: 50px">
+        <div class="row" style="margin-bottom: 50px">
             <form method="post" class="col-md-12" enctype="multipart/form-data">
                 @csrf
                 <div class="row col-md-12">
