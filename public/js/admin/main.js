@@ -1,26 +1,47 @@
-var imagesSession = [];
-function chooseImages(id) {
-    // var image = '', i;
-    // let url = "http://localhost:8000/images-session";
-    // $.ajax({
-    //     url: url,
-    //     type: 'post',
-    //     data: {id: id},
-    //     success: function (results) {
-    //         $("#images-session").html(results);
-    //     }
-    // });
-    if (imagesSession.includes(id)) {
-        var key = imagesSession.indexOf(id);
+var imagesSession = [], i;
+
+function listModal() {
+    var imgModal, icon;
+    imgModal = document.getElementsByClassName('img-modal');
+    for (i=0; i<imgModal.length; i++) {
+        imgModal[i].className = imgModal[i].className.replace(" img-choosed", "");
+    }
+    for (i=0; i<imagesSession.length; i++) {
+        document.getElementById(imagesSession[i]).className += " img-choosed";
+    }
+}
+
+function chooseImages(url) {
+    if (imagesSession.includes(url)) {
+        var key = imagesSession.indexOf(url);
         if (key == -1) {
-            imagesSession.push(id);
+            imagesSession.push(url);
         } else {
-            delete imagesSession[key];
+            imagesSession.splice(key, 1);
         }
     } else {
-        imagesSession.push(id);
+        imagesSession.push(url);
     }
-
-    $("#images-session").html(imagesSession);
+    this.listModal();
 }
+
+function rejectImage(url) {
+    this.chooseImages(url);
+    this.chooseDone();
+}
+
+function chooseDone() {
+    var list = '', i;
+    for (i=0; i<imagesSession.length; i++) {
+        list += "<div class='col-md-3 img-show pull-left'>" +
+                    "<div class='reject-img' onclick=\"rejectImage('"+imagesSession[i]+"')\">" +
+                        "<span class='button-reject-img'>&times;</span>" +
+                    "</div>" +
+                    "<img src='http://"+window.location.host+"/images/admin/library-images/"+imagesSession[i]+"' " +
+                    "alt='img' class='img-thumbnail' style='width: 120px; height: 120px;'>" +
+                "</div>"
+    }
+    $('#images-session').html(list);
+}
+
 

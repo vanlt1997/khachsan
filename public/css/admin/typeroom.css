@@ -30,3 +30,51 @@ label span{
     color: red;
     font-size: 25px;
 }
+
+.reject-img {
+    position: relative;
+    top: 15.5px;
+    float: right;
+    right: 3.5px;
+    color: red;
+    background: white;
+    border-radius: 50%;
+    font-weight: bold;
+    width: 15px;
+    text-align: center;
+    height: 15px;
+    cursor: pointer;
+}
+
+.button-reject-img {
+    position: relative;
+    top: -4px;
+}
+.img-show {
+    transition-duration: 0.3s;
+}
+.img-show:hover {
+    transform: scale(1.1);
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+.img-choosed {
+    transform: scale(0.9);
+    transition-duration: 0.3s;
+}
+
+.img-choosed::before {
+    content: '\2713';
+    color: white;
+    position: relative;
+    top: 26px;
+    float: right;
+    background: greenyellow;
+    width: 25px;
+    text-align: center;
+    border-radius: 0 0 0 10px;
+    height: 25px;
+    font-weight: bold;
+    font-size: 18px;
+    transition-duration: 0.5s;
+}

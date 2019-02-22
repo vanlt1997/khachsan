@@ -186,7 +186,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal"
-                                            data-target="#type-rooms">Choose Images
+                                            data-target="#type-rooms" onclick="listModal()">Choose Images
                                     </button>
                                 </div>
                             </div>
@@ -220,7 +220,7 @@
     </div>
 
     <div class="modal fade" id="type-rooms" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-         aria-hidden="true">
+         aria-hidden="true" onclick="chooseDone()">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -233,19 +233,18 @@
                     <div class="container-fluid">
                         <div class="row">
                             @foreach($images as $image)
-                                <div class="col-md-3 img-show">
+                                <div class="col-md-3 img-show img-modal" id="{{$image->url}}">
                                     <img src="{{asset('images/admin/library-images')}}/{{$image->url}}"
                                          alt="{{$image->url}}"
                                          id="{{$image->id}}"
-                                         class="img-thumbnail" style="width: 120px; height: 120px" onclick="chooseImages({{$image->id}})"/>
+                                         class="img-thumbnail" style="width: 120px; height: 120px" onclick="chooseImages('{{$image->url}}')"/>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-sm btn-outline-primary">Choose</button>
+                    <button type="button" class="btn btn-sm btn-outline-success" data-dismiss="modal">Continue</button>
                 </div>
             </div>
         </div>
