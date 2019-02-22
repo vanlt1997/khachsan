@@ -14,22 +14,18 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="row col-md-12">
-            <form method="post" class="col-md-6" enctype="multipart/form-data">
+        <div class="row col-md-12" style="margin-bottom: 50px">
+            <form method="post" class="col-md-12" enctype="multipart/form-data">
                 @csrf
-                <div class="row">
-                    <div class="col-md-12 library-image">
-                        <input type="file" name="image" id="image" accept="image/*" id="imgInp"
-                               onchange="loadFile(event)">
+                <div class="row col-md-12">
+                    <div class="col-md-6 library-image">
+                        <input type="file" name="image" id="image" accept="image/*" id="imgInp">
                     </div>
-                    <div class="col-md-12 button-library">
-                        <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-sm btn-outline-primary button-library">Save</button>
                     </div>
                 </div>
             </form>
-            <div class="col-md-6 show-image">
-                <img src="#" id="output" alt="" width="100px">
-            </div>
         </div>
         <div class="row col-md-12 list-images">
             @if($images)

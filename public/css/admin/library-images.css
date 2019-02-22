@@ -5,8 +5,7 @@
     padding: 10px 0 10px 20px;
 }
 .button-library{
-    padding: 20px;
-    margin-left: 15px;
+    line-height: 3.5 !important;
 }
 .list-images{
     padding: 50px 20px;
