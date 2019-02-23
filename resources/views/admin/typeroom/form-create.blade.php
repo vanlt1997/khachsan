@@ -200,10 +200,10 @@
                             <div class="row col-md-12" id="images-session"></div>
 
                             <div class="row col-md-12">
-                                <div class="img-upload">
+                                {{--<div class="img-upload">
                                     <output id="list"></output>
-                                </div>
-
+                                </div>--}}
+                                <input type="text" class="form-control" name="images" id="images">
                             </div>
                         </div>
                         <div class="col-md-12">

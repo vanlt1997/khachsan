@@ -2,6 +2,7 @@
 @section('title','Loại Phòng')
 @section('css')
     <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/alert.css')}}">
 @endsection
 @section('header')
     <div class="container">
@@ -13,6 +14,22 @@
 @endsection
 @section('content')
     <div class="container">
+        @if(Session::has('message'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{Session::get('message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+            @if(Session::has('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{Session::get('error')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
         <table class="table table-striped table-bordered" id="typeroom-table">
             <thead>
             <tr>

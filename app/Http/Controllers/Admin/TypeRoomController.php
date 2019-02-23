@@ -33,9 +33,9 @@ class TypeRoomController extends Controller
         return DataTables::of($this->typeRoomService->getTypeRooms())
             ->addColumn('action', function ($typeroom) {
                 return
-                    '<a href="type-rooms/detail/' . $typeroom->id . '" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#typeroom-{$ty}"> <i class="fa fa-info"></i></a>
-                    <a href="type-rooms/edit/' . $typeroom->id . '" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i></a>
-                    <a href="type-rooms/delete/' . $typeroom->id . '" class="btn btn-sm btn-outline-danger"> <i class="fa fa-trash-o"></i></a>
+                    '<a href="type-rooms/' . $typeroom->id . '/detail" class="btn btn-sm btn-outline-warning"> <i class="fa fa-info"></i></a>
+                    <a href="type-rooms/' . $typeroom->id . '/edit" class="btn btn-sm btn-outline-primary" > <i class="fa fa-pencil"></i></a>
+                    <a href="type-rooms/' . $typeroom->id . '/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Are you sure ?\')"> <i class="fa fa-trash-o"></i></a>
                     <a href="type-rooms/' . $typeroom->id . '/rooms" class="btn btn-sm btn-outline-info">Room</a>
                     ';
             })
@@ -50,12 +50,32 @@ class TypeRoomController extends Controller
 
     public function actionCreateTypeRoom(TypeRoomRequest $request)
     {
-        dd($request->all());
         $this->typeRoomService->create($request);
         $typeRoom = $this->typeRoomService->getItemLast();
-        if ($request->files) {
-            $this->imageService->create($request, $typeRoom);
+        if ($request->images)
+        {
+            $this->imageService->saveImageTypeRoom($request->images, $typeRoom->id);
         }
-        return redirect()->route('admin.type-rooms.index');
+        return redirect()->route('admin.type-rooms.index')->with('mesage');
+    }
+
+    public function delete($id)
+    {
+        if ($this->typeRoomService->find($id)->room->isEmpty())
+        {
+            $this->typeRoomService->delete($id);
+            return redirect()->route('admin.type-rooms.index')->with('message', 'Delete TypeRoom Successfully !');
+        }
+        else
+        {
+            return redirect()->route('admin.type-rooms.index')->with('error', "You Can't Delete TypeRoom !");
+        }
+
+    }
+
+    public function detail($id)
+    {
+        $typeRoom = $this->typeRoomService->find($id);
+        return view('admin.typeroom.detail', compact('typeRoom'));
     }
 }

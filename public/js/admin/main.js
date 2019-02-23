@@ -42,6 +42,7 @@ function chooseDone() {
                 "</div>"
     }
     $('#images-session').html(list);
+    $('#images').val(this.imagesSession);
 }
 
 

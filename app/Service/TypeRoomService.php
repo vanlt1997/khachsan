@@ -39,4 +39,14 @@ class TypeRoomService
     {
         return $this->typeRoom->all()->last();
     }
+
+    public function find($id)
+    {
+        return $this->typeRoom->find($id);
+    }
+
+    public function delete($id)
+    {
+        return $this->find($id)->delete();
+    }
 }

@@ -29,12 +29,12 @@ class TypeRoom extends Model
 
     public function room()
     {
-        $this->hasMany('App\Models\Room');
+        return $this->hasMany('App\Models\Room');
     }
 
     public function bill()
     {
-        $this->belongsToMany('App\Models\Bill','App\Models\BillTypeRoom');
+        return $this->belongsToMany('App\Models\Bill','App\Models\BillTypeRoom');
     }
 
     public static function boot()
@@ -45,6 +45,11 @@ class TypeRoom extends Model
         {
             $data = explode(' ', $model->name);
             $model->aliases = implode('-', $data);
+        });
+
+        self::deleting( function ($model)
+        {
+            ImageTypeRoom::whereTypeRoomId($model->id)->delete();
         });
     }
 }
