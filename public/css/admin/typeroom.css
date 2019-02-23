@@ -79,3 +79,26 @@ label span{
     transition-duration: 0.5s;
 }
 
+.alert-dismissible i {
+    margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+}
+
+.alert-custom-success {
+     background-color: rgba(14, 160, 5, 0.73) !important;
+     border: 1px solid rgba(32, 148, 22, 0.8);
+     margin-top: 1%;
+     margin-right: 2.1%;
+     font-weight: bold;
+     font-size: 16px !important;
+ }
+
+.alert-custom-error {
+    background-color: rgba(160, 27, 17, 0.73) !important;
+    border: 1px solid rgba(148, 41, 29, 0.8);
+    margin-top: 1%;
+    margin-right: 2.1%;
+    font-weight: bold;
+    font-size: 16px !important;
+}
