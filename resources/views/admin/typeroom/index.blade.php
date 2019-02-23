@@ -62,7 +62,7 @@
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
-                    {data: 'number_room', name: 'number_room'},
+                    {data: 'people', name: 'people'},
                     {data: 'price', name: 'price'},
                     {data: 'sale', name: 'sale'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},

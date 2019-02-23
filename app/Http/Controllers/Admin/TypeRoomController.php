@@ -56,7 +56,7 @@ class TypeRoomController extends Controller
         {
             $this->imageService->saveImageTypeRoom($request->images, $typeRoom->id);
         }
-        return redirect()->route('admin.type-rooms.index')->with('mesage');
+        return redirect()->route('admin.type-rooms.index')->with('message', 'Create TypeRoom Successfully !');
     }
 
     public function delete($id)

@@ -199,7 +199,7 @@
 
                             <div class="row col-md-12" id="images-session"></div>
 
-                            <div class="row col-md-12">
+                            <div class="row col-md-12" hidden>
                                 {{--<div class="img-upload">
                                     <output id="list"></output>
                                 </div>--}}
