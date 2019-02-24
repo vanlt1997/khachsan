@@ -28,6 +28,12 @@ class TypeRoomController extends Controller
         return view('admin.typeroom.index');
     }
 
+    public function test()
+    {
+        $typeRooms = $this->typeRoomService->getTypeRooms();
+        return response()->json($typeRooms);
+    }
+
     public function getListTypeRoom()
     {
         return DataTables::of($this->typeRoomService->getTypeRooms())
