@@ -60,4 +60,11 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/getList', 'DeviceController@getList')->name('get-list');
     });
 
+    Route::prefix('services')->name('services.')->group(function (){
+        Route::get('/', 'ServiceController@index')->name('index');
+        Route::get('/getList','ServiceController@getList')->name('get-list');
+        Route::post('/delete', 'ServiceController@delete')->name('delete');
+        Route::post('/action', 'ServiceController@action')->name('action');
+    });
+
 });
