@@ -30,7 +30,7 @@ class RoomService
         return $this->room->create([
             'type_room_id' => $id,
             'name' => $room->name,
-            'status' => $room->status,
+            'status_id' => $room->status,
             'description' => $room->description
         ]);
     }

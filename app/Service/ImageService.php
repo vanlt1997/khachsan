@@ -33,7 +33,7 @@ class ImageService
         return $this->image->find($id)->delete();
     }
 
-    public function saveImageTypeRoom($images, $idTypeRoom)
+    public function saveImageTypeRoom($idTypeRoom, $images)
     {
         $this->imageTypeRoom->whereTypeRoomId($idTypeRoom)->delete();
         $images = explode(',',$images);

@@ -1,4 +1,11 @@
-var imagesSession = [], i;
+var imagesSession = [], i, check;
+
+check = document.getElementsByClassName('img-start');
+for (i = 0 ; i < check.length; i++)
+{
+    imagesSession.push(check[i].getAttribute('data-content'));
+}
+document.getElementById('images').value = imagesSession;
 
 function listModal() {
     var imgModal, icon;

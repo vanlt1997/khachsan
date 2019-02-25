@@ -14,8 +14,4 @@ class Status extends Model
         'name'
     ];
 
-    public function room()
-    {
-        return $this->hasMany('App\Models\Room');
-    }
 }

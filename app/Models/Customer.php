@@ -12,8 +12,4 @@ class Customer extends Model
       'name','email','phone','address','account',
     ];
 
-    public function bill()
-    {
-        return $this->hasMany('App\Models\Bill');
-    }
 }

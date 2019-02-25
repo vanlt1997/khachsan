@@ -42,15 +42,16 @@ class TypeRoomController extends Controller
             ->make();
     }
 
-    public function createTypeRoom(Request $request)
+    public function createTypeRoom()
     {
         $images = $this->imageService->getImages();
-        return view('admin.typeroom.form-create', compact('images'));
+        return view('admin.typeroom.form', compact('images'));
     }
 
     public function actionCreateTypeRoom(TypeRoomRequest $request)
     {
-        $this->typeRoomService->create($request);
+
+        $this->typeRoomService->createOrUpdate($request);
         $typeRoom = $this->typeRoomService->getItemLast();
         if ($request->images)
         {
@@ -61,7 +62,7 @@ class TypeRoomController extends Controller
 
     public function delete($id)
     {
-        if ($this->typeRoomService->find($id)->room->isEmpty())
+        if ($this->typeRoomService->find($id)->rooms->isEmpty())
         {
             $this->typeRoomService->delete($id);
             return redirect()->route('admin.type-rooms.index')->with('message', 'Delete TypeRoom Successfully !');
@@ -76,6 +77,27 @@ class TypeRoomController extends Controller
     public function detail($id)
     {
         $typeRoom = $this->typeRoomService->find($id);
+
         return view('admin.typeroom.detail', compact('typeRoom'));
+    }
+
+    public function edit($id)
+    {
+        $typeRoom = $this->typeRoomService->find($id);
+        $images = $this->imageService->getImages();
+        $typeRoom->images;
+
+        return view('admin.typeroom.form', compact('typeRoom', 'images'));
+    }
+
+    public function actionEdit($id, TypeRoomRequest $request)
+    {
+        $this->typeRoomService->createOrUpdate($request, $id);
+        if ($request->images)
+        {
+            $this->imageService->saveImageTypeRoom( $id, $request->images);
+        }
+
+        return redirect()->route('admin.type-rooms.index')->with('message', 'Update TypeRoom Successfully !');
     }
 }

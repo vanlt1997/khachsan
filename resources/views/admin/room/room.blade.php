@@ -20,8 +20,10 @@
         </table>
     </div>
     <div class="container" style="clear: both">
+        <a href="{{route('admin.type-rooms.index', $idTypeRoom)}}" class="btn btn-sm btn-outline-success"><i
+                class="fa fa-plus-circle"></i> Back</a>
         <a href="{{route('admin.type-rooms.rooms.create', $idTypeRoom)}}" class="btn btn-sm btn-outline-info"><i
-                class="fa fa-plus-circle"></i> Thêm mới</a>
+                class="fa fa-plus-circle"></i> Add</a>
     </div>
 @endsection
 @push('scripts')

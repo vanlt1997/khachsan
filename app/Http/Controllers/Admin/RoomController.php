@@ -51,12 +51,12 @@ class RoomController extends Controller
         $idTypeRoom = $id;
         $status = $this->statusService->getStatus();
         $images = $this->imageService->getImages();
-        return view('admin.room.form-create', compact('idTypeRoom', 'status', 'images'));
+        return view('admin.room.form', compact('idTypeRoom', 'status', 'images'));
     }
 
     public function actionCreateRoom($id, RoomRequest $roomRequest)
     {
-        $this->roomService->create($id, $roomRequest->all());
+        $this->roomService->create($id, $roomRequest);
         return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $id);
 
     }

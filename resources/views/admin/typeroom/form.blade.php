@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title','Create Type Room')
+@section('title',"Type Room" )
 @section('css')
     <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
 @endsection
 @section('header')
     <div class="container">
         <div class="title-header">
-            <h3 class="text-center">Add Room Type</h3>
+            <h3 class="text-center">{{isset($typeRoom) ? 'Edit Room '.$typeRoom['name'] : 'Add Room Type'}}</h3>
         </div>
     </div>
 @endsection
@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="text" name="name" class="form-control"
-                                           placeholder="Tên Loại Phòng">
+                                           placeholder="Name" value="{{$typeRoom->name ?? null}}">
                                     <div class="error-content">
                                         @if($errors->has('name'))
                                             <p class="text-danger"><i
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="people" class="form-control"
-                                           placeholder="0">
+                                           placeholder="0" value="{{$typeRoom->people ?? null}}">
                                     <div class="error-content">
                                         @if($errors->has('people'))
                                             <p class="text-danger"><i
@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="bed" class="form-control"
-                                           placeholder="0">
+                                           placeholder="0" value="{{$typeRoom->bed ?? null}}">
                                     <div class="error-content">
                                         @if($errors->has('bed'))
                                             <p class="text-danger"><i
@@ -75,19 +75,19 @@
                                     <label for="extra-bed">Number Extra_bed</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="number" name="extra-bed" class="form-control"
-                                           placeholder="0">
+                                    <input type="number" name="extra_bed" class="form-control"
+                                           placeholder="0" value="{{$typeRoom->extra_bed ?? null}}">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" hidden>
+                        <div class="form-group" {{isset($typeRoom) ? '': 'hidden'}}>
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
-                                    <label for="number_room">Số Phòng <span>&hercon;</span></label>
+                                    <label for="number_room">Number Room <span>&hercon;</span></label>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="number_room" class="form-control"
-                                           placeholder="0" value="0">
+                                           placeholder="0" value="{{$typeRoom->number_room ?? null}}" disabled>
                                     <div class="error-content">
                                         @if($errors->has('number_room'))
                                             <p class="text-danger"><i
@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="acreage" class="form-control"
-                                           placeholder="0">
+                                           placeholder="0" value="{{$typeRoom->acreage ?? null}}">
                                     <div class="error-content">
                                         @if($errors->has('acreage'))
                                             <p class="text-danger"><i
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="price" class="form-control"
-                                           placeholder="0">
+                                           placeholder="0" value="{{$typeRoom->price ?? null}}">
                                     <div class="error-content">
                                         @if($errors->has('price'))
                                             <p class="text-danger"><i
@@ -140,7 +140,8 @@
                                     <label for="sale">Sale</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="number" name="sale" class="form-control" placeholder="0">
+                                    <input type="number" name="sale" class="form-control" placeholder="0"
+                                           value="{{$typeRoom->sale ?? null}}">
                                 </div>
                             </div>
                         </div>
@@ -150,8 +151,8 @@
                                     <label for="view">View</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="number" name="view" class="form-control"
-                                           placeholder="Hướng Nhìn">
+                                    <input type="text" name="view" class="form-control"
+                                           placeholder="View" value="{{$typeRoom->view ?? null}}">
                                 </div>
                             </div>
                         </div>
@@ -162,7 +163,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <textarea name="description" class="form-control" id="editor" cols="30" rows="10"
-                                              placeholder="Mô Tả"></textarea>
+                                              placeholder="Mô Tả">
+                                        {!! $typeRoom->description ?? null !!}
+                                    </textarea>
                                 </div>
                             </div>
                         </div>
@@ -172,8 +175,8 @@
                                 <div class="col-md-4 text-right"></div>
                                 <div class="col-md-8">
                                     <a href="{{route('admin.type-rooms.index')}}"
-                                       class="btn btn-outline-success">Back</a>
-                                    <button type="submit" class="btn btn-outline-primary">Save</button>
+                                       class="btn btn-sm btn-outline-success">Back</a>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -190,19 +193,20 @@
                                     </button>
                                 </div>
                             </div>
-                            {{--<div class="upload-image">
-                                <p>
-                                    <label for="files">Ảnh ....</label>
-                                </p>
+                            <div class="row col-md-12" id="images-session">
+                                @if(isset($typeRoom))
+                                    @foreach($typeRoom['images'] as $image)
+                                        <div class='col-md-3 img-show pull-left img-start' data-content = "{{$image->url}}">
+                                            <div class='reject-img' onclick="rejectImage('{{$image->url}}')">
+                                                <span class='button-reject-img'>&times;</span>
+                                                </div>
+                                            <img src="{{asset('images/admin/library-images')}}/{{$image->url}}" alt='img' class='img-thumbnail' style='width: 120px; height: 120px;'>
+                                            </div>
+                                    @endforeach
+                                @endif
                             </div>
-                            <input type="file" id="files" name="files[]" multiple accept="image/*"/>--}}
-
-                            <div class="row col-md-12" id="images-session"></div>
 
                             <div class="row col-md-12" hidden>
-                                {{--<div class="img-upload">
-                                    <output id="list"></output>
-                                </div>--}}
                                 <input type="text" class="form-control" name="images" id="images">
                             </div>
                         </div>
@@ -237,7 +241,8 @@
                                     <img src="{{asset('images/admin/library-images')}}/{{$image->url}}"
                                          alt="{{$image->url}}"
                                          id="{{$image->id}}"
-                                         class="img-thumbnail" style="width: 120px; height: 120px" onclick="chooseImages('{{$image->url}}')"/>
+                                         class="img-thumbnail" style="width: 120px; height: 120px"
+                                         onclick="chooseImages('{{$image->url}}')"/>
                                 </div>
                             @endforeach
                         </div>
@@ -249,7 +254,8 @@
             </div>
         </div>
     </div>
-
-    <script src="{{asset('js/admin/main.js')}}"></script>
 @endsection
+@push('scripts')
+    <script src="{{asset('js/admin/main.js')}}"></script>
+@endpush
 

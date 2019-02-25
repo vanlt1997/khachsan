@@ -53,8 +53,7 @@
                             <label for="description">Description</label>
                         </div>
                         <div class="col-md-8">
-                                    <textarea name="description" class="form-control" id="editor" cols="30" rows="10"
-                                              placeholder="Mô Tả"></textarea>
+                            <textarea name="description" class="form-control" id="editor" cols="30" rows="10"></textarea>
                         </div>
                     </div>
                 </div>
@@ -63,9 +62,8 @@
                         <div class="col-md-4 text-right"></div>
                         <div class="col-md-8">
                             <a href="{{route('admin.type-rooms.rooms.getRoomByTypeRoom', $idTypeRoom)}}"
-                               class="btn btn-outline-danger">Trở
-                                về</a>
-                            <button type="submit" class="btn btn-outline-primary">Lưu</button>
+                               class="btn btn-sm btn-outline-danger">Back</a>
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                         </div>
                     </div>
                 </div>

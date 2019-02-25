@@ -12,29 +12,14 @@ class TypeRoom extends Model
         'name','aliases' ,'people', 'bed', 'extra_bed', 'number_room', 'acreage','view','price','sale','description',
     ];
 
-    public function image()
+    public function images()
     {
-        return $this->hasMany('App\Models\Image');
+        return $this->belongsToMany('App\Models\Image');
     }
 
-    public function service()
-    {
-        return $this->belongsToMany('App\Models\Service','App\Models\TypeRoomService');
-    }
-
-    public function device()
-    {
-        return $this->belongsToMany('App\Models\Device','App\Models\DeviceTypeRoom');
-    }
-
-    public function room()
+    public function rooms()
     {
         return $this->hasMany('App\Models\Room');
-    }
-
-    public function bill()
-    {
-        return $this->belongsToMany('App\Models\Bill','App\Models\BillTypeRoom');
     }
 
     public static function boot()

@@ -24,9 +24,7 @@
         </div>
     </form>
 
-    <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fa fa-comments-o"></i>
@@ -34,7 +32,6 @@
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
                     <div class="media">
                         <img src="{{asset('dist/img/user1-128x128.jpg')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                         <div class="media-body">
@@ -46,11 +43,9 @@
                             <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
                         </div>
                     </div>
-                    <!-- Message End -->
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
                     <div class="media">
                         <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
                         <div class="media-body">
@@ -62,11 +57,9 @@
                             <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
                         </div>
                     </div>
-                    <!-- Message End -->
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
                     <div class="media">
                         <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
                         <div class="media-body">
@@ -78,13 +71,11 @@
                             <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
                         </div>
                     </div>
-                    <!-- Message End -->
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
             </div>
         </li>
-        <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fa fa-bell-o"></i>
@@ -118,16 +109,13 @@
     </ul>
 </nav>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
     <a href="#" class="brand-link">
         <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">MayStar</span>
     </a>
 
-    <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
@@ -137,16 +125,13 @@
             </div>
         </div>
 
-        <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
                 <li class="nav-item has-treeview menu-open">
                     <a href="{{route('admin.diagrams.index')}}" class="nav-link active">
                         <i class="nav-icon fa fa-th"></i>
                         <p>
-                            Sơ Đồ Khách Sạn
+                            Diagram Hotel
                         </p>
                     </a>
                 </li>
@@ -154,7 +139,7 @@
                     <a href="{{route('admin.type-rooms.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-building-o"></i>
                         <p>
-                            Loại Phòng
+                            Type Room
                         </p>
                     </a>
                 </li>
@@ -162,7 +147,7 @@
                     <a href="{{route('admin.rooms.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-hotel"></i>
                         <p>
-                            Phòng
+                            Room
                         </p>
                     </a>
                 </li>
@@ -170,7 +155,7 @@
                     <a href="{{route('admin.devices.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-cogs"></i>
                         <p>
-                            Thiết Bị
+                            Devices
                         </p>
                     </a>
                 </li>
@@ -178,7 +163,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fa fa-hand-scissors-o "></i>
                         <p>
-                           Dịch Vụ
+                           Services
                         </p>
                     </a>
                 </li>
@@ -186,7 +171,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fa fa-user-circle"></i>
                         <p>
-                            Khách Hàng
+                            Customer
                         </p>
                     </a>
                 </li>
@@ -194,7 +179,7 @@
                     <a href="#" class="nav-link">
                         <i class="fa fa-line-chart"></i>
                         <p>
-                            Doanh Thu
+                            Revenue
                             <i class="fa fa-angle-left right"></i>
                         </p>
                     </a>
@@ -202,13 +187,13 @@
                         <li class="nav-item">
                             <a href="pages/forms/general.html" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Thống Kê Doanh Thu</p>
+                                <p>Revenue statistics</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="pages/forms/editors.html" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Báo Cáo</p>
+                                <p>Report</p>
                             </a>
                         </li>
                     </ul>
@@ -217,7 +202,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fa fa-pie-chart"></i>
                         <p>
-                            Thống Kê
+                            Statistical
                             <i class="fa fa-angle-left right"></i>
                         </p>
                     </a>
@@ -225,35 +210,35 @@
                         <li class="nav-item">
                             <a href="pages/tables/simple.html" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Danh Sách Hóa Đơn</p>
+                                <p>List Bill</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="pages/tables/data.html" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Kiểm Tra $ Tài Khoản</p>
+                                <p>Test $ Account</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="pages/tables/data.html" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Kết Quả Kinh Doanh</p>
+                                <p>Business Results</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="pages/tables/data.html" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Báo Cáo</p>
+                                <p>Report</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-header">Mục Khác</li>
+                <li class="nav-header">Menu</li>
                 <li class="nav-item">
                     <a href="{{route('admin.library-images.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-image"></i>
                         <p>
-                            Thư Viện Ảnh
+                            Library Images
                         </p>
                     </a>
                 </li>
@@ -261,13 +246,11 @@
                     <a href="pages/calendar.html" class="nav-link">
                         <i class="nav-icon fa fa-undo"></i>
                         <p>
-                            Chuyển Trang
+                            Back Client
                         </p>
                     </a>
                 </li>
             </ul>
         </nav>
-        <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
 </aside>

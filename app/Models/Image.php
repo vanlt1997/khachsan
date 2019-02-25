@@ -12,20 +12,11 @@ class Image extends Model
         'url'
     ];
 
-    public function service()
+    public function typeRooms()
     {
-        return $this->belongsTo('App\Models\Service');
+        return $this->belongsToMany('App\Models\TypeRoom');
     }
 
-    public function device()
-    {
-        return $this->belongsToMany('App\Models\Device','App\Models\DeviceImage');
-    }
-
-    public function typeRoom()
-    {
-        return $this->belongsTo('App\Models\TypeRoom');
-    }
 
     public static function boot()
     {

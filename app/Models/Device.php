@@ -12,13 +12,4 @@ class Device extends Model
       'image_id','name','quantity'
     ];
 
-    public function image()
-    {
-        return $this->belongsToMany('App\Models\Image','App\Models\DeviceImage');
-    }
-
-    public function typeRoom()
-    {
-        return $this->belongsToMany('App\Models\TypeRoom','App\Models\DeviceTypeRoom');
-    }
 }

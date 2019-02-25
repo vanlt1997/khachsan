@@ -12,18 +12,4 @@ class Service extends Model
         'name','aliases','description','status','icon'
     ];
 
-    public function detailService()
-    {
-        return $this->hasMany('App\Models\Detail_Service');
-    }
-
-    public function image()
-    {
-        return $this->hasMany('App\Models\Image');
-    }
-
-    public function typeRoom()
-    {
-        return $this->belongsToMany('App\Models\TypeRoom','App\Models\TypeRoomService');
-    }
 }

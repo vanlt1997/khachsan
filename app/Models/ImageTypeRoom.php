@@ -11,4 +11,15 @@ class ImageTypeRoom extends Model
     protected $fillable = [
         'image_id','type_room_id'
     ];
+
+    public function typeRoom()
+    {
+        return $this->belongsTo('App\Models\TypeRoom');
+    }
+
+    public function images()
+    {
+        return $this->belongsTo('App\Models\Image');
+    }
+
 }

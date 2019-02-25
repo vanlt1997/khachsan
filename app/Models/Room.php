@@ -17,13 +17,4 @@ class Room extends Model
         return $this->belongsTo('App\Models\TypeRoom');
     }
 
-    public function status()
-    {
-        return $this->belongsTo('App\Models\Status');
-    }
-
-    public function bill()
-    {
-        return $this->belongsToMany('App\Models\Bill', 'App\Models\BillRoom');
-    }
 }

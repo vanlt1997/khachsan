@@ -19,20 +19,20 @@ class TypeRoomService
         return $this->typeRoom->all();
     }
 
-    public function create($typeRoom)
+    public function createOrUpdate($typeRoom, $id = null)
     {
-        return $this->typeRoom->create([
-            'name' => $typeRoom->name,
-            'people' => $typeRoom->people,
-            'bed' => $typeRoom->bed,
-            'extra_bed' => $typeRoom->extra_bed,
-            'number_room' => $typeRoom->number_room,
-            'acreage' => $typeRoom->acreage,
-            'view' => $typeRoom->view,
-            'price' => $typeRoom->price,
-            'sale' => $typeRoom->sale,
-            'description' => $typeRoom->description
-        ]);
+        $action = $this->typeRoom->find($id) ?? new TypeRoom();
+        $action->name = $typeRoom->name;
+        $action->people = $typeRoom->people;
+        $action->bed = $typeRoom->bed;
+        $action->extra_bed = $typeRoom->extra_bed;
+        $action->number_room = $typeRoom->number_room;
+        $action->acreage = $typeRoom->acreage;
+        $action->view = $typeRoom->view;
+        $action->price = $typeRoom->price;
+        $action->sale = $typeRoom->sale;
+        $action->description = $typeRoom->description;
+        $action->save();
     }
 
     public function getItemLast()
@@ -49,4 +49,5 @@ class TypeRoomService
     {
         return $this->find($id)->delete();
     }
+
 }

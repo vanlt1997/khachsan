@@ -12,8 +12,4 @@ class DetailService extends Model
         'service_id','name','price','sale','description'
     ];
 
-    public function service()
-    {
-        return $this->belongsTo('App\Models\Service');
-    }
 }

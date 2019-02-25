@@ -10,7 +10,6 @@ class TypeRoomRequest extends Request
             'name' => 'required',
             'people' => 'required|integer|min:0|max:5',
             'bed' => 'required|integer|min:0|max:2',
-            'number_room' => 'required|integer',
             'acreage' => 'required|integer',
             'price' => 'required|integer'
         ];
@@ -28,8 +27,6 @@ class TypeRoomRequest extends Request
             'bed.integer' => 'Số giường là số nguyên dương',
             'bed.min' => 'Số giường phải lớn hơn 0',
             'bed.max' => 'Số giường phải nhỏ hơn 5',
-            'number_room.required' => 'Số phòng không được để trống',
-            'number_room.integer' => 'Số phòng là số nguyên dương',
             'acreage.required' => 'Diện tích không được để trống',
             'acreage.integer' => 'Diện tích là số nguyên dương',
             'price.required' => 'Giá phòng không được để trống',

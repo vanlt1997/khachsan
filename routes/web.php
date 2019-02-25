@@ -33,6 +33,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::post('/create', 'TypeRoomController@actionCreateTypeRoom')->name('actionCreateTypeRoom');
         Route::get('/{id}/delete', 'TypeRoomController@delete')->name('delete');
         Route::get('/{id}/detail','TypeRoomController@detail')->name('detail');
+        Route::get('/{id}/edit','TypeRoomController@edit')->name('edit');
+        Route::post('/{id}/edit','TypeRoomController@actionEdit')->name('edit');
         Route::prefix('/{id}/rooms')->name('rooms.')->group(function (){
             Route::get('/', 'RoomController@getRoomByTypeRoom')->name('getRoomByTypeRoom');
             Route::get('/getListRoom', 'RoomController@getListRoomByTypeRoom')->name('getListRoomByTypeRoom');
