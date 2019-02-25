@@ -45,6 +45,7 @@ class TypeRoomController extends Controller
     public function createTypeRoom()
     {
         $images = $this->imageService->getImages();
+
         return view('admin.typeroom.form', compact('images'));
     }
 
@@ -53,10 +54,8 @@ class TypeRoomController extends Controller
 
         $this->typeRoomService->createOrUpdate($request);
         $typeRoom = $this->typeRoomService->getItemLast();
-        if ($request->images)
-        {
-            $this->imageService->saveImageTypeRoom($request->images, $typeRoom->id);
-        }
+        $this->imageService->saveImageTypeRoom( $typeRoom->id, $request->images);
+
         return redirect()->route('admin.type-rooms.index')->with('message', 'Create TypeRoom Successfully !');
     }
 
@@ -93,10 +92,7 @@ class TypeRoomController extends Controller
     public function actionEdit($id, TypeRoomRequest $request)
     {
         $this->typeRoomService->createOrUpdate($request, $id);
-        if ($request->images)
-        {
-            $this->imageService->saveImageTypeRoom( $id, $request->images);
-        }
+        $this->imageService->saveImageTypeRoom( $id, $request->images);
 
         return redirect()->route('admin.type-rooms.index')->with('message', 'Update TypeRoom Successfully !');
     }

@@ -36,14 +36,17 @@ class ImageService
     public function saveImageTypeRoom($idTypeRoom, $images)
     {
         $this->imageTypeRoom->whereTypeRoomId($idTypeRoom)->delete();
-        $images = explode(',',$images);
-        foreach ($images as $image)
+        if ($images !== null)
         {
-            $image = $this->image->whereUrl($image)->first();
-            $this->imageTypeRoom->create([
-               'type_room_id' => $idTypeRoom,
-               'image_id' => $image->id
-            ]);
+            $images = explode(',',$images);
+            foreach ($images as $image)
+            {
+                $image = $this->image->whereUrl($image)->first();
+                $this->imageTypeRoom->create([
+                    'type_room_id' => $idTypeRoom,
+                    'image_id' => $image->id
+                ]);
+            }
         }
     }
 }
