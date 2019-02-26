@@ -29,7 +29,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::prefix('type-rooms')->name('type-rooms.')->group(function (){
         Route::get('/', 'TypeRoomController@index')->name('index');
         Route::get('/getListTypeRoom', 'TypeRoomController@getListTypeRoom')->name('getListTypeRoom');
-        Route::get('/create', 'TypeRoomController@createTypeRoom')->name('createTypeRoom');
+        Route::get('/create', 'TypeRoomController@createTypeRoom')->name('create');
         Route::post('/create', 'TypeRoomController@actionCreateTypeRoom')->name('actionCreateTypeRoom');
         Route::get('/{id}/delete', 'TypeRoomController@delete')->name('delete');
         Route::get('/{id}/detail','TypeRoomController@detail')->name('detail');
