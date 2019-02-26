@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Loại Phòng')
+@section('title','Type Room')
 @section('css')
     <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/alert.css')}}">
@@ -7,7 +7,7 @@
 @section('header')
     <div class="container">
         <div class="title-header">
-            <h3 class="text-center">Room Types</h3>
+            <h3 class="text-center">Type Room</h3>
         </div>
     </div>
 
@@ -41,7 +41,7 @@
     </div>
     <div class="container" style="clear: both">
         <a href="{{route('admin.index')}}" class="btn btn-outline-success btn-sm">Back</a>
-        <a href="{{route('admin.type-rooms.createTypeRoom')}}" class="btn btn-sm btn-outline-info"><i
+        <a href="{{route('admin.type-rooms.create')}}" class="btn btn-sm btn-outline-info"><i
                 class="fa fa-plus-circle"></i> Add</a>
     </div>
 @endsection
