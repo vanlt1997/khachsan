@@ -22,16 +22,18 @@ class RoomService
 
     public function getListRoomByID($id)
     {
-        return $this->room->where(['type_room_id' => $id]);
+        return $this->room->where(['type_room_id' => $id])
+            ->join('status','rooms.status_id','status.id')
+            ->select('rooms.*', 'status.name as status_name');
     }
 
     public function create($id, $room)
     {
         return $this->room->create([
             'type_room_id' => $id,
-            'name' => $room->name,
-            'status_id' => $room->status,
-            'description' => $room->description
+            'name'         => $room->name,
+            'status_id'    => $room->status,
+            'description'  => $room->description
         ]);
     }
 }

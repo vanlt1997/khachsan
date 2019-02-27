@@ -14,14 +14,14 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
             </thead>
         </table>
     </div>
     <div class="container" style="clear: both">
-        <a href="{{route('admin.type-rooms.index', $idTypeRoom)}}" class="btn btn-sm btn-outline-success"><i
-                class="fa fa-plus-circle"></i> Back</a>
+        <a href="{{route('admin.type-rooms.index', $idTypeRoom)}}" class="btn btn-sm btn-outline-success">Back</a>
         <a href="{{route('admin.type-rooms.rooms.create', $idTypeRoom)}}" class="btn btn-sm btn-outline-info"><i
                 class="fa fa-plus-circle"></i> Add</a>
     </div>
@@ -38,6 +38,7 @@
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
+                    {data: 'status_name', name: 'status_name'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });

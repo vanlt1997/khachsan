@@ -196,12 +196,14 @@
                             <div class="row col-md-12" id="images-session">
                                 @if(isset($typeRoom))
                                     @foreach($typeRoom['images'] as $image)
-                                        <div class='col-md-3 img-show pull-left img-start' data-content = "{{$image->url}}">
+                                        <div class='col-md-3 img-show pull-left img-start'
+                                             data-content="{{$image->url}}">
                                             <div class='reject-img' onclick="rejectImage('{{$image->url}}')">
                                                 <span class='button-reject-img'>&times;</span>
-                                                </div>
-                                            <img src="{{asset('images/admin/library-images')}}/{{$image->url}}" alt='img' class='img-thumbnail' style='width: 120px; height: 120px;'>
                                             </div>
+                                            <img src="{{asset('images/admin/library-images')}}/{{$image->url}}"
+                                                 alt='img' class='img-thumbnail' style='width: 120px; height: 120px;'>
+                                        </div>
                                     @endforeach
                                 @endif
                             </div>
@@ -222,7 +224,7 @@
             </form>
         </div>
     </div>
-
+    {{--Modal--}}
     <div class="modal fade" id="type-rooms" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
          aria-hidden="true" onclick="chooseDone()">
         <div class="modal-dialog modal-dialog-centered" role="document">
