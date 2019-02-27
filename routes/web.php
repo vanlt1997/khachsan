@@ -22,20 +22,20 @@ Route::group(['prefix' => 'loai-phong'], function () {
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', 'IndexController@trangchu')->name('index');
 
-    Route::prefix('diagram')->name('diagram.')->group(function (){
+    Route::prefix('diagram')->name('diagram.')->group(function () {
         Route::get('/', 'DiagramController@index')->name('index');
     });
 
-    Route::prefix('type-rooms')->name('type-rooms.')->group(function (){
+    Route::prefix('type-rooms')->name('type-rooms.')->group(function () {
         Route::get('/', 'TypeRoomController@index')->name('index');
         Route::get('/getListTypeRoom', 'TypeRoomController@getListTypeRoom')->name('getListTypeRoom');
         Route::get('/create', 'TypeRoomController@createTypeRoom')->name('create');
         Route::post('/create', 'TypeRoomController@actionCreateTypeRoom')->name('actionCreateTypeRoom');
         Route::get('/{id}/delete', 'TypeRoomController@delete')->name('delete');
-        Route::get('/{id}/detail','TypeRoomController@detail')->name('detail');
-        Route::get('/{id}/edit','TypeRoomController@edit')->name('edit');
-        Route::post('/{id}/edit','TypeRoomController@actionEdit')->name('edit');
-        Route::prefix('/{id}/rooms')->name('rooms.')->group(function (){
+        Route::get('/{id}/detail', 'TypeRoomController@detail')->name('detail');
+        Route::get('/{id}/edit', 'TypeRoomController@edit')->name('edit');
+        Route::post('/{id}/edit', 'TypeRoomController@actionEdit')->name('edit');
+        Route::prefix('/{id}/rooms')->name('rooms.')->group(function () {
             Route::get('/', 'RoomController@getRoomByTypeRoom')->name('getRoomByTypeRoom');
             Route::get('/getListRoom', 'RoomController@getListRoomByTypeRoom')->name('getListRoomByTypeRoom');
             Route::get('/create', 'RoomController@createRoom')->name('create');
@@ -43,23 +43,29 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         });
     });
 
-    Route::prefix('list-rooms')->name('rooms.')->group(function (){
-        Route::get('/','RoomController@index')->name('index');
+    Route::prefix('list-rooms')->name('rooms.')->group(function () {
+        Route::get('/', 'RoomController@index')->name('index');
     });
 
-    Route::prefix('library-images')->name('library-images.')->group(function (){
-        Route::get('/','LibraryImageController@index')->name('index');
-        Route::post('/','LibraryImageController@actionSaveImage')->name('index');
-        Route::post('/{id?}','LibraryImageController@actionDeleteImage')->name('delete');
+    Route::prefix('library-images')->name('library-images.')->group(function () {
+        Route::get('/', 'LibraryImageController@index')->name('index');
+        Route::post('/', 'LibraryImageController@actionSaveImage')->name('index');
+        Route::post('/{id?}', 'LibraryImageController@actionDeleteImage')->name('delete');
     });
 
-    Route::prefix('diagrams')->name('diagrams.')->group(function (){
+    Route::prefix('diagrams')->name('diagrams.')->group(function () {
         Route::get('/', 'DiagramController@index')->name('index');
     });
 
-    Route::prefix('devices')->name('devices.')->group(function (){
+    Route::prefix('devices')->name('devices.')->group(function () {
         Route::get('/', 'DeviceController@index')->name('index');
         Route::get('/getList', 'DeviceController@getList')->name('get-list');
+        Route::get('/create', 'DeviceController@create')->name('create');
+        Route::post('/create', 'DeviceController@actionCreate')->name('create');
+        Route::get('/{id}/edit', 'DeviceController@edit')->name('edit');
+        Route::post('/{id}/edit', 'DeviceController@actionEdit')->name('edit');
+        Route::get('/{id}/delete', 'DeviceController@delete')->name('delete');
+        Route::get('/{id}/detail', 'DeviceController@detail')->name('detail');
     });
 
 });

@@ -9,7 +9,12 @@ class Device extends Model
     public $timestamps = false;
     protected $table = "devices";
     protected $fillable = [
-      'image_id','name','quantity'
+      'name','quantity'
     ];
+
+    public function typeRooms()
+    {
+        return $this->belongsToMany('App\Models\TypeRoom');
+    }
 
 }

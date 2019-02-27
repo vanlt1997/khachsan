@@ -22,6 +22,11 @@ class TypeRoom extends Model
         return $this->hasMany('App\Models\Room');
     }
 
+    public function devices()
+    {
+        return $this->belongsToMany('App\Models\Device');
+    }
+
     public static function boot()
     {
         parent::boot();
