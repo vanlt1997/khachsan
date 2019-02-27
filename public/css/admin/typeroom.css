@@ -471,17 +471,38 @@ label span{
 }
 
 .bg-status-1{
-    background-color: lightgrey;
+    background-color: #f5ecec;
 }
 
 .bg-status-4{
-    background-color: red;
+    background-color: #f97a7a;
 }
 
 .bg-status-3{
-    background-color: seagreen;
+    background-color: #1ce273;
 }
 
 .bg-status-2{
-    background-color: orange;
+    background-color: #de991c;
 }
+
+.style-rooms{
+    width: 100%;
+    height: 100%;
+    border: 2px solid #f4f6f9;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+.style-rooms h4{
+     text-align: center;
+     clear: both;
+     padding: 50px;
+ }
+
+.style-rooms:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+

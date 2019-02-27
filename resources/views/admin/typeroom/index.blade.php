@@ -33,7 +33,7 @@
                 <th>Type</th>
                 <th>People Number</th>
                 <th>Price</th>
-                <th>Sale</th>
+                <th>Sale (%)</th>
                 <th>Action</th>
             </tr>
             </thead>
