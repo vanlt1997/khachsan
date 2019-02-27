@@ -40,7 +40,6 @@
         </table>
     </div>
     <div class="container" style="clear: both">
-        <a href="{{route('admin.index')}}" class="btn btn-outline-success btn-sm">Back</a>
         <a href="{{route('admin.type-rooms.create')}}" class="btn btn-sm btn-outline-info"><i
                 class="fa fa-plus-circle"></i> Add</a>
     </div>

@@ -66,11 +66,8 @@ class TypeRoomController extends Controller
             $this->typeRoomService->delete($id);
             return redirect()->route('admin.type-rooms.index')->with('message', 'Delete TypeRoom Successfully !');
         }
-        else
-        {
-            return redirect()->route('admin.type-rooms.index')->with('error', "You Can't Delete TypeRoom !");
-        }
 
+        return redirect()->route('admin.type-rooms.index')->with('error', "You Can't Delete TypeRoom !");
     }
 
     public function detail($id)
