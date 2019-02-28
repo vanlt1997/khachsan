@@ -7,6 +7,7 @@ use App\Service\ImageService;
 use App\Service\RoomService;
 use App\Service\StatusService;
 use App\Http\Controllers\Controller;
+use App\Service\TypeRoomService;
 use Yajra\DataTables\DataTables;
 
 class RoomController extends Controller
@@ -14,12 +15,20 @@ class RoomController extends Controller
     protected $roomService;
     protected $statusService;
     protected $imageService;
+    protected $typeRoomService;
 
-    public function __construct(RoomService $roomService, StatusService $statusService, ImageService $imageService)
+    public function __construct
+    (
+        RoomService $roomService,
+        StatusService $statusService,
+        ImageService $imageService,
+        TypeRoomService $typeRoomService
+    )
     {
         $this->roomService = $roomService;
         $this->statusService = $statusService;
         $this->imageService = $imageService;
+        $this->typeRoomService = $typeRoomService;
     }
 
     public function index()

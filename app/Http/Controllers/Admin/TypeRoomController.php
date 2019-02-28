@@ -4,23 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\TypeRoomRequest;
 use App\Http\Controllers\Controller;
+use App\Service\DeviceService;
 use App\Service\ImageService;
 use App\Service\TypeRoomService;
-use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class TypeRoomController extends Controller
 {
     protected $typeRoomService;
     protected $imageService;
+    protected $deviceService;
 
     public function __construct(
         TypeRoomService $typeRoomService,
-        ImageService $imageService
+        ImageService $imageService,
+        DeviceService $deviceService
     )
     {
         $this->typeRoomService = $typeRoomService;
         $this->imageService = $imageService;
+        $this->deviceService = $deviceService;
     }
 
     public function index()
@@ -45,15 +48,16 @@ class TypeRoomController extends Controller
     public function createTypeRoom()
     {
         $images = $this->imageService->getImages();
+        $devices = $this->deviceService->getDevices();
 
-        return view('admin.typeroom.form', compact('images'));
+        return view('admin.typeroom.form', compact('images', 'devices'));
     }
 
     public function actionCreateTypeRoom(TypeRoomRequest $request)
     {
-
         $this->typeRoomService->createOrUpdate($request);
         $typeRoom = $this->typeRoomService->getItemLast();
+        $this->deviceService->saveDeviceTypeRoom($typeRoom->id, $request->devices);
         $this->imageService->saveImageTypeRoom( $typeRoom->id, $request->images);
 
         return redirect()->route('admin.type-rooms.index')->with('message', 'Create TypeRoom Successfully !');
@@ -82,14 +86,17 @@ class TypeRoomController extends Controller
         $typeRoom = $this->typeRoomService->find($id);
         $images = $this->imageService->getImages();
         $typeRoom->images;
+        $devices = $this->deviceService->getDevices();
+        $deviceTypeRoom = $this->deviceService->getDeviceTypeRoom($id)->toArray();
 
-        return view('admin.typeroom.form', compact('typeRoom', 'images'));
+        return view('admin.typeroom.form', compact('typeRoom', 'images', 'devices', 'deviceTypeRoom'));
     }
 
     public function actionEdit($id, TypeRoomRequest $request)
     {
         $this->typeRoomService->createOrUpdate($request, $id);
         $this->imageService->saveImageTypeRoom( $id, $request->images);
+        $this->deviceService->saveDeviceTypeRoom($id, $request->devices);
 
         return redirect()->route('admin.type-rooms.index')->with('message', 'Update TypeRoom Successfully !');
     }

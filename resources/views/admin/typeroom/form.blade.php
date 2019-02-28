@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title',"Type Room" )
+@section('title',"Type Rooms" )
 @section('css')
     <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
 @endsection
@@ -16,7 +16,7 @@
             <form method="post" role="form" class="form-horizontal col-md-12">
                 @csrf
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <div class="row col-md-12">
                                 <div class="col-md-4 text-right">
@@ -181,35 +181,55 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <div class="row col-md-12">
-                                <div class="col-md-4  text-right">
+                                <div class="col-md-3 text-right">
+                                    <label for="devices" class="col-form-label">Devices</label>
+                                </div>
+                                <div class="col-md-9 row">
+                                    @foreach($devices as $device)
+                                        <div class="col-md-4" style="padding-top: 10px;">
+                                            <label for="device{{$device->id}}">
+                                                <input type="checkbox" name="devices[]" id="device{{$device->id}}" value="{{$device->id}}"
+                                                       @if(isset($deviceTypeRoom) && in_array($device->id, $deviceTypeRoom))
+                                                           checked
+                                                       @endif
+                                                > {{$device->name}}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row col-md-12">
+                                <div class="col-md-3 text-right">
                                     <label for="Image" class="col-form-label">Images</label>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-9">
                                     <button type="button" class="btn btn-sm btn-outline-warning" data-toggle="modal"
                                             data-target="#type-rooms" onclick="listModal()">Choose Images
                                     </button>
-                                </div>
-                            </div>
-                            <div class="row col-md-12" id="images-session">
-                                @if(isset($typeRoom))
-                                    @foreach($typeRoom['images'] as $image)
-                                        <div class='col-md-3 img-show pull-left img-start'
-                                             data-content="{{$image->url}}">
-                                            <div class='reject-img' onclick="rejectImage('{{$image->url}}')">
-                                                <span class='button-reject-img'>&times;</span>
-                                            </div>
-                                            <img src="{{asset('images/admin/library-images')}}/{{$image->url}}"
-                                                 alt='img' class='img-thumbnail' style='width: 120px; height: 120px;'>
-                                        </div>
-                                    @endforeach
-                                @endif
-                            </div>
+                                    <div class="row col-md-12" id="images-session">
+                                        @if(isset($typeRoom))
+                                            @foreach($typeRoom['images'] as $image)
+                                                <div class='col-md-3 img-show pull-left img-start'
+                                                     data-content="{{$image->url}}">
+                                                    <div class='reject-img' onclick="rejectImage('{{$image->url}}')">
+                                                        <span class='button-reject-img'>&times;</span>
+                                                    </div>
+                                                    <img src="{{asset('images/admin/library-images')}}/{{$image->url}}"
+                                                         alt='img' class='img-thumbnail' style='width: 120px; height: 120px;'>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
 
-                            <div class="row col-md-12" hidden>
-                                <input type="text" class="form-control" name="images" id="images">
+                                    <div class="row col-md-12" hidden>
+                                        <input type="text" class="form-control" name="images" id="images">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12">
