@@ -33,7 +33,9 @@ class RoomController extends Controller
 
     public function index()
     {
-        return view('admin.room.index');
+        $typeRooms = $this->typeRoomService->getTypeRooms();
+
+        return view('admin.room.index', compact('typeRooms'));
     }
 
     public function getRoomByTypeRoom($id)
