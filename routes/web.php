@@ -20,7 +20,7 @@ Route::group(['prefix' => 'loai-phong'], function () {
 });
 
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
-    Route::get('/', 'IndexController@trangchu')->name('index');
+    Route::get('/', 'IndexController@index')->name('index');
 
     Route::prefix('diagram')->name('diagram.')->group(function () {
         Route::get('/', 'DiagramController@index')->name('index');
@@ -71,7 +71,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::prefix('services')->name('services.')->group(function (){
        Route::get('/', 'ServiceController@index')->name('index');
        Route::get('/getList', 'ServiceController@getList')->name('getList');
-       Route::get('/create', 'ServiceController@index')->name('create');
+       Route::get('/create', 'ServiceController@create')->name('create');
+       Route::post('/create', 'ServiceController@actionCreate')->name('create');
     });
 
 });

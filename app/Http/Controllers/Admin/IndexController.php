@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
-    function trangchu()
+    public function index()
     {
         return view('admin.index');
     }

@@ -30,8 +30,12 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Action</th>
+                <th style="width: 100px">Name</th>
+                <th style="width: 50px">Price</th>
+                <th style="width: 50px">Sale(%)</th>
+                <th style="width: 50px">Number</th>
+                <th>Description</th>
+                <th style="width: 100px">Action</th>
             </tr>
             </thead>
         </table>
@@ -54,6 +58,10 @@
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
+                    {data: 'price', name: 'price'},
+                    {data: 'sale', name: 'sale'},
+                    {data: 'quantity', name: 'quantity'},
+                    {data: 'description', name: 'description'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });

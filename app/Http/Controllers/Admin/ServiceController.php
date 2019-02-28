@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\ServiceRequest;
 use App\Service\ServiceService;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -22,7 +23,7 @@ class ServiceController extends Controller
 
     public function getList()
     {
-        return DataTables::of($this->serviceService->getServices())
+        return DataTables::of($this->serviceService->getAllList())
             ->addColumn('action', function ($service) {
                 return
                     '<a href="services/' . $service->id . '/detail" class="btn btn-sm btn-outline-warning"> <i class="fa fa-info"></i></a>
@@ -31,5 +32,17 @@ class ServiceController extends Controller
                     ';
             })
             ->make();
+    }
+
+    public function create()
+    {
+        return view('admin.service.form');
+    }
+
+    public function actionCreate(ServiceRequest $request)
+    {
+        $this->serviceService->createOrUpdateService($request);
+
+        return redirect()->route('admin.services.index')->with('message', 'Create Service Successfully !');
     }
 }
