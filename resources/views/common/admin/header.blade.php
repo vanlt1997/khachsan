@@ -160,7 +160,7 @@
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('admin.services.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-hand-scissors-o "></i>
                         <p>
                            Services

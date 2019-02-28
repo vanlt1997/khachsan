@@ -68,4 +68,10 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/{id}/detail', 'DeviceController@detail')->name('detail');
     });
 
+    Route::prefix('services')->name('services.')->group(function (){
+       Route::get('/', 'ServiceController@index')->name('index');
+       Route::get('/getList', 'ServiceController@getList')->name('getList');
+       Route::get('/create', 'ServiceController@index')->name('create');
+    });
+
 });
