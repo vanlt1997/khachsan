@@ -40,7 +40,7 @@ function rejectImage(url) {
 function chooseDone() {
     var list = '', i;
     for (i=0; i<imagesSession.length; i++) {
-        list += "<div class='col-md-3 img-show pull-left'>" +
+        list += "<div class='col-md-4 img-show pull-left'>" +
                     "<div class='reject-img' onclick=\"rejectImage('"+imagesSession[i]+"')\">" +
                         "<span class='button-reject-img'>&times;</span>" +
                     "</div>" +

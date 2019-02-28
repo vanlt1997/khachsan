@@ -40,6 +40,7 @@ class TypeRoom extends Model
         self::deleting( function ($model)
         {
             ImageTypeRoom::whereTypeRoomId($model->id)->delete();
+            DeviceTypeRoom::whereTypeRoomId($model->id)->delete();
         });
     }
 }

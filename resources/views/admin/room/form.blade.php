@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Create Type Room')
+@section('title','Room')
 @section('css')
     <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
 @endsection

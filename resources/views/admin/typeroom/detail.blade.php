@@ -88,6 +88,14 @@
                                     <th>Description</th>
                                     <td>{!! $typeRoom->description !!}</td>
                                 </tr>
+                                <tr class="table-info">
+                                    <th>Devices</th>
+                                    <td>
+                                        @foreach($typeRoom->devices as $device)
+                                            <li>{{$device->name}}</li>
+                                        @endforeach
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -113,19 +121,19 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="bg-status-1"></div>
-                                <p>Trống</p>
+                                <p>Free</p>
                             </div>
                             <div class="col-md-3">
                                 <div class="bg-status-2"></div>
-                                <p>Đã giữ phòng</p>
+                                <p>Reserved</p>
                             </div>
                             <div class="col-md-3">
                                 <div class="bg-status-3"></div>
-                                <p>Đang sử dụng</p>
+                                <p>Using</p>
                             </div>
                             <div class="col-md-3">
                                 <div class="bg-status-4"></div>
-                                <p>Quá hạn</p>
+                                <p>Expired</p>
                             </div>
                         </div>
                         <div class="row">
