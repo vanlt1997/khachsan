@@ -88,9 +88,9 @@
                                 <div class="detail-typeRoom col-md-12">
                                     <h3>{{$typeRoom->name}}</h3>
                                 </div>
-                                <div class="col-md-12" style="margin-top: 50px">
+                                <div class="row col-md-12" style="margin-top: 50px">
                                     @foreach($typeRoom->rooms as $room)
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <div class="room">
                                                 <div class="style-rooms @if($room->status_id === 1) bg-status-1
                                                                 @elseif($room->status_id === 2) bg-status-2

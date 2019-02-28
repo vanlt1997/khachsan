@@ -138,7 +138,7 @@
                         </div>
                         <div class="row">
                             @foreach($typeRoom->rooms as $room)
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="room">
                                         <div class="style-rooms @if($room->status_id === 1) bg-status-1
                                                                 @elseif($room->status_id === 2) bg-status-2

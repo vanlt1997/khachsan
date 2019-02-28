@@ -139,7 +139,7 @@
                     <a href="{{route('admin.type-rooms.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-building-o"></i>
                         <p>
-                            Type Room
+                            Type Rooms
                         </p>
                     </a>
                 </li>
@@ -147,7 +147,7 @@
                     <a href="{{route('admin.rooms.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-hotel"></i>
                         <p>
-                            Room
+                            Rooms
                         </p>
                     </a>
                 </li>
@@ -171,7 +171,7 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fa fa-user-circle"></i>
                         <p>
-                            Customer
+                            Customers
                         </p>
                     </a>
                 </li>
