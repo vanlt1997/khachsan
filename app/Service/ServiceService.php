@@ -40,4 +40,9 @@ class ServiceService
     {
         return $this->service->find($id);
     }
+
+    public function delete($id)
+    {
+        return $this->find($id)->delete();
+    }
 }

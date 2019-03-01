@@ -1,12 +1,9 @@
-$(document).ready(function () {
-    changeInput();
-});
-
-function changeInput() {
+function changeSelect() {
     var status = $('#status').val();
     if (status == 1) {
-        $('.div-status').hide();
+        $('#div-status').attr('hidden','');
     } else {
-        $('.div-status').show();
+        $('#div-status').removeAttr('hidden');
     }
 }
+changeSelect();
