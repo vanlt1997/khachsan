@@ -1,13 +1,5 @@
-<?php
-
-use App\Models\Service;
-use App\Models\SlideBar;
-
-$services = Service::all();
-$slidebars = SlideBar::all();
-?>
-@extends('layouts.client')
-@section('title','Trang chủ')
+ @extends('layouts.client')
+@section('title','Home')
 @section('slidebar')
     <section class="home-slider owl-carousel">
         @foreach($slidebars as $slidebar)
@@ -74,14 +66,14 @@ $slidebars = SlideBar::all();
                                 <a class="nav-link px-4 active" id="{{$service->id}}-tab" data-toggle="pill"
                                    href="#{{$service->id}}" role="tab" aria-controls="{{$service->id}}"
                                    aria-selected="true">
-                                    @if($service->icon !== '')<img
+                                    @if($service->icon !== ''  && $service->icon !== null)<img
                                         src="{{asset('images/services')}}/{{$service->icon}}">@endif {{$service->name}}
                                 </a>
                             @else
                                 <a class="nav-link px-4" id="{{$service->id}}-tab" data-toggle="pill"
                                    href="#{{$service->id}}" role="tab" aria-controls="{{$service->id}}"
                                    aria-selected="false">
-                                    @if($service->icon !== '')<img
+                                    @if($service->icon !== '' && $service->icon !== null)<img
                                         src="{{asset('images/services')}}/{{$service->icon}}">@endif {{$service->name}}
                                 </a>
                             @endif
@@ -95,7 +87,7 @@ $slidebars = SlideBar::all();
                             @if($key == 0)
                                 <div class="tab-pane fade show active" id="{{$service->id}}" role="tabpanel"
                                      aria-labelledby="{{$service->id}}-tab">
-                                    @if($service->icon !== '')
+                                    @if($service->icon !== '' && $service->icon !== null)
                                         <img src="{{asset('images/services/')}}/{{$service->icon}}">@endif
                                     <h2 class="mb-4">{{$service->name}}</h2>
                                     <p>{!! $service->description !!}</p>
@@ -105,7 +97,7 @@ $slidebars = SlideBar::all();
                             @else
                                 <div class="tab-pane fade" id="{{$service->id}}" role="tabpanel"
                                      aria-labelledby="{{$service->id}}-tab">
-                                    @if($service->icon !== '')<img
+                                    @if($service->icon !== '' && $service->icon !== null)<img
                                         src="{{asset('images/services/')}}/{{$service->icon}}">@endif
                                     <h2 class="mb-4">{{$service->name}}</h2>
                                     <p>{!! $service->description !!}</p>

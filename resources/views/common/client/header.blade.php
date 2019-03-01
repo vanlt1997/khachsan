@@ -7,14 +7,14 @@
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{route('trang-chu')}}">Hotel MayStar</a>
+        <a class="navbar-brand" href="{{route('client.index')}}">Hotel MayStar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
         </button>
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a href="{{route('trang-chu')}}" class="nav-link">TRANG CHỦ</a></li>
+                <li class="nav-item"><a href="{{route('client.index')}}" class="nav-link">HOME</a></li>
                 <li class="nav-item"><a href="{{route('gioi-thieu')}}" class="nav-link">GIỚI THIỆU</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="{{route('loai-phong')}}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">LOẠI PHÒNG & GIÁ</a>

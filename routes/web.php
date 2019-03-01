@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'IndexController@trangchu')->name('trang-chu');
+Route::get('/', 'IndexController@index')->name('client.index');
 Route::get('gioi-thieu', 'IndexController@gioiThieu')->name('gioi-thieu');
 Route::get('lien-he', 'IndexController@lienHe')->name('lien-he');
 Route::post('lien-he', 'IndexController@guiMail')->name('lien-he');
