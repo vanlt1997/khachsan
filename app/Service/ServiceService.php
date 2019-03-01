@@ -28,10 +28,16 @@ class ServiceService
     {
         $action = $this->service->find($id) ?? new Service();
         $action->name = $service->name;
+        $action->status = $service->status;
         $action->price = $service->price;
         $action->sale = $service->sale;
         $action->quantity = $service->quantity;
         $action->description = $service->description;
         $action->save();
+    }
+
+    public function find($id)
+    {
+        return $this->service->find($id);
     }
 }

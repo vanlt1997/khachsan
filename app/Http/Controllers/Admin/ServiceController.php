@@ -45,4 +45,18 @@ class ServiceController extends Controller
 
         return redirect()->route('admin.services.index')->with('message', 'Create Service Successfully !');
     }
+
+    public function edit($id)
+    {
+        $service = $this->serviceService->find($id);
+
+        return view('admin.service.form', compact('service'));
+    }
+
+    public function actionEdit($id, ServiceRequest $request)
+    {
+        $this->serviceService->createOrUpdateService($request, $id);
+
+        return redirect()->route('admin.services.index')->with('message', 'Update Service Successfully !');
+    }
 }
