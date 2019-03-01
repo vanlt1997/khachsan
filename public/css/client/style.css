@@ -13,6 +13,7 @@ a.navbar-brand {
 }
 .icon_service img{
     width: 40px;
+    margin-right: 15px;
 }
 .show_service img{
     width: 120px;

@@ -24,10 +24,20 @@ class ServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'price' => 'required|numeric|min:1',
-            'sale' => 'required|numeric|min:0',
-            'quantity' => 'required|numeric|min:1'
+            'name'     => 'required',
+            'price'    => 'required|numeric|min:1',
+            'sale'     => 'required|numeric|min:0',
+            'quantity' => 'required|numeric|min:1',
+            'status'   => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        parent::messages();
+
+        return [
+            'status.required' => 'Choose status service'
         ];
     }
 }
