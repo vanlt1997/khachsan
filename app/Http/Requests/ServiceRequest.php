@@ -25,9 +25,9 @@ class ServiceRequest extends FormRequest
     {
         return [
             'name'     => 'required',
-            'price'    => 'required|numeric|min:1',
-            'sale'     => 'required|numeric|min:0',
-            'quantity' => 'required|numeric|min:1',
+            'price'    => 'required|integer',
+            'sale'     => 'required|integer',
+            'quantity' => 'required|integer',
             'status'   => 'required'
         ];
     }

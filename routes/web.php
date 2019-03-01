@@ -75,6 +75,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
        Route::post('/create', 'ServiceController@actionCreate')->name('create');
        Route::get('/{id}/edit', 'ServiceController@edit')->name('edit');
        Route::post('/{id}/edit', 'ServiceController@actionEdit')->name('edit');
+       Route::get('/{id}/delete', 'ServiceController@delete')->name('delete');
+       Route::get('/{id}/detail', 'ServiceController@detail')->name('detail');
     });
 
 });

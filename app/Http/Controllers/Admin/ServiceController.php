@@ -59,4 +59,18 @@ class ServiceController extends Controller
 
         return redirect()->route('admin.services.index')->with('message', 'Update Service Successfully !');
     }
+
+    public function delete($id)
+    {
+        $this->serviceService->delete($id);
+
+        return redirect()->route('admin.services.index')->with('message', 'Delete Service Successfully !');
+    }
+
+    public function detail($id)
+    {
+        $service = $this->serviceService->find($id);
+
+        return view('admin.service.detail', compact('service'));
+    }
 }
