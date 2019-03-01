@@ -14,15 +14,27 @@ class IndexController extends Controller
 {
     protected $slideBarService;
     protected $serviceService;
-    public function __construct(SlideBarService $slideBarService, ServiceService $serviceService)
+    protected $typeRoomService;
+
+    public function __construct
+    (
+        SlideBarService $slideBarService,
+        ServiceService $serviceService,
+        TypeRoomService $typeRoomService
+    )
     {
         $this->slideBarService = $slideBarService;
         $this->serviceService = $serviceService;
+        $this->typeRoomService = $typeRoomService;
         session_start();
     }
 
-    public function trangchu() {
-        return view('client.index');
+    public function index() {
+        $services = $this->serviceService->getServices();
+        $slidebars = $this->slideBarService->getSlideBars();
+        $typeRooms = $this->typeRoomService->getTypeRooms();
+
+        return view('client.index', compact('services', 'slidebars'));
     }
 
     public function dichVu()

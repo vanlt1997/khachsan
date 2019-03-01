@@ -51,7 +51,7 @@
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">MayStar</h2>
-                    <p>Đằng sau những ngọn núi , phía xa xa , gần cạnh bãi biển . Hãy đến <a href="{{route('trang-chu')}}">MyStar</a> để thư giãn và tận hưởng những giây phút thật thoải mái , tuyệt vời ...</p>
+                    <p>Đằng sau những ngọn núi , phía xa xa , gần cạnh bãi biển . Hãy đến <a href="{{route('client.index')}}">MyStar</a> để thư giãn và tận hưởng những giây phút thật thoải mái , tuyệt vời ...</p>
                     <ul class="ftco-footer-social list-unstyled float-md-left float-lft">
                         <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                         <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
