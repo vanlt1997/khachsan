@@ -50,7 +50,7 @@ class DeviceService
     public function saveDeviceTypeRoom($id, $devices)
     {
         $this->deviceTypeRoom->whereTypeRoomId($id)->delete();
-        if (count($devices) > 0)
+        if ($devices !== null)
         {
             foreach ($devices as $device)
             {

@@ -1,4 +1,4 @@
- @extends('layouts.client')
+@extends('layouts.client')
 @section('title','Home')
 @section('slidebar')
     <section class="home-slider owl-carousel">
@@ -41,7 +41,7 @@
                                     <label for="Guest">Số Người:</label>
                                     <div class="select-wrap">
                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                        <input type="number" id="people" class="form-control">
+                                        <input type="number" id="people" class="form-control" min="0">
                                     </div>
                                 </div>
                             </div>
@@ -116,129 +116,50 @@
         <div class="container">
             <div class="row justify-content-center mb-5 pb-5">
                 <div class="col-md-7 text-center heading-section ftco-animate">
-                    <span class="subheading">Phòng của chúng tôi</span>
-                    <h2>Hãy khám phá các phòng</h2>
+                    <span class="subheading">OUR ROOM</span>
+                    <h2>Discover the rooms</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 ftco-animate">
                     <div class="carousel-room owl-carousel">
-                        <div class="item">
-                            <div class="room-wrap">
-                                <a href="#" class="room-img" style="background-image: url(images/room-1.jpg);"></a>
-                                <div class="text p-4">
-                                    <div class="d-flex mb-1">
-                                        <div class="one-third">
-                                            <p class="star-rate"><span class="icon-star"></span><span
-                                                    class="icon-star"></span><span class="icon-star"></span><span
-                                                    class="icon-star"></span><span class="icon-star-half-full"></span>
-                                            </p>
-                                            <h3><a href="#">Double Room</a></h3>
+                        @foreach($typeRooms as $typeRoom)
+                            <div class="item">
+                                <div class="room-wrap">
+                                    <a href="#" class="room-img"
+                                       style="background-image: url('{{asset('images/admin/library-images')}}/{{$typeRoom->images->first()['url']}}');"></a>
+                                    <div class="text p-4">
+                                        <div class="d-flex mb-1">
+                                            <div class="one-third">
+                                                <p class="star-rate"><span class="icon-star"></span><span
+                                                        class="icon-star"></span><span class="icon-star"></span><span
+                                                        class="icon-star"></span><span
+                                                        class="icon-star-half-full"></span>
+                                                </p>
+                                                <h3><a href="#">{{$typeRoom->name}}</a></h3>
+                                            </div>
+                                            <div class="one-forth text-center" style="margin-right: 10px">
+                                                <p class="price">${{$typeRoom->price}} <br><span>/day</span></p>
+                                            </div>
+                                            @if($typeRoom->sale !== 0 && $typeRoom->sale !== null)
+                                                <div class="one-forth text-center">
+                                                    <p class="price">- {{$typeRoom->sale}} <br><span>%</span></p>
+                                                </div>
+                                            @endif
                                         </div>
-                                        <div class="one-forth text-center">
-                                            <p class="price">$99 <br><span>/night</span></p>
-                                        </div>
+                                        <p class="features">
+                                            <span class="d-block mb-2"><i class="icon-check mr-2"></i> Perfect for traveling couples</span>
+                                            <span class="d-block mb-2"><i
+                                                    class="icon-check mr-2"></i> Breakfast included</span>
+                                            <span class="d-block mb-2"><i class="icon-check mr-2"></i> Free wifi</span>
+                                            <span class="d-block mb-2"><i class="icon-check mr-2"></i> Full facilities</span>
+                                            <span class="d-block mb-2"><i class="icon-check mr-2"></i> 24-hour reception</span>
+                                        </p>
+                                        <p><a href="#" class="btn btn-primary">Book room</a></p>
                                     </div>
-                                    <p class="features">
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Perfect for traveling couples</span>
-                                        <span class="d-block mb-2"><i
-                                                class="icon-check mr-2"></i> Breakfast included</span>
-                                        <span class="d-block mb-2"><i
-                                                class="icon-check mr-2"></i> Two double beds</span>
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Baby sitting facilities</span>
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Free wifi</span>
-                                    </p>
-                                    <p><a href="#" class="btn btn-primary">Reserve a room</a></p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <div class="room-wrap">
-                                <a href="#" class="room-img" style="background-image: url(images/room-2.jpg);"></a>
-                                <div class="text p-4">
-                                    <div class="d-flex mb-1">
-                                        <div class="one-third">
-                                            <p class="star-rate"><span class="icon-star"></span><span
-                                                    class="icon-star"></span><span class="icon-star"></span><span
-                                                    class="icon-star"></span><span class="icon-star-half-full"></span>
-                                            </p>
-                                            <h3><a href="#">Family Room</a></h3>
-                                        </div>
-                                        <div class="one-forth text-center">
-                                            <p class="price">$99 <br><span>/night</span></p>
-                                        </div>
-                                    </div>
-                                    <p class="features">
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Perfect for traveling couples</span>
-                                        <span class="d-block mb-2"><i
-                                                class="icon-check mr-2"></i> Breakfast included</span>
-                                        <span class="d-block mb-2"><i
-                                                class="icon-check mr-2"></i> Two double beds</span>
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Baby sitting facilities</span>
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Free wifi</span>
-                                    </p>
-                                    <p><a href="#" class="btn btn-primary">Reserve a room</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="room-wrap">
-                                <a href="#" class="room-img" style="background-image: url(images/room-3.jpg);"></a>
-                                <div class="text p-4">
-                                    <div class="d-flex mb-1">
-                                        <div class="one-third">
-                                            <p class="star-rate"><span class="icon-star"></span><span
-                                                    class="icon-star"></span><span class="icon-star"></span><span
-                                                    class="icon-star"></span><span class="icon-star-half-full"></span>
-                                            </p>
-                                            <h3><a href="#">Deluxe Room</a></h3>
-                                        </div>
-                                        <div class="one-forth text-center">
-                                            <p class="price">$99 <br><span>/night</span></p>
-                                        </div>
-                                    </div>
-                                    <p class="features">
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Perfect for traveling couples</span>
-                                        <span class="d-block mb-2"><i
-                                                class="icon-check mr-2"></i> Breakfast included</span>
-                                        <span class="d-block mb-2"><i
-                                                class="icon-check mr-2"></i> Two double beds</span>
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Baby sitting facilities</span>
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Free wifi</span>
-                                    </p>
-                                    <p><a href="#" class="btn btn-primary">Reserve a room</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="room-wrap">
-                                <a href="#" class="room-img" style="background-image: url(images/room-4.jpg);"></a>
-                                <div class="text p-4">
-                                    <div class="d-flex mb-1">
-                                        <div class="one-third">
-                                            <p class="star-rate"><span class="icon-star"></span><span
-                                                    class="icon-star"></span><span class="icon-star"></span><span
-                                                    class="icon-star"></span><span class="icon-star-half-full"></span>
-                                            </p>
-                                            <h3><a href="#">Suite Room</a></h3>
-                                        </div>
-                                        <div class="one-forth text-center">
-                                            <p class="price">$99 <br><span>/night</span></p>
-                                        </div>
-                                    </div>
-                                    <p class="features">
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Perfect for traveling couples</span>
-                                        <span class="d-block mb-2"><i
-                                                class="icon-check mr-2"></i> Breakfast included</span>
-                                        <span class="d-block mb-2"><i
-                                                class="icon-check mr-2"></i> Two double beds</span>
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Baby sitting facilities</span>
-                                        <span class="d-block mb-2"><i class="icon-check mr-2"></i> Free wifi</span>
-                                    </p>
-                                    <p><a href="#" class="btn btn-primary">Reserve a room</a></p>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

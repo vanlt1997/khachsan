@@ -34,7 +34,7 @@ class IndexController extends Controller
         $slidebars = $this->slideBarService->getSlideBars();
         $typeRooms = $this->typeRoomService->getTypeRooms();
 
-        return view('client.index', compact('services', 'slidebars'));
+        return view('client.index', compact('services', 'slidebars', 'typeRooms'));
     }
 
     public function dichVu()
