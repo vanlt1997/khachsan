@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row no-gutters justify-content-center pb-5">
             <div class="col-md-7 text-center heading-section ftco-animate">
-                <h2><span class="icon-instagram"></span> Instagram</h2>
+                <h2><span class="icon-instagram"></span> Images</h2>
             </div>
         </div>
         <div class="row no-gutters">
@@ -51,7 +51,7 @@
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">MayStar</h2>
-                    <p>Đằng sau những ngọn núi , phía xa xa , gần cạnh bãi biển . Hãy đến <a href="{{route('client.index')}}">MyStar</a> để thư giãn và tận hưởng những giây phút thật thoải mái , tuyệt vời ...</p>
+                    <p>Behind the mountains, far away, near the beach. Welcome <a href="{{route('client.index')}}">MyStar</a> to relax and enjoy the comfortable, wonderful moments ...</p>
                     <ul class="ftco-footer-social list-unstyled float-md-left float-lft">
                         <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
                         <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -63,19 +63,19 @@
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">Giờ mở cửa</h2>
                     <ul class="list-unstyled">
-                        <li><a class="py-2 d-block">Thứ 2: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 3: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 4: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 5: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 6: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thứ 7: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Chủ Nhật: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Monday: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Tuesday: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Wednesday: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Thursday: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Friday: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Saturday: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Sunday: <span>08:00 - 22:00</span></a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Thông tin liên hệ</h2>
+                    <h2 class="ftco-heading-2">Infomation contact</h2>
                     <ul class="list-unstyled">
                         <li><a class="py-2 d-block">Đà Nẵng</a></li>
                         <li><a class="py-2 d-block">0335833102</a></li>

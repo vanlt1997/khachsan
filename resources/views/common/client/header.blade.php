@@ -15,35 +15,35 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a href="{{route('client.index')}}" class="nav-link">HOME</a></li>
-                <li class="nav-item"><a href="{{route('gioi-thieu')}}" class="nav-link">INTRODUCTION</a></li>
+                <li class="nav-item"><a href="{{route('client.introduction')}}" class="nav-link">INTRODUCTION</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{{route('loai-phong')}}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ROOM & PRICE</a>
+                    <a class="nav-link dropdown-toggle" href="{{route('client.typerooms.index')}}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ROOM & PRICE</a>
                     @if($type_rooms->count() > 0)
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                             @foreach($type_rooms as $type_room)
-                                <a class="dropdown-item" href="{{route('chi-tiet-loai-phong',$type_room->aliases)}}">Room {{$type_room->name}}</a>
+                                <a class="dropdown-item" href="{{route('client.typerooms.detail',$type_room->aliases)}}">Room {{$type_room->name}}</a>
                             @endforeach
-                                <a class="dropdown-item" href="{{route('loai-phong')}}">All Room ...</a>
+                                <a class="dropdown-item" href="{{route('client.typerooms.index')}}">All Room ...</a>
                     </div>
                     @endif
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{{route('dich-vu')}}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SERVICE</a>
+                    <a class="nav-link dropdown-toggle" href="{{route('client.services.index')}}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SERVICE</a>
                     @if($services->count() > 0)
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             @foreach($services as $service)
                                 @if($service->status !== 0)
-                                <a class="dropdown-item" href="{{route('chi-tiet-dich-vu',$service->aliases)}}">{{$service->name}}</a>
+                                <a class="dropdown-item" href="{{route('client.services.detail',$service->aliases)}}">{{$service->name}}</a>
                                 @endif
                             @endforeach
-                            <a class="dropdown-item" href="{{route('dich-vu')}}">All service ...</a>
+                            <a class="dropdown-item" href="{{route('client.services.index')}}">All service ...</a>
                         </div>
                     @endif
                 </li>
                 <li class="nav-item"><a href="{{route('client.contact')}}" class="nav-link">CONTACT</a></li>
                 <li class="nav-item"><a href="{{route('client.promotion')}}" class="nav-link">PROMOTION</a></li>
-                <li class="nav-item"><a href="blog.html" class="nav-link">REGISTRATION</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link">LOGIN</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">REGISTRATION</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">LOGIN</a></li>
             </ul>
         </div>
     </div>

@@ -37,44 +37,44 @@ class IndexController extends Controller
         return view('client.index', compact('services', 'slidebars', 'typeRooms'));
     }
 
-    public function dichVu()
+    public function services()
     {
         $slidebars = $this->slideBarService->getSlideBars();
         $services = $this->serviceService->getServices();
-        return view('client.dichvu.index',compact('slidebars','services'));
+        return view('client.service.index',compact('slidebars','services'));
     }
 
-    public function chiTietDichVu($name){
+    public function detailService($name){
 
     }
 
-    public function gioiThieu()
+    public function introduction()
     {
         $slidebars = $this->slideBarService->getSlideBars();
-        return view('client.gioithieu',compact('slidebars'));
+        return view('client.introduction',compact('slidebars'));
     }
 
-    public function lienHe()
+    public function contact()
     {
         $slidebars = $this->slideBarService->getSlideBars();
-        return view('client.lienhe',compact('slidebars'));
+        return view('client.contact',compact('slidebars'));
     }
 
-    public function guiMail(Request $request)
+    public function sendMail(Request $request)
     {
 
     }
-    public function uuDai()
-    {
-
-    }
-
-    public function loaiPhong()
+    public function promotion()
     {
 
     }
 
-    public function chiTietLoaiPhong($name){
+    public function typeRoom()
+    {
+
+    }
+
+    public function detailTypeRoom($name){
 
     }
 

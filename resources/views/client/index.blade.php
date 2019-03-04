@@ -81,7 +81,7 @@
                                     <img src="{{asset('images/services/')}}/{{$service->icon}}">@endif
                                 <h2 class="mb-4">{{$service->name}}</h2>
                                 <p>{!! $service->description !!}</p>
-                                <p><a href="{{route('chi-tiet-dich-vu',$service->aliases)}}"
+                                <p><a href="{{route('client.services.detail',$service->aliases)}}"
                                       class="btn btn-primary">Xem thêm</a></p>
                             </div>
                         @endforeach

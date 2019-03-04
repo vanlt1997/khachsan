@@ -5,18 +5,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'IndexController@index')->name('client.index');
 Route::get('introduction', 'IndexController@introduction')->name('client.introduction');
 Route::get('contact', 'IndexController@contact')->name('client.contact');
-Route::post('contact', 'IndexController@guiMail')->name('client.contact');
-Route::get('promotion', 'IndexController@uuDai')->name('client.promotion');
+Route::post('contact', 'IndexController@sendMail')->name('client.contact');
+Route::get('promotion', 'IndexController@promotion')->name('client.promotion');
 
 
 Route::group(['prefix' => 'service'], function () {
-    Route::get('/', 'IndexController@service')->name('client.services');
-    Route::get('{name}', 'IndexController@detailService')->name('client.detail');
+    Route::get('/', 'IndexController@services')->name('client.services.index');
+    Route::get('{name}', 'IndexController@detailService')->name('client.services.detail');
 });
 
 Route::group(['prefix' => 'typerooms'], function () {
-    Route::get('/', 'IndexController@typeRoom')->name('client.typeRoom');
-    Route::get('{name}', 'IndexController@detailTypeRoom')->name('client.');
+    Route::get('/', 'IndexController@typeRoom')->name('client.typerooms.index');
+    Route::get('{name}', 'IndexController@detailTypeRoom')->name('client.typerooms.detail');
 });
 
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {

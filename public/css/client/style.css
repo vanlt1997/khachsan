@@ -28,3 +28,10 @@ a.navbar-brand {
 .gioithieu-content{
     margin: 50px;
 }
+#service{
+    text-align: center;
+}
+#service>img{
+    width: 200px;
+    margin-top: 50px;
+}

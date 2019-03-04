@@ -1,5 +1,5 @@
 @extends('layouts.client')
-@section('title','Liên Hệ')
+@section('title','Contact')
 @section('slidebar')
     <section class="home-slider owl-carousel">
         @if($slidebars->count() > 0)
@@ -9,8 +9,8 @@
                     <div class="container">
                         <div class="row slider-text align-items-end">
                             <div class="col-md-10 col-sm-12 ftco-animate mb-4">
-                                <p class="breadcrumbs"><span class="mr-2"><a href="{{route('trang-chu')}}">Trang chủ</a></span> <span>Liên Hệ</span></p>
-                                <h1 class="mb-3">Liên Hệ</h1>
+                                <p class="breadcrumbs"><span class="mr-2"><a href="{{route('client.index')}}">Home</a></span> <span>Contact</span></p>
+                                <h1 class="mb-3">Contact</h1>
                             </div>
                         </div>
                     </div>
@@ -24,14 +24,14 @@
         <div class="container bg-light">
             <div class="row d-flex mb-5 contact-info">
                 <div class="col-md-12 mb-4">
-                    <h2 class="h4">Thông tin liên hệ</h2>
+                    <h2 class="h4">Infomation contact</h2>
                 </div>
                 <div class="w-100"></div>
                 <div class="col-md-3">
-                    <p><span>Địa chỉ:</span> Đà Nẵng</p>
+                    <p><span>Address:</span> Đà Nẵng</p>
                 </div>
                 <div class="col-md-3">
-                    <p><span>Điện thoại:</span> <a href="tel://1234567920">0335833102</a></p>
+                    <p><span>Phone:</span> <a href="tel://1234567920">0335833102</a></p>
                 </div>
                 <div class="col-md-3">
                     <p><span>Email:</span> <a href="mailto:info@yoursite.com">maystar@gmail.com</a></p>
@@ -42,16 +42,16 @@
                     <form method="post">
                         @csrf
                         <div class="form-group">
-                            <input type="text" name="name" class="form-control" placeholder="Họ & Tên">
+                            <input type="text" name="name" class="form-control" placeholder="Name">
                         </div>
                         <div class="form-group">
                             <input type="text" name="email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input type="text" name="title" class="form-control" placeholder="Tiêu Đề">
+                            <input type="text" name="title" class="form-control" placeholder="Title">
                         </div>
                         <div class="form-group">
-                            <textarea name="" id="" cols="30" rows="7" name="content" class="form-control" placeholder="Nội Dung"></textarea>
+                            <textarea name="" id="" cols="30" rows="7" name="content" class="form-control" placeholder="Content"></textarea>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Gửi" class="btn btn-primary py-3 px-5">
