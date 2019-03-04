@@ -11,7 +11,7 @@
                             <h1 class="mb-4">{{$slidebar->description}}</h1>
                             <p><a href="https://vimeo.com/309627602"
                                   class="btn btn-primary btn-outline-white px-4 py-3 popup-vimeo"><span
-                                        class="ion-ios-play mr-2"></span>Xem Video</a></p>
+                                        class="ion-ios-play mr-2"></span>View Video</a></p>
                         </div>
                     </div>
                 </div>
@@ -28,24 +28,24 @@
                             <div class="fields d-block">
 
                                 <div class="book-date one-third">
-                                    <label for="check-in">Ngày đến:</label>
+                                    <label for="check-in">Checkin:</label>
                                     <input type="text" id="checkin_date" class="form-control" placeholder="M/D/YYYY">
                                 </div>
 
                                 <div class="book-date one-third">
-                                    <label for="check-out">Ngày đi:</label>
+                                    <label for="check-out">Checkout:</label>
                                     <input type="text" id="checkout_date" class="form-control" placeholder="M/D/YYYY">
                                 </div>
 
                                 <div class="one-third">
-                                    <label for="Guest">Số Người:</label>
+                                    <label for="Guest">Number people:</label>
                                     <div class="select-wrap">
                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                         <input type="number" id="people" class="form-control" min="0">
                                     </div>
                                 </div>
                             </div>
-                            <input type="submit" class="search-submit btn btn-primary" value="Đặt phòng">
+                            <input type="submit" class="search-submit btn btn-primary" value="Book">
                         </form>
                     </div>
                 </div>
@@ -62,21 +62,12 @@
                     <div class="nav flex-column nav-pills icon_service" id="v-pills-tab" role="tablist"
                          aria-orientation="vertical">
                         @foreach($services as $key => $service)
-                            @if($key == 0)
-                                <a class="nav-link px-4 active" id="{{$service->id}}-tab" data-toggle="pill"
+                                <a class="nav-link px-4 @if($key == 0) active @endif" id="{{$service->id}}-tab" data-toggle="pill"
                                    href="#{{$service->id}}" role="tab" aria-controls="{{$service->id}}"
                                    aria-selected="true">
                                     @if($service->icon !== ''  && $service->icon !== null)<img
                                         src="{{asset('images/services')}}/{{$service->icon}}">@endif {{$service->name}}
                                 </a>
-                            @else
-                                <a class="nav-link px-4" id="{{$service->id}}-tab" data-toggle="pill"
-                                   href="#{{$service->id}}" role="tab" aria-controls="{{$service->id}}"
-                                   aria-selected="false">
-                                    @if($service->icon !== '' && $service->icon !== null)<img
-                                        src="{{asset('images/services')}}/{{$service->icon}}">@endif {{$service->name}}
-                                </a>
-                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -84,27 +75,15 @@
 
                     <div class="tab-content pl-md-5 show_service" id="v-pills-tabContent">
                         @foreach($services as $key =>$service)
-                            @if($key == 0)
-                                <div class="tab-pane fade show active" id="{{$service->id}}" role="tabpanel"
-                                     aria-labelledby="{{$service->id}}-tab">
-                                    @if($service->icon !== '' && $service->icon !== null)
-                                        <img src="{{asset('images/services/')}}/{{$service->icon}}">@endif
-                                    <h2 class="mb-4">{{$service->name}}</h2>
-                                    <p>{!! $service->description !!}</p>
-                                    <p><a href="{{route('chi-tiet-dich-vu',$service->aliases)}}"
-                                          class="btn btn-primary">Xem thêm</a></p>
-                                </div>
-                            @else
-                                <div class="tab-pane fade" id="{{$service->id}}" role="tabpanel"
-                                     aria-labelledby="{{$service->id}}-tab">
-                                    @if($service->icon !== '' && $service->icon !== null)<img
-                                        src="{{asset('images/services/')}}/{{$service->icon}}">@endif
-                                    <h2 class="mb-4">{{$service->name}}</h2>
-                                    <p>{!! $service->description !!}</p>
-                                    <p><a href="{{route('chi-tiet-dich-vu',$service->aliases)}}"
-                                          class="btn btn-primary">Xem thêm</a></p>
-                                </div>
-                            @endif
+                            <div class="tab-pane fade @if($key == 0)show active @endif" id="{{$service->id}}" role="tabpanel"
+                                 aria-labelledby="{{$service->id}}-tab">
+                                @if($service->icon !== '' && $service->icon !== null)
+                                    <img src="{{asset('images/services/')}}/{{$service->icon}}">@endif
+                                <h2 class="mb-4">{{$service->name}}</h2>
+                                <p>{!! $service->description !!}</p>
+                                <p><a href="{{route('chi-tiet-dich-vu',$service->aliases)}}"
+                                      class="btn btn-primary">Xem thêm</a></p>
+                            </div>
                         @endforeach
                     </div>
                 </div>

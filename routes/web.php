@@ -3,20 +3,20 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'IndexController@index')->name('client.index');
-Route::get('gioi-thieu', 'IndexController@gioiThieu')->name('gioi-thieu');
-Route::get('lien-he', 'IndexController@lienHe')->name('lien-he');
-Route::post('lien-he', 'IndexController@guiMail')->name('lien-he');
-Route::get('uu-dai', 'IndexController@uuDai')->name('uu-dai');
+Route::get('introduction', 'IndexController@introduction')->name('client.introduction');
+Route::get('contact', 'IndexController@contact')->name('client.contact');
+Route::post('contact', 'IndexController@guiMail')->name('client.contact');
+Route::get('promotion', 'IndexController@uuDai')->name('client.promotion');
 
 
-Route::group(['prefix' => 'dich-vu'], function () {
-    Route::get('/', 'IndexController@dichVu')->name('dich-vu');
-    Route::get('{name}', 'IndexController@chiTietDichVu')->name('chi-tiet-dich-vu');
+Route::group(['prefix' => 'service'], function () {
+    Route::get('/', 'IndexController@service')->name('client.services');
+    Route::get('{name}', 'IndexController@detailService')->name('client.detail');
 });
 
-Route::group(['prefix' => 'loai-phong'], function () {
-    Route::get('/', 'IndexController@loaiPhongs')->name('loai-phong');
-    Route::get('{name}', 'IndexController@chiTietLoaiPhong')->name('chi-tiet-loai-phong');
+Route::group(['prefix' => 'typerooms'], function () {
+    Route::get('/', 'IndexController@typeRoom')->name('client.typeRoom');
+    Route::get('{name}', 'IndexController@detailTypeRoom')->name('client.');
 });
 
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
