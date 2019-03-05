@@ -38,8 +38,11 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::prefix('/{id}/rooms')->name('rooms.')->group(function () {
             Route::get('/', 'RoomController@getRoomByTypeRoom')->name('getRoomByTypeRoom');
             Route::get('/getListRoom', 'RoomController@getListRoomByTypeRoom')->name('getListRoomByTypeRoom');
-            Route::get('/create', 'RoomController@createRoom')->name('create');
-            Route::post('/create', 'RoomController@actionCreateRoom')->name('action-create');
+            Route::get('/create', 'RoomController@create')->name('create');
+            Route::post('/create', 'RoomController@actionCreate')->name('action-create');
+            Route::get('{id}/edit', 'RoomController@edit')->name('edit');
+            Route::post('{id}/edit', 'RoomController@actionEdit')->name('edit');
+            Route::get('{id}/delete', 'RoomController@delete')->name('delete');
         });
     });
 

@@ -49,15 +49,15 @@ class RoomController extends Controller
         return DataTables::of($this->roomService->getListRoomByID($id))
             ->addColumn('action', function ($room) use ($id) {
                 return
-                    '<a href="type-rooms/' . $id . '/rooms/detail/'.$room->id.'" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#typeroom-{$ty}"> <i class="fa fa-info"></i></a>
-                    <a href="type-rooms/' . $id . '/rooms/edit/'.$room->id.'" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i></a>
-                    <a href="type-rooms/' . $id . '/rooms/delete/'.$room->id.'" class="btn btn-sm btn-outline-danger"> <i class="fa fa-trash-o"></i></a>
+                    '<a href="rooms/'.$room->id.'/detail" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#typeroom-{$ty}"> <i class="fa fa-info"></i></a>
+                    <a href="rooms/'.$room->id.'/edit" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i></a>
+                    <a href="rooms/'.$room->id.'/delete" class="btn btn-sm btn-outline-danger"> <i class="fa fa-trash-o"></i></a>
                     ';
             })
             ->make();
     }
 
-    public function createRoom($id)
+    public function create($id)
     {
         $idTypeRoom = $id;
         $status = $this->statusService->getStatus();
@@ -65,10 +65,27 @@ class RoomController extends Controller
         return view('admin.room.form', compact('idTypeRoom', 'status', 'images'));
     }
 
-    public function actionCreateRoom($id, RoomRequest $roomRequest)
+    public function actionCreate($id, RoomRequest $roomRequest)
     {
         $this->roomService->create($id, $roomRequest);
-        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $id);
+
+        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $id)->with('message', 'Create Room Successfully !');
+    }
+
+    public function edit($roomId)
+    {
+        $room = $this->roomService->find($roomId);
+
+        return view('admin.room.form', compact('room'));
+    }
+
+    public function actionEdit($roomId, RoomRequest $request)
+    {
+
+    }
+
+    public function delete($roomId)
+    {
 
     }
 }

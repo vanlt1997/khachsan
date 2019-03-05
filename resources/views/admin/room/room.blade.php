@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('title','Rooms')
+@section('css')
+    <link rel="stylesheet" href="{{asset('css/admin/alert.css')}}">
+@endsection
 @section('header')
     <div class="container">
         <div class="title-header">
@@ -9,6 +12,18 @@
 @endsection
 @section('content')
     <div class="container">
+        @if(Session::has('message'))
+            <div class="alert alert-success alert-dismissible fade show alert-custom-success" role="alert">
+                <i class="fa fa-check"></i>
+                {{Session::get('message')}}
+            </div>
+        @endif
+        @if(Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show alert-custom-error" role="alert">
+                <i class="fa fa-warning"></i>
+                {{Session::get('error')}}
+            </div>
+        @endif
         <table class="table table-striped table-bordered" id="room-table">
             <thead>
             <tr>

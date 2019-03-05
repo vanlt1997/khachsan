@@ -54,4 +54,9 @@ class RoomService
         $typeRoom = $this->typeRoom->find($id);
         $typeRoom->increment('number_room');
     }
+
+    public function find($id)
+    {
+        return $this->room->find($id);
+    }
 }
