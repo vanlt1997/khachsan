@@ -61,7 +61,7 @@
             </div>
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Giờ mở cửa</h2>
+                    <h2 class="ftco-heading-2">Open</h2>
                     <ul class="list-unstyled">
                         <li><a class="py-2 d-block">Monday: <span>08:00 - 22:00</span></a></li>
                         <li><a class="py-2 d-block">Tuesday: <span>08:00 - 22:00</span></a></li>
