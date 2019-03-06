@@ -6,41 +6,15 @@
             </div>
         </div>
         <div class="row no-gutters">
-            <div class="col-sm-12 col-md ftco-animate">
-                <a href="images/insta-1.jpg" class="insta-img image-popup" style="background-image: url(images/insta-1.jpg);">
-                    <div class="icon d-flex justify-content-center">
-                        <span class="icon-instagram align-self-center"></span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-12 col-md ftco-animate">
-                <a href="images/insta-2.jpg" class="insta-img image-popup" style="background-image: url(images/insta-2.jpg);">
-                    <div class="icon d-flex justify-content-center">
-                        <span class="icon-instagram align-self-center"></span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-12 col-md ftco-animate">
-                <a href="images/insta-3.jpg" class="insta-img image-popup" style="background-image: url(images/insta-3.jpg);">
-                    <div class="icon d-flex justify-content-center">
-                        <span class="icon-instagram align-self-center"></span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-12 col-md ftco-animate">
-                <a href="images/insta-4.jpg" class="insta-img image-popup" style="background-image: url(images/insta-4.jpg);">
-                    <div class="icon d-flex justify-content-center">
-                        <span class="icon-instagram align-self-center"></span>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-12 col-md ftco-animate">
-                <a href="images/insta-5.jpg" class="insta-img image-popup" style="background-image: url(images/insta-5.jpg);">
-                    <div class="icon d-flex justify-content-center">
-                        <span class="icon-instagram align-self-center"></span>
-                    </div>
-                </a>
-            </div>
+            @foreach($images as $image)
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="{{asset("images/admin/library-images/$image->url")}}" class="insta-img image-popup" style="background-image: url({{asset("images/admin/library-images/$image->url")}});background-position: center;">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
         </div>
     </div>
 </section>

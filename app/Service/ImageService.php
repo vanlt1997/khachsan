@@ -49,4 +49,9 @@ class ImageService
             }
         }
     }
+
+    public function getImagesFooter()
+    {
+        return $this->getImages()->take(5);
+    }
 }

@@ -34,19 +34,19 @@ class RoomService
     public function create($id, $room)
     {
         return DB::transaction(function () use ($id, $room){
-            $this->actionCreate($id, $room);
+            $this->actionCreateOrUpdate($room, $id);
             $this->updateTypeRoom($id);
         });
     }
 
-    protected function actionCreate($id, $room)
+    public function actionCreateOrUpdate($room, $idTypeRoom, $idRoom = null)
     {
-        return $this->room->create([
-            'type_room_id' => $id,
-            'name'         => $room->name,
-            'status_id'    => $room->status,
-            'description'  => $room->description
-        ]);
+        $action = $this->find($idRoom)?? new Room();
+        $action->type_room_id = $idTypeRoom;
+        $action->name = $room->name;
+        $action->status_id = $room->status;
+        $action->description = $room->description;
+        $action->save();
     }
 
     protected function updateTypeRoom($id)

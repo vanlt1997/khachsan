@@ -72,19 +72,22 @@ class RoomController extends Controller
         return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $id)->with('message', 'Create Room Successfully !');
     }
 
-    public function edit($roomId)
+    public function edit($id, $roomId)
     {
         $room = $this->roomService->find($roomId);
+        $status = $this->statusService->getStatus();
 
-        return view('admin.room.form', compact('room'));
+        return view('admin.room.form', compact('room', 'status'));
     }
 
-    public function actionEdit($roomId, RoomRequest $request)
+    public function actionEdit($id, $roomId, RoomRequest $request)
     {
+        $this->roomService->actionCreateOrUpdate($request, $id, $roomId);
 
+        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $id)->with('message', 'Update Room Successfully !');
     }
 
-    public function delete($roomId)
+    public function delete($id, $roomId)
     {
 
     }

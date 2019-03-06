@@ -6,14 +6,14 @@
 @section('header')
     <div class="container">
         <div class="title-header">
-            <h3 class="text-center">Create Room</h3>
+            <h3 class="text-center">{{isset($room) ? 'Edit'.$room->name : 'Create Room'}}</h3>
         </div>
     </div>
 @endsection
 @section('content')
     <div class="container">
         <div class="row">
-            <form method="post" action="{{ route('admin.type-rooms.rooms.action-create', $idTypeRoom) }}" role="form"
+            <form method="post" role="form"
                   class="form-horizontal col-md-offset-6">
                 @csrf
                 <div class="form-group">
@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" name="name" class="form-control"
-                                   placeholder="Name">
+                                   placeholder="Name" value="{{ $room->name ?? null}}">
                             <div class="error-content">
                                 @if($errors->has('name'))
                                     <p class="text-danger"><i
@@ -41,7 +41,7 @@
                         <div class="col-md-8">
                             <select name="status" class="form-control">
                                 @foreach($status as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    <option value="{{$item->id}}" @if(isset($room) && $room->status_id === $item->id) selected @endif>{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -53,7 +53,9 @@
                             <label for="description">Description</label>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="description" class="form-control" id="editor" cols="30" rows="10"></textarea>
+                            <textarea name="description" class="form-control" id="editor" cols="30" rows="10">
+                                {{$room->description ?? null}}
+                            </textarea>
                         </div>
                     </div>
                 </div>
@@ -61,7 +63,7 @@
                     <div class="row col-md-12">
                         <div class="col-md-4 text-right"></div>
                         <div class="col-md-8">
-                            <a href="{{route('admin.type-rooms.rooms.getRoomByTypeRoom', $idTypeRoom)}}"
+                            <a href="{{route('admin.type-rooms.rooms.getRoomByTypeRoom', isset($room) ? $room->typeRoom->id : $idTypeRoom)}}"
                                class="btn btn-sm btn-outline-danger">Back</a>
                             <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                         </div>

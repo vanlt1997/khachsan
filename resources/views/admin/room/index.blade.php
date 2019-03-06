@@ -42,7 +42,7 @@
                                         <button class="btn btn-sm btn-outline-warning" data-toggle="modal"
                                                 data-target="#room-{{$room->id}}"><i
                                                 class="fa fa-info"></i></button>
-                                        <a href="#" class="btn btn-sm btn-outline-primary"><i
+                                        <a href="{{route('admin.type-rooms.rooms.edit',['id' => $room->typeRoom, 'idRoom' => $room->id])}}" class="btn btn-sm btn-outline-primary"><i
                                                 class="fa fa-edit"></i></a>
                                         <a href="#" class="btn btn-sm btn-outline-danger"><i
                                                 class="fa fa-trash"></i></a>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use App\Models\SlideBar;
+use App\Service\ImageService;
 use App\Service\ServiceService;
 use App\Service\SlideBarService;
 use App\Service\TypeRoomService;
@@ -15,17 +16,20 @@ class IndexController extends Controller
     protected $slideBarService;
     protected $serviceService;
     protected $typeRoomService;
+    protected $imageService;
 
     public function __construct
     (
         SlideBarService $slideBarService,
         ServiceService $serviceService,
-        TypeRoomService $typeRoomService
+        TypeRoomService $typeRoomService,
+        ImageService $imageService
     )
     {
         $this->slideBarService = $slideBarService;
         $this->serviceService = $serviceService;
         $this->typeRoomService = $typeRoomService;
+        $this->imageService = $imageService;
         session_start();
     }
 
@@ -33,15 +37,18 @@ class IndexController extends Controller
         $services = $this->serviceService->getServices();
         $slidebars = $this->slideBarService->getSlideBars();
         $typeRooms = $this->typeRoomService->getTypeRooms();
+        $images = $this->imageService->getImagesFooter();
 
-        return view('client.index', compact('services', 'slidebars', 'typeRooms'));
+        return view('client.index', compact('services', 'slidebars', 'typeRooms', 'images'));
     }
 
     public function services()
     {
         $slidebars = $this->slideBarService->getSlideBars();
         $services = $this->serviceService->getServices();
-        return view('client.service.index',compact('slidebars','services'));
+        $images = $this->imageService->getImagesFooter();
+
+        return view('client.service.index',compact('slidebars','services', 'images'));
     }
 
     public function detailService($name){
@@ -51,13 +58,17 @@ class IndexController extends Controller
     public function introduction()
     {
         $slidebars = $this->slideBarService->getSlideBars();
-        return view('client.introduction',compact('slidebars'));
+        $images = $this->imageService->getImagesFooter();
+
+        return view('client.introduction',compact('slidebars', 'images'));
     }
 
     public function contact()
     {
         $slidebars = $this->slideBarService->getSlideBars();
-        return view('client.contact',compact('slidebars'));
+        $images = $this->imageService->getImagesFooter();
+
+        return view('client.contact',compact('slidebars', 'images'));
     }
 
     public function sendMail(Request $request)
