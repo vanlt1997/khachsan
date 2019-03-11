@@ -32,7 +32,7 @@
                             <div class="one-half order-last text">
                                 <h2>{{$service->name}}</h2>
                                 <p>{!! $service->description !!}</p>
-                                <p><a href="{{route('client.services.detail',$service->aliases)}}" class="btn btn-primary">View ...</a></p>
+                                <p><a href="{{route('client.services.detail',$service->id)}}" class="btn btn-primary">View ...</a></p>
                             </div>
                         </div>
                     @else
@@ -43,7 +43,7 @@
                             <div class="one-half order-first text">
                                 <h2  @if($key%2 != 0)class="mb-4" @endif>{{$service->name}}</h2>
                                 <p>{!! $service->description !!}</p>
-                                <p><a href="{{route('client.services.detail',$service->aliases)}}" class="btn btn-primary">View ...</a></p>
+                                <p><a href="{{route('client.services.detail',$service->id)}}" class="btn btn-primary">View ...</a></p>
                             </div>
                         </div>
                     @endif

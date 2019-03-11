@@ -33,7 +33,8 @@ class IndexController extends Controller
         session_start();
     }
 
-    public function index() {
+    public function index()
+    {
         $services = $this->serviceService->getServices();
         $slidebars = $this->slideBarService->getSlideBars();
         $typeRooms = $this->typeRoomService->getTypeRooms();
@@ -48,11 +49,15 @@ class IndexController extends Controller
         $services = $this->serviceService->getServices();
         $images = $this->imageService->getImagesFooter();
 
-        return view('client.service.index',compact('slidebars','services', 'images'));
+        return view('client.service.index', compact('slidebars', 'services', 'images'));
     }
 
-    public function detailService($name){
+    public function detailService(Service $service)
+    {
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
 
+        return view('client.service.detail', compact('service', 'slidebars', 'images'));
     }
 
     public function introduction()
@@ -60,7 +65,7 @@ class IndexController extends Controller
         $slidebars = $this->slideBarService->getSlideBars();
         $images = $this->imageService->getImagesFooter();
 
-        return view('client.introduction',compact('slidebars', 'images'));
+        return view('client.introduction', compact('slidebars', 'images'));
     }
 
     public function contact()
@@ -68,13 +73,14 @@ class IndexController extends Controller
         $slidebars = $this->slideBarService->getSlideBars();
         $images = $this->imageService->getImagesFooter();
 
-        return view('client.contact',compact('slidebars', 'images'));
+        return view('client.contact', compact('slidebars', 'images'));
     }
 
     public function sendMail(Request $request)
     {
 
     }
+
     public function promotion()
     {
 
@@ -85,8 +91,16 @@ class IndexController extends Controller
 
     }
 
-    public function detailTypeRoom($name){
+    public function detailTypeRoom($name)
+    {
 
     }
 
+    protected function getData()
+    {
+        return [
+            'slidebars' => $this->slideBarService->getSlideBars(),
+            'images' => $this->imageService->getImagesFooter()
+        ];
+    }
 }

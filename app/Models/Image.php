@@ -17,6 +17,10 @@ class Image extends Model
         return $this->belongsToMany('App\Models\TypeRoom');
     }
 
+    public function services()
+    {
+        return $this->belongsToMany('App\Models\Service');
+    }
 
     public static function boot()
     {

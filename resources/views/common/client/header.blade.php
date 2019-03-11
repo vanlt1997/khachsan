@@ -21,7 +21,7 @@
                     @if($type_rooms->count() > 0)
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                             @foreach($type_rooms as $type_room)
-                                <a class="dropdown-item" href="{{route('client.typerooms.detail',$type_room->aliases)}}">Room {{$type_room->name}}</a>
+                                <a class="dropdown-item" href="{{route('client.typerooms.detail',$type_room->id)}}">Room {{$type_room->name}}</a>
                             @endforeach
                                 <a class="dropdown-item" href="{{route('client.typerooms.index')}}">All Room ...</a>
                     </div>
@@ -33,7 +33,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             @foreach($services as $service)
                                 @if($service->status !== 0)
-                                <a class="dropdown-item" href="{{route('client.services.detail',$service->aliases)}}">{{$service->name}}</a>
+                                <a class="dropdown-item" href="{{route('client.services.detail',$service->id)}}">{{$service->name}}</a>
                                 @endif
                             @endforeach
                             <a class="dropdown-item" href="{{route('client.services.index')}}">All service ...</a>

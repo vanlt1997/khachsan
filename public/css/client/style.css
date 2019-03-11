@@ -35,3 +35,19 @@ a.navbar-brand {
     width: 200px;
     margin-top: 50px;
 }
+.header-title{
+    margin-bottom: 100px !important;
+    border-bottom: 3px solid #0b93d5;
+}
+
+.image-detail{
+    margin: 10px;
+}
+.image-detail .detail{
+    background-position: center;
+    width: 100%;
+    height: 230px;
+}
+.image-detail .detail .icon{
+    height: 230px;
+}

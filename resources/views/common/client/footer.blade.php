@@ -7,7 +7,7 @@
         </div>
         <div class="row no-gutters">
             @foreach($images as $image)
-                <div class="col-sm-12 col-md ftco-animate">
+                <div class="col-sm-12 col-md-2 ftco-animate">
                     <a href="{{asset("images/admin/library-images/$image->url")}}" class="insta-img image-popup" style="background-image: url({{asset("images/admin/library-images/$image->url")}});background-position: center;">
                         <div class="icon d-flex justify-content-center">
                             <span class="icon-instagram align-self-center"></span>

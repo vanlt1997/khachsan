@@ -12,6 +12,11 @@ class Service extends Model
         'name','aliases','price','sale','quantity','description','status','icon'
     ];
 
+    public function images()
+    {
+        return $this->belongsToMany('App\Models\Image');
+    }
+
     protected static function boot()
     {
         parent::boot();

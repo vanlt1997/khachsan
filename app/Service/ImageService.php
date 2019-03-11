@@ -52,6 +52,7 @@ class ImageService
 
     public function getImagesFooter()
     {
-        return $this->getImages()->take(5);
+        return $this->getImages()->take(6);
     }
+
 }
