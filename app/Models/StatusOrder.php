@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BillRoom extends Model
+class StatusOrder extends Model
 {
+
     public $timestamps = false;
-    protected $table = "bill_room";
+    protected $table = 'status_order';
+
     protected $fillable = [
-        'room_id','bill_id','check_in','check_out'
+        'name'
     ];
+
 }
