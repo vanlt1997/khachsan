@@ -50,4 +50,9 @@ class TypeRoomService
         return $this->find($id)->delete();
     }
 
+    public function getPromotions()
+    {
+        return $this->typeRoom->orderBy('sale', 'desc')->get();
+    }
+
 }

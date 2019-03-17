@@ -15,9 +15,9 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a href="{{route('client.index')}}" class="nav-link">HOME</a></li>
-                <li class="nav-item"><a href="{{route('client.introduction')}}" class="nav-link">INTRODUCTION</a></li>
+                <li class="nav-item"><a href="{{route('client.introduction')}}" class="nav-link">INTRODUCE</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{{route('client.typerooms.index')}}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ROOM & PRICE</a>
+                    <a class="nav-link dropdown-toggle" href="{{route('client.typerooms.index')}}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ROOMS & PRICE</a>
                     @if($type_rooms->count() > 0)
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                             @foreach($type_rooms as $type_room)
@@ -41,7 +41,7 @@
                     @endif
                 </li>
                 <li class="nav-item"><a href="{{route('client.contact')}}" class="nav-link">CONTACT</a></li>
-                <li class="nav-item"><a href="{{route('client.promotion')}}" class="nav-link">PROMOTION</a></li>
+                <li class="nav-item"><a href="{{route('client.promotions')}}" class="nav-link">PROMOTIONS</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">REGISTRATION</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">LOGIN</a></li>
             </ul>

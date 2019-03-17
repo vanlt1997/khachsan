@@ -9,8 +9,8 @@
                     <div class="container">
                         <div class="row slider-text align-items-end">
                             <div class="col-md-10 col-sm-12 ftco-animate mb-4">
-                                <p class="breadcrumbs"><span class="mr-2"><a href="{{route('client.index')}}">Home</a></span> <span>Introduction</span></p>
-                                <h1 class="mb-3">Introduction</h1>
+                                <p class="breadcrumbs"><span class="mr-2"><a href="{{route('client.index')}}">Home</a></span> <span>Introduce</span></p>
+                                <h1 class="mb-3">Introduce</h1>
                             </div>
                         </div>
                     </div>

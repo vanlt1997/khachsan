@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
-use App\Models\SlideBar;
+use App\Models\TypeRoom;
 use App\Service\ImageService;
+use App\Service\PromotionService;
 use App\Service\ServiceService;
 use App\Service\SlideBarService;
 use App\Service\TypeRoomService;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {
@@ -17,19 +17,22 @@ class IndexController extends Controller
     protected $serviceService;
     protected $typeRoomService;
     protected $imageService;
+    protected $promotionService;
 
     public function __construct
     (
         SlideBarService $slideBarService,
         ServiceService $serviceService,
         TypeRoomService $typeRoomService,
-        ImageService $imageService
+        ImageService $imageService,
+        PromotionService $promotionService
     )
     {
         $this->slideBarService = $slideBarService;
         $this->serviceService = $serviceService;
         $this->typeRoomService = $typeRoomService;
         $this->imageService = $imageService;
+        $this->promotionService = $promotionService;
         session_start();
     }
 
@@ -41,6 +44,24 @@ class IndexController extends Controller
         $images = $this->imageService->getImagesFooter();
 
         return view('client.index', compact('services', 'slidebars', 'typeRooms', 'images'));
+    }
+
+    public function typeRoom()
+    {
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
+        $typeRooms = $this->typeRoomService->getTypeRooms();
+
+        return view('client.typeroom.index', compact('slidebars', 'images', 'typeRooms'));
+    }
+
+    public function detailTypeRoom(TypeRoom $typeRoom)
+    {
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
+
+        return view('client.typeroom.detail', compact('typeRoom','slidebars', 'images'));
+
     }
 
     public function services()
@@ -83,24 +104,10 @@ class IndexController extends Controller
 
     public function promotion()
     {
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
+        $promotions = $this->promotionService->getPromotions();
 
-    }
-
-    public function typeRoom()
-    {
-
-    }
-
-    public function detailTypeRoom($name)
-    {
-
-    }
-
-    protected function getData()
-    {
-        return [
-            'slidebars' => $this->slideBarService->getSlideBars(),
-            'images' => $this->imageService->getImagesFooter()
-        ];
+        return view('client.promotion', compact('slidebars','images', 'promotions'));
     }
 }

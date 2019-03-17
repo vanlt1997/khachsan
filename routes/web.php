@@ -1,24 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+/*Client*/
 Route::get('/', 'IndexController@index')->name('client.index');
 Route::get('introduction', 'IndexController@introduction')->name('client.introduction');
 Route::get('contact', 'IndexController@contact')->name('client.contact');
 Route::post('contact', 'IndexController@sendMail')->name('client.contact');
-Route::get('promotion', 'IndexController@promotion')->name('client.promotion');
+Route::get('promotions', 'IndexController@promotion')->name('client.promotions');
 
 
-Route::group(['prefix' => 'service'], function () {
+Route::group(['prefix' => 'services'], function () {
     Route::get('/', 'IndexController@services')->name('client.services.index');
     Route::get('{service}', 'IndexController@detailService')->name('client.services.detail');
 });
 
 Route::group(['prefix' => 'typerooms'], function () {
     Route::get('/', 'IndexController@typeRoom')->name('client.typerooms.index');
-    Route::get('{typerooms}', 'IndexController@detailTypeRoom')->name('client.typerooms.detail');
+    Route::get('{typeRoom}', 'IndexController@detailTypeRoom')->name('client.typerooms.detail');
 });
-
+/*Admin*/
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', 'IndexController@index')->name('index');
 

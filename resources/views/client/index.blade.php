@@ -105,7 +105,7 @@
                         @foreach($typeRooms as $typeRoom)
                             <div class="item">
                                 <div class="room-wrap">
-                                    <a href="#" class="room-img"
+                                    <a href="{{route('client.typerooms.detail', $typeRoom->id)}}" class="room-img"
                                        style="background-image: url('{{asset('images/admin/library-images')}}/{{$typeRoom->images->first()['url']}}');"></a>
                                     <div class="text p-4">
                                         <div class="d-flex mb-1">
@@ -115,7 +115,7 @@
                                                         class="icon-star"></span><span
                                                         class="icon-star-half-full"></span>
                                                 </p>
-                                                <h3><a href="#">{{$typeRoom->name}}</a></h3>
+                                                <h3><a href="{{route('client.typerooms.detail', $typeRoom->id)}}">{{$typeRoom->name}}</a></h3>
                                             </div>
                                             <div class="one-forth text-center" style="margin-right: 10px">
                                                 <p class="price">${{$typeRoom->price}} <br><span>/day</span></p>

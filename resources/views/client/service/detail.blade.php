@@ -9,7 +9,8 @@
                     <div class="container">
                         <div class="row slider-text align-items-end">
                             <div class="col-md-10 col-sm-12 ftco-animate mb-4">
-                                <p class="breadcrumbs"><span class="mr-2"><a href="{{route('client.index')}}">Home</a></span> <span>Services</span></p>
+                                <p class="breadcrumbs"><span class="mr-2"><a href="{{route('client.index')}}">Home</a></span> <span class="mr-2"><a
+                                            href="{{route('client.services.index')}}">Services</a></span> <span>{{$service->name}}</span></p>
                                 <h1 class="mb-3">{{$service->name}}</h1>
                             </div>
                         </div>
@@ -25,7 +26,7 @@
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4 text-center header-title">
                     <h2 class="ftco-heading-2">{{$service->name}}</h2>
-                    <h4>Hotel <a href="{{route('client.index')}}">MayStar</a></h4>
+                    <h5>Hotel <a href="{{route('client.index')}}">MayStar</a></h5>
                 </div>
                 <div class="row">
                     <div class="{{$service->images->isEmpty() ? 'col-md-12' : 'col-md-4'}}">
