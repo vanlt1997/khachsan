@@ -23,8 +23,10 @@ class RoomRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->room ? $this->room->id : null;
+
         return [
-            'name' => 'required'
+            'name' => 'required|unique:rooms,name,'.$id,
         ];
     }
     public function messages()

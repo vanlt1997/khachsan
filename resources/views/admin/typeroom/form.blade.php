@@ -163,7 +163,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <textarea name="description" class="form-control" id="editor" cols="30" rows="10"
-                                              placeholder="Mô Tả">
+                                              placeholder="Description">
                                         {!! $typeRoom->description ?? null !!}
                                     </textarea>
                                 </div>

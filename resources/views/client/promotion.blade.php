@@ -32,13 +32,17 @@
                 <div class="row">
                     @foreach($promotions as $promotion)
                         <div class="col-md-12 amenities d-md-flex ftco-animate" style="margin: 30px;">
-                            <div class=" row one-half order-last text" style="width: 100%">
+                            <div class=" row one-half order-last text promotion" style="width: 100%">
                                 <div class="col-md-12">
                                     <h3 class="text-danger">{{$promotion->title}}</h3>
+                                    <h5 class="text-danger">Date : {{$promotion->startDate}} &hercon; {{$promotion->endDate}}</h5>
                                     <p class="text-justify">{!! $promotion->description !!}</p>
                                 </div>
                                 <div class="col-md-12 text-right">
                                     <a href="{{route('client.typerooms.index')}}" class="btn btn-primary btn-sm">Booking Now</a>
+                                </div>
+                                <div id="promoton-sale">
+                                    Sale : {{$promotion->sale}}% <br> for {{Carbon\Carbon::now()->diffInDays($promotion->endDate)}} day
                                 </div>
                             </div>
                         </div>

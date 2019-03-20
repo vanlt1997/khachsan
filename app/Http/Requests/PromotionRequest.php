@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeviceRequest extends FormRequest
+class PromotionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,13 @@ class DeviceRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->device? $this->device->id : null;
+        $id = $this->promotion? $this->promotion->id : null;
 
         return [
-            'name' => 'required|unique:devices,name,'.$id,
-            'quantity' => 'required|min:1|numeric'
+            'title' => 'required|unique:promotions,title,'.$id,
+            'sale' => 'required|integer',
+            'startDate' => 'required',
+            'endDate' => 'required'
         ];
     }
 }

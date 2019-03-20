@@ -62,3 +62,18 @@ a.navbar-brand {
     margin-right: 30px;
 }
 
+.promotion{
+    position: relative;
+}
+
+#promoton-sale{
+    width: 20%;
+    padding: 10px;
+    background-color: red;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+}
+

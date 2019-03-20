@@ -9,6 +9,7 @@ use App\Service\PromotionService;
 use App\Service\ServiceService;
 use App\Service\SlideBarService;
 use App\Service\TypeRoomService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller

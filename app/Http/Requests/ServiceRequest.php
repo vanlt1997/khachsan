@@ -23,8 +23,10 @@ class ServiceRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->service ? $this->service->id : null;
+
         return [
-            'name'     => 'required|unique:services,name,' .$this->getSegmentFromEnd().',id',
+            'name'     => 'required|unique:services,name,'.$id,
             'price'    => 'required|integer',
             'sale'     => 'required|integer',
             'quantity' => 'required|integer',

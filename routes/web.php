@@ -82,4 +82,14 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
        Route::get('/{id}/detail', 'ServiceController@detail')->name('detail');
     });
 
+    Route::prefix('promotions')->name('promotions.')->group(function (){
+       Route::get('/', 'PromotionController@index')->name('index');
+       Route::get('/getList', 'PromotionController@getList')->name('getList');
+       Route::get('/create', 'PromotionController@create')->name('create');
+       Route::post('/create', 'PromotionController@actionCreate')->name('create');
+       Route::get('/{promotion}/edit', 'PromotionController@edit')->name('edit');
+       Route::post('/{promotion}/edit', 'PromotionController@actionEdit')->name('edit');
+       Route::get('/{promotion}/delete', 'PromotionController@delete')->name('delete');
+    });
+
 });
