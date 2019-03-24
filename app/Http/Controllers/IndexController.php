@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Http\Requests\SendMailRequest;
 use App\Models\Service;
 use App\Models\TypeRoom;
@@ -99,9 +100,8 @@ class IndexController extends Controller
         return view('client.contact', compact('slidebars', 'images'));
     }
 
-    public function sendMail(SendMailRequest $request)
+    public function sendMail(ContactRequest $request)
     {
-
 
     }
 
