@@ -1,0 +1,47 @@
+.alert-info, .alert-success, .alert-warning, .alert-error, .alert-validation,.alert-danger {
+    -webkit-animation: seconds 1.0s forwards;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-delay: 2s;
+    animation: seconds 1.0s forwards;
+    animation-iteration-count: 1;
+    animation-delay: 3s;
+}
+
+.alert-success {
+    background-color: rgba(14, 160, 5, 0.73) !important;
+    border: 1px solid rgba(32, 148, 22, 0.8);
+    margin-top: 1%;
+    margin-right: 2.1%;
+    font-weight: bold;
+    font-size: 16px !important;
+}
+
+.alert-error {
+    background-color: rgba(160, 27, 17, 0.73) !important;
+    border: 1px solid rgba(148, 41, 29, 0.8);
+    margin-top: 1%;
+    margin-right: 2.1%;
+    font-weight: bold;
+    font-size: 16px !important;
+}
+
+@-webkit-keyframes seconds {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        left: -9999px;
+        position: absolute;
+    }
+}
+@keyframes seconds {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        left: -9999px;
+        position: absolute;
+    }
+}

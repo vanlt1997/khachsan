@@ -20,3 +20,4 @@
 <link rel="stylesheet" href="{{asset('css/icomoon.css')}}">
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/client/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/client/alert.css')}}">

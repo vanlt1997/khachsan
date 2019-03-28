@@ -71,25 +71,31 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/{id}/detail', 'DeviceController@detail')->name('detail');
     });
 
-    Route::prefix('services')->name('services.')->group(function (){
-       Route::get('/', 'ServiceController@index')->name('index');
-       Route::get('/getList', 'ServiceController@getList')->name('getList');
-       Route::get('/create', 'ServiceController@create')->name('create');
-       Route::post('/create', 'ServiceController@actionCreate')->name('create');
-       Route::get('/{id}/edit', 'ServiceController@edit')->name('edit');
-       Route::post('/{id}/edit', 'ServiceController@actionEdit')->name('edit');
-       Route::get('/{id}/delete', 'ServiceController@delete')->name('delete');
-       Route::get('/{id}/detail', 'ServiceController@detail')->name('detail');
+    Route::prefix('services')->name('services.')->group(function () {
+        Route::get('/', 'ServiceController@index')->name('index');
+        Route::get('/getList', 'ServiceController@getList')->name('getList');
+        Route::get('/create', 'ServiceController@create')->name('create');
+        Route::post('/create', 'ServiceController@actionCreate')->name('create');
+        Route::get('/{id}/edit', 'ServiceController@edit')->name('edit');
+        Route::post('/{id}/edit', 'ServiceController@actionEdit')->name('edit');
+        Route::get('/{id}/delete', 'ServiceController@delete')->name('delete');
+        Route::get('/{id}/detail', 'ServiceController@detail')->name('detail');
     });
 
-    Route::prefix('promotions')->name('promotions.')->group(function (){
-       Route::get('/', 'PromotionController@index')->name('index');
-       Route::get('/getList', 'PromotionController@getList')->name('getList');
-       Route::get('/create', 'PromotionController@create')->name('create');
-       Route::post('/create', 'PromotionController@actionCreate')->name('create');
-       Route::get('/{promotion}/edit', 'PromotionController@edit')->name('edit');
-       Route::post('/{promotion}/edit', 'PromotionController@actionEdit')->name('edit');
-       Route::get('/{promotion}/delete', 'PromotionController@delete')->name('delete');
+    Route::prefix('promotions')->name('promotions.')->group(function () {
+        Route::get('/', 'PromotionController@index')->name('index');
+        Route::get('/getList', 'PromotionController@getList')->name('getList');
+        Route::get('/create', 'PromotionController@create')->name('create');
+        Route::post('/create', 'PromotionController@actionCreate')->name('create');
+        Route::get('/{promotion}/edit', 'PromotionController@edit')->name('edit');
+        Route::post('/{promotion}/edit', 'PromotionController@actionEdit')->name('edit');
+        Route::get('/{promotion}/delete', 'PromotionController@delete')->name('delete');
     });
 
+    Route::prefix('contacts')->name('contacts.')->group(function () {
+        Route::get('/', 'ContactController@index')->name('index');
+        Route::get('/getList', 'ContactController@getList')->name('getList');
+        Route::post('/delete', 'ContactController@delete')->name('delete');
+        Route::post('/send-mail', 'ContactController@sendMail')->name('sendMail');
+    });
 });

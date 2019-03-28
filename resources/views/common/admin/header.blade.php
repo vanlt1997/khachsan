@@ -176,6 +176,14 @@
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
+                    <a href="{{route('admin.contacts.index')}}" class="nav-link">
+                        <i class="fa fa-envelope"></i>
+                        <p>
+                            Contacts
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="fa fa-line-chart"></i>
                         <p>

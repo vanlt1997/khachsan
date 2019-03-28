@@ -20,7 +20,7 @@
     </section>
 @endsection
 @section('content')
-    <section class="ftco-section bg-light">
+    <section class="ftco-section bg-light" id="services">
         <div class="container">
             <div class="row no-gutters">
                 @foreach($services as $key =>$service)
@@ -52,3 +52,12 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+    <script>
+        $(document).on("ready",function () {
+            $('html, body').animate({
+                scrollTop: $("#services").offset().top
+            }, 1000);
+        });
+    </script>
+@endpush

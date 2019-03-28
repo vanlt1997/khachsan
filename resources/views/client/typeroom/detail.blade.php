@@ -22,7 +22,7 @@
     </section>
 @endsection
 @section('content')
-    <section class="ftco-section bg-light" id="typeRooms">
+    <section class="ftco-section bg-light" id="detailTrpeRoom">
         <div class="container">
             <div class="col-md-12">
                 <div class="ftco-footer-widget mb-4 text-center header-title">
@@ -112,3 +112,12 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+    <script>
+        $(document).on("ready",function () {
+            $('html, body').animate({
+                scrollTop: $("#detailTrpeRoom").offset().top
+            }, 1000);
+        });
+    </script>
+@endpush

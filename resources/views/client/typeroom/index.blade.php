@@ -43,7 +43,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <img src="{{asset("images/admin/library-images")}}/{{$typeRoom->images->first()['url']}}" alt="images" width="300px" height="300px">
+                                    @if($typeRoom->images->first() !== null)
+                                        <img src="{{asset("images/admin/library-images")}}/{{$typeRoom->images->first()['url']}}" alt="images" width="300px" height="300px">
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -53,3 +55,12 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+    <script>
+        $(document).on("ready",function () {
+            $('html, body').animate({
+                scrollTop: $("#typeRooms").offset().top
+            }, 1000);
+        });
+    </script>
+@endpush

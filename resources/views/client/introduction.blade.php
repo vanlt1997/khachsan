@@ -18,7 +18,9 @@
             @endforeach
         @endif
     </section>
-    <section class="ftco-section-2">
+@endsection
+@section('content')
+    <section class="ftco-section-2" id="intro">
         <div class="container d-flex">
             <div class="section-2-blocks-wrapper row d-flex">
                 <div class="img col-sm-12 col-lg-6 order-last" style="background-image: url({{asset('images/about-2.jpg')}});">
@@ -65,7 +67,7 @@
                     <div class="row">
                         <div class="col-md-6 gioithieu">
                             <div class="gioithieu">
-                                <img src="{{asset('introduction')}}" alt="images">
+                                <img src="{{asset('images/introduction/gt_2.jpg')}}" height="164.89px" alt="images">
                             </div>
                         </div>
                         <div class="col-md-6 gioithieu">
@@ -206,3 +208,12 @@
     </section>
 @endsection
 @section('content')
+    @push('scripts')
+        <script>
+            $(document).on("ready",function () {
+                $('html, body').animate({
+                    scrollTop: $("#intro").offset().top
+                }, 1000);
+            });
+        </script>
+    @endpush

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
-use App\Http\Requests\SendMailRequest;
+use App\Service\ContactService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Service;
 use App\Models\TypeRoom;
 use App\Service\ImageService;
@@ -11,8 +13,6 @@ use App\Service\PromotionService;
 use App\Service\ServiceService;
 use App\Service\SlideBarService;
 use App\Service\TypeRoomService;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
@@ -21,21 +21,22 @@ class IndexController extends Controller
     protected $typeRoomService;
     protected $imageService;
     protected $promotionService;
+    protected $contactService;
 
-    public function __construct
-    (
+    public function __construct(
         SlideBarService $slideBarService,
         ServiceService $serviceService,
         TypeRoomService $typeRoomService,
         ImageService $imageService,
-        PromotionService $promotionService
-    )
-    {
+        PromotionService $promotionService,
+        ContactService $contactService
+    ) {
         $this->slideBarService = $slideBarService;
         $this->serviceService = $serviceService;
         $this->typeRoomService = $typeRoomService;
         $this->imageService = $imageService;
         $this->promotionService = $promotionService;
+        $this->contactService = $contactService;
         session_start();
     }
 
@@ -63,8 +64,7 @@ class IndexController extends Controller
         $slidebars = $this->slideBarService->getSlideBars();
         $images = $this->imageService->getImagesFooter();
 
-        return view('client.typeroom.detail', compact('typeRoom','slidebars', 'images'));
-
+        return view('client.typeroom.detail', compact('typeRoom', 'slidebars', 'images'));
     }
 
     public function services()
@@ -102,7 +102,9 @@ class IndexController extends Controller
 
     public function sendMail(ContactRequest $request)
     {
+        $this->contactService->sendMail($request);
 
+        return redirect()->back()->with('message', 'Thank you for contact with us !');
     }
 
     public function promotion()
@@ -111,6 +113,6 @@ class IndexController extends Controller
         $images = $this->imageService->getImagesFooter();
         $promotions = $this->promotionService->getPromotions();
 
-        return view('client.promotion', compact('slidebars','images', 'promotions'));
+        return view('client.promotion', compact('slidebars', 'images', 'promotions'));
     }
 }

@@ -1,0 +1,11 @@
+#contact-table > tbody > tr:hover{
+    cursor: pointer;
+}
+#contact-table > tbody > tr.selected{
+    background-color: rgb(10,74,89,1);
+    color: white;
+}
+
+.style-text{
+    color: red;
+}
