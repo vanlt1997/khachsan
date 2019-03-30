@@ -1,24 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Le Van
- * Date: 3/17/2019
- * Time: 10:27 AM
- */
 
 namespace App\Service;
 
-
 use App\Models\Promotion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class PromotionService
 {
     protected $promotion;
+    protected $contactService;
+    protected $userService;
 
-    public function __construct(Promotion $promotion)
+    public function __construct(Promotion $promotion, ContactService $contactService, UserService $userService)
     {
         $this->promotion = $promotion;
+        $this->contactService = $contactService;
+        $this->userService = $userService;
     }
 
     public function getPromotions()
@@ -42,5 +40,33 @@ class PromotionService
     public function delete($promotionId)
     {
         return $this->promotion->find($promotionId)->delete();
+    }
+
+    public function sendMailByPromotion($Ids)
+    {
+        $count = 0;
+        $users = $this->userService->users();
+        $contacts = $this->contactService->contacts();
+        $promotions = $this->promotion->whereIn('id', $Ids)->get();
+
+        if (!$users->isEmpty()) {
+            foreach ($users as $user) {
+                Mail::send('admin.contact.mail-template', ['contact' => $user, 'promotions' => $promotions], function ($message) use ($user) {
+                    $message->to($user->email, $user->name)->subject('New Promotions');
+                });
+                    $count++;
+            }
+        }
+
+        if (!$contacts->isEmpty()) {
+            foreach ($contacts as $contact) {
+                Mail::send('admin.contact.mail-template', ['contact' => $contact, 'promotions' => $promotions], function ($message) use ($contact) {
+                    $message->to($contact->email, $contact->name)->subject('New Promotions');
+                });
+                $count++;
+            }
+        }
+
+        return $count;
     }
 }

@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Payment extends Model
 {
     public $timestamps = false;
-    protected $table = "customers";
+    protected $table = "payments";
     protected $fillable = [
-      'name','email','phone','address','account',
+        'name'
     ];
 
 }

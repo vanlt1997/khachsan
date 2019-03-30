@@ -72,13 +72,15 @@ class ContactService
     public function sendMailFromAdmin($Ids, $promotions)
     {
         $count = 0;
-        foreach ($Ids as $Id) {
-            $contact = $this->contact->find($Id);
-            if (isset($contact)) {
-                Mail::send('admin.contact.mail-template', ['contact' => $contact, 'promotions' => $promotions], function ($message) use ($contact) {
-                    $message->to($contact->email, $contact->name)->subject('New Promotions');
-                });
-                $count++;
+        if (! $promotions->isEmpty()) {
+            foreach ($Ids as $Id) {
+                $contact = $this->contact->find($Id);
+                if (isset($contact)) {
+                    Mail::send('admin.contact.mail-template', ['contact' => $contact, 'promotions' => $promotions], function ($message) use ($contact) {
+                        $message->to($contact->email, $contact->name)->subject('New Promotions');
+                    });
+                    $count++;
+                }
             }
         }
 

@@ -128,6 +128,14 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
+                    <a href="{{route('admin.orders.index')}}" class="nav-link">
+                        <i class="nav-icon fa fa-money"></i>
+                        <p>
+                            Orders
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{route('admin.type-rooms.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-building-o"></i>
                         <p>
@@ -168,7 +176,7 @@
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('admin.users.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-user-circle"></i>
                         <p>
                             Customers

@@ -90,6 +90,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/{promotion}/edit', 'PromotionController@edit')->name('edit');
         Route::post('/{promotion}/edit', 'PromotionController@actionEdit')->name('edit');
         Route::get('/{promotion}/delete', 'PromotionController@delete')->name('delete');
+        Route::post('/send-mail', 'PromotionController@sendMail')->name('sendMail');
     });
 
     Route::prefix('contacts')->name('contacts.')->group(function () {
@@ -97,5 +98,20 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/getList', 'ContactController@getList')->name('getList');
         Route::post('/delete', 'ContactController@delete')->name('delete');
         Route::post('/send-mail', 'ContactController@sendMail')->name('sendMail');
+    });
+
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', 'UserController@index')->name('index');
+        Route::get('/getList', 'UserController@getList')->name('getList');
+        Route::get('/create', 'UserController@create')->name('create');
+        Route::post('/create', 'UserController@actionCreate')->name('create');
+        Route::get('/{user}/detail', 'UserController@detail')->name('detail');
+        Route::get('/{user}/edit', 'UserController@edit')->name('edit');
+        Route::post('/{user}/edit', 'UserController@actionEdit')->name('edit');
+        Route::get('/{user}/delete', 'UserController@delete')->name('delete');
+    });
+
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', 'OrderController@index')->name('index');
     });
 });

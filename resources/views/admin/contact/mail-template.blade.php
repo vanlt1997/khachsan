@@ -45,11 +45,11 @@
         <tbody>
             @foreach($promotions as $promotion)
                 <tr>
-                    <td>{{$promotion->title}}</td>
-                    <td>{{$promotion->sale}}</td>
-                    <td>{!! $promotion->description !!}</td>
-                    <td>{{$promotion->startDate}}</td>
-                    <td>{{$promotion->endDate}}</td>
+                    <td>{{$promotion['title']}}</td>
+                    <td>{{$promotion['sale']}}</td>
+                    <td>{!! $promotion['description'] !!}</td>
+                    <td>{{$promotion['startDate']}}</td>
+                    <td>{{$promotion['endDate']}}</td>
                 </tr>
             @endforeach
         </tbody>

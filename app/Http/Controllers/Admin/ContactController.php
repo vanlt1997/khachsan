@@ -40,6 +40,7 @@ class ContactController extends Controller
     {
         $promotions = $this->promotionService->getPromotions();
         $count = $this->contactService->sendMailFromAdmin($request->Ids, $promotions);
+
         return response()->json($count, 200);
     }
 }
