@@ -58,7 +58,7 @@
                         <div class="col-md-8">
                             <select name="sex" class="form-control" onchange="changeSelect()" id="sex">
                                 <option value="1" @if(isset($user) && $user->sex === 1) selected @endif>Male</option>
-                                <option value="0" @if(isset($user) && $user->sex === 0) selected @endif>FeMale</option>
+                                <option value="0" @if(isset($user) && $user->sex === 0) selected @endif>Female</option>
                                 <option value="2" @if(isset($user) && $user->sex === 2) selected @endif>Other</option>
                             </select>
                         </div>

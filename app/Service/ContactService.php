@@ -72,7 +72,7 @@ class ContactService
     public function sendMailFromAdmin($Ids, $promotions)
     {
         $count = 0;
-        if (! $promotions->isEmpty()) {
+        if (!$promotions->isEmpty()) {
             foreach ($Ids as $Id) {
                 $contact = $this->contact->find($Id);
                 if (isset($contact)) {

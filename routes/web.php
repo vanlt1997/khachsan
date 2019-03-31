@@ -105,6 +105,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/getList', 'UserController@getList')->name('getList');
         Route::get('/create', 'UserController@create')->name('create');
         Route::post('/create', 'UserController@actionCreate')->name('create');
+        Route::post('/sendMail', 'UserController@sendMail')->name('sendMail');
         Route::get('/{user}/detail', 'UserController@detail')->name('detail');
         Route::get('/{user}/edit', 'UserController@edit')->name('edit');
         Route::post('/{user}/edit', 'UserController@actionEdit')->name('edit');

@@ -42,7 +42,7 @@
         <a id="btnDeleteContact" href="javascript:;" class="btn btn-sm btn-outline-info"><i
                     class="fa fa-trash-o"></i> Delete</a>
         <a id="btnSendMail" href="javascript:;" class="btn btn-sm btn-outline-success"><i
-                    class="fa fa-send"></i> Send Mail Promotions</a>
+                    class="fa fa-send"></i> Send Mail</a>
         <p class="text-danger">
             Choose row for delete or send mail promotions.
         </p>

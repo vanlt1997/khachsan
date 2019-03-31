@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Service\PromotionService;
 use App\Service\UserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,10 +13,12 @@ use Yajra\DataTables\DataTables;
 class UserController extends Controller
 {
     protected $userService;
+    protected $promotionService;
 
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, PromotionService $promotionService)
     {
         $this->userService = $userService;
+        $this->promotionService = $promotionService;
     }
 
     public function index()
@@ -74,6 +77,14 @@ class UserController extends Controller
         }
 
         return redirect()->route('admin.users.index')->with('error', 'You Can\'t Delete User');
+    }
+
+    public function sendMail(Request $request)
+    {
+        $promotions = $this->promotionService->getPromotions();
+        $count = $this->userService->sendMailFromAdmin($request->Ids, $promotions);
+
+        return response()->json($count, 200);
     }
 
 }
