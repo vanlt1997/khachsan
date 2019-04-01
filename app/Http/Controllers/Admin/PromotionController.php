@@ -26,7 +26,7 @@ class PromotionController extends Controller
 
     public function getList()
     {
-        $promotions = $this->promotionService->getPromotions();
+        $promotions = $this->promotionService->promotions();
         return DataTables::of($promotions)
             ->editColumn('startDate', function ($promotions) {
                 return $promotions->startDate ? with(new Carbon($promotions->startDate))->format('Y-m-d') : '';

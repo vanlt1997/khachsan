@@ -19,6 +19,11 @@ class PromotionService
         $this->userService = $userService;
     }
 
+    public function promotions()
+    {
+        return $this->promotion->all();
+    }
+
     public function getPromotions()
     {
         $dateNow = Carbon::now()->format('Y-m-d');
