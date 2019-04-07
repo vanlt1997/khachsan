@@ -27,18 +27,22 @@ class TypeRoom extends Model
         return $this->belongsToMany('App\Models\Device');
     }
 
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
+
+
     public static function boot()
     {
         parent::boot();
 
-        self::saving( function ($model)
-        {
+        self::saving(function ($model) {
             $data = explode(' ', $model->name);
             $model->aliases = implode('-', $data);
         });
 
-        self::deleting( function ($model)
-        {
+        self::deleting(function ($model) {
             ImageTypeRoom::whereTypeRoomId($model->id)->delete();
             DeviceTypeRoom::whereTypeRoomId($model->id)->delete();
         });

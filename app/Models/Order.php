@@ -21,4 +21,19 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function payment()
+    {
+        return $this->belongsTo('App\Models\Payment');
+    }
+
+    public function typeRoom()
+    {
+        return $this->belongsTo('App\Models\TypeRoom');
+    }
+
+    public function statusOrder()
+    {
+        return $this->belongsTo('App\Models\StatusOrder');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\DeviceRequest;
+use App\Models\Device;
 use App\Service\DeviceService;
 use App\Http\Controllers\Controller;
 use App\Service\ImageService;
@@ -51,24 +52,24 @@ class DeviceController extends Controller
         return redirect()->route('admin.devices.index')->with('message', 'Create Device Successfully !');
     }
 
-    public function edit($id)
+    public function edit(Device $device)
     {
-        $device = $this->deviceService->find($id);
+        $device = $this->deviceService->find($device->id);
 
         return view('admin.device.form', compact('device'));
     }
 
-    public function actionEdit(DeviceRequest $request, $id)
+    public function actionEdit(DeviceRequest $request, Device $device)
     {
-        $this->deviceService->createOrUpdate($request, $id);
+        $this->deviceService->createOrUpdate($request, $device->id);
 
         return redirect()->route('admin.devices.index')->with('message', 'Update Device Successfully !');
     }
 
-    public function delete($id)
+    public function delete(Device $device)
     {
-        if ($this->deviceService->find($id)->typeRooms->isEmpty()) {
-            $this->deviceService->delete($id);
+        if ($this->deviceService->find($device->id)->typeRooms->isEmpty()) {
+            $this->deviceService->delete($device->id);
 
             return redirect()->route('admin.devices.index')->with('message', 'Delete Device Successfully !');
         }
@@ -76,10 +77,8 @@ class DeviceController extends Controller
         return redirect()->route('admin.devices.index')->with('error', 'You Can\'t Delete Device !');
     }
 
-    public function detail($id)
+    public function detail(Device $device)
     {
-        $device = $this->deviceService->find($id);
-
         return view('admin.device.detail', compact('device'));
     }
 }

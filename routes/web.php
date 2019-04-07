@@ -31,18 +31,18 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/getListTypeRoom', 'TypeRoomController@getListTypeRoom')->name('getListTypeRoom');
         Route::get('/create', 'TypeRoomController@createTypeRoom')->name('create');
         Route::post('/create', 'TypeRoomController@actionCreateTypeRoom')->name('actionCreateTypeRoom');
-        Route::get('/{id}/delete', 'TypeRoomController@delete')->name('delete');
-        Route::get('/{id}/detail', 'TypeRoomController@detail')->name('detail');
-        Route::get('/{id}/edit', 'TypeRoomController@edit')->name('edit');
-        Route::post('/{id}/edit', 'TypeRoomController@actionEdit')->name('edit');
-        Route::prefix('/{id}/rooms')->name('rooms.')->group(function () {
+        Route::get('/{typeRoom}/delete', 'TypeRoomController@delete')->name('delete');
+        Route::get('/{typeRoom}/detail', 'TypeRoomController@detail')->name('detail');
+        Route::get('/{typeRoom}/edit', 'TypeRoomController@edit')->name('edit');
+        Route::post('/{typeRoom}/edit', 'TypeRoomController@actionEdit')->name('edit');
+        Route::prefix('/{typeRoom}/rooms')->name('rooms.')->group(function () {
             Route::get('/', 'RoomController@getRoomByTypeRoom')->name('getRoomByTypeRoom');
             Route::get('/getListRoom', 'RoomController@getListRoomByTypeRoom')->name('getListRoomByTypeRoom');
             Route::get('/create', 'RoomController@create')->name('create');
             Route::post('/create', 'RoomController@actionCreate')->name('action-create');
-            Route::get('{idRoom}/edit', 'RoomController@edit')->name('edit');
-            Route::post('{idRoom}/edit', 'RoomController@actionEdit')->name('edit');
-            Route::get('{idRoom}/delete', 'RoomController@delete')->name('delete');
+            Route::get('{room}/edit', 'RoomController@edit')->name('edit');
+            Route::post('{room}/edit', 'RoomController@actionEdit')->name('edit');
+            Route::get('{room}/delete', 'RoomController@delete')->name('delete');
         });
     });
 
@@ -65,10 +65,10 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/getList', 'DeviceController@getList')->name('get-list');
         Route::get('/create', 'DeviceController@create')->name('create');
         Route::post('/create', 'DeviceController@actionCreate')->name('create');
-        Route::get('/{id}/edit', 'DeviceController@edit')->name('edit');
-        Route::post('/{id}/edit', 'DeviceController@actionEdit')->name('edit');
-        Route::get('/{id}/delete', 'DeviceController@delete')->name('delete');
-        Route::get('/{id}/detail', 'DeviceController@detail')->name('detail');
+        Route::get('/{device}/edit', 'DeviceController@edit')->name('edit');
+        Route::post('/{device}/edit', 'DeviceController@actionEdit')->name('edit');
+        Route::get('/{device}/delete', 'DeviceController@delete')->name('delete');
+        Route::get('/{device}/detail', 'DeviceController@detail')->name('detail');
     });
 
     Route::prefix('services')->name('services.')->group(function () {
@@ -76,10 +76,10 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/getList', 'ServiceController@getList')->name('getList');
         Route::get('/create', 'ServiceController@create')->name('create');
         Route::post('/create', 'ServiceController@actionCreate')->name('create');
-        Route::get('/{id}/edit', 'ServiceController@edit')->name('edit');
-        Route::post('/{id}/edit', 'ServiceController@actionEdit')->name('edit');
-        Route::get('/{id}/delete', 'ServiceController@delete')->name('delete');
-        Route::get('/{id}/detail', 'ServiceController@detail')->name('detail');
+        Route::get('/{service}/edit', 'ServiceController@edit')->name('edit');
+        Route::post('/{service}/edit', 'ServiceController@actionEdit')->name('edit');
+        Route::get('/{service}/delete', 'ServiceController@delete')->name('delete');
+        Route::get('/{service}/detail', 'ServiceController@detail')->name('detail');
     });
 
     Route::prefix('promotions')->name('promotions.')->group(function () {
@@ -114,5 +114,12 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/', 'OrderController@index')->name('index');
+        Route::get('/getList', 'OrderController@getList')->name('getList');
+        Route::get('/create', 'OrderController@create')->name('create');
+        Route::get('/{order}/edit', 'OrderController@edit')->name('edit');
+        Route::post('/{order}/edit', 'OrderController@actionEdit')->name('edit');
+        Route::get('/{order}/delete', 'OrderController@delete')->name('delete');
+        Route::post('/select-user', 'OrderController@selectUser')->name('select-user');
+        Route::post('/select-room', 'OrderController@searchRoom')->name('search-room');
     });
 });

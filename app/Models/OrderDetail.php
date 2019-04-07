@@ -11,4 +11,9 @@ class OrderDetail extends Model
     protected $fillable = [
         'order_id', 'room_id', 'date', 'start_date', 'end_date', 'description'
     ];
+
+    public function room()
+    {
+        return $this->belongsTo('App\Models\Room');
+    }
 }

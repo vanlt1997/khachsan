@@ -17,5 +17,10 @@ class Room extends Model
         return $this->belongsTo('App\Models\TypeRoom');
     }
 
+    public function orderDetails()
+    {
+        return $this->hasMany('App\Models\OrderDetail');
+    }
+
 
 }

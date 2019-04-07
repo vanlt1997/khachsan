@@ -63,8 +63,6 @@
                     <div class="row col-md-12">
                         <div class="col-md-4 text-right"></div>
                         <div class="col-md-8">
-                            <a href="{{route('admin.type-rooms.rooms.getRoomByTypeRoom', isset($room) ? $room->typeRoom->id : $idTypeRoom)}}"
-                               class="btn btn-sm btn-outline-danger">Back</a>
                             <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                         </div>
                     </div>

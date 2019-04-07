@@ -59,4 +59,9 @@ class RoomService
     {
         return $this->room->find($id);
     }
+
+    public function rooms()
+    {
+        return $this->room->groupBy(['id','type_room_id'])->get();
+    }
 }

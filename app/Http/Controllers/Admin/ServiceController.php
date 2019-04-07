@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ServiceRequest;
+use App\Models\Service;
 use App\Service\ServiceService;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
@@ -46,31 +47,29 @@ class ServiceController extends Controller
         return redirect()->route('admin.services.index')->with('message', 'Create Service Successfully !');
     }
 
-    public function edit($id)
+    public function edit(Service $service)
     {
-        $service = $this->serviceService->find($id);
+        $service = $this->serviceService->find($service->id);
 
         return view('admin.service.form', compact('service'));
     }
 
-    public function actionEdit($id, ServiceRequest $request)
+    public function actionEdit(Service $service, ServiceRequest $request)
     {
-        $this->serviceService->createOrUpdateService($request, $id);
+        $this->serviceService->createOrUpdateService($request, $service->id);
 
         return redirect()->route('admin.services.index')->with('message', 'Update Service Successfully !');
     }
 
-    public function delete($id)
+    public function delete(Service $service)
     {
-        $this->serviceService->delete($id);
+        $this->serviceService->delete($service->id);
 
         return redirect()->route('admin.services.index')->with('message', 'Delete Service Successfully !');
     }
 
-    public function detail($id)
+    public function detail(Service $service)
     {
-        $service = $this->serviceService->find($id);
-
         return view('admin.service.detail', compact('service'));
     }
 }

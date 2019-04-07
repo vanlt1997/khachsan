@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RoomRequest;
+use App\Models\Room;
+use App\Models\TypeRoom;
 use App\Service\ImageService;
 use App\Service\RoomService;
 use App\Service\StatusService;
@@ -38,18 +40,18 @@ class RoomController extends Controller
         return view('admin.room.index', compact('typeRooms'));
     }
 
-    public function getRoomByTypeRoom($id)
+    public function getRoomByTypeRoom(TypeRoom $typeRoom)
     {
-        $idTypeRoom = $id;
+        $idTypeRoom = $typeRoom->id;
         return view('admin.room.room', compact('idTypeRoom'));
     }
 
-    public function getListRoomByTypeRoom($id)
+    public function getListRoomByTypeRoom(TypeRoom $typeRoom)
     {
-        return DataTables::of($this->roomService->getListRoomByID($id))
-            ->addColumn('action', function ($room) use ($id) {
+        return DataTables::of($this->roomService->getListRoomByID($typeRoom->id))
+            ->addColumn('action', function ($room) {
                 return
-                    '<a href="rooms/'.$room->id.'/detail" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#typeroom-{$ty}"> <i class="fa fa-info"></i></a>
+                    '<a href="rooms/'.$room->id.'/detail" class="btn btn-sm btn-outline-warning"> <i class="fa fa-info"></i></a>
                     <a href="rooms/'.$room->id.'/edit" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i></a>
                     <a href="rooms/'.$room->id.'/delete" class="btn btn-sm btn-outline-danger"> <i class="fa fa-trash-o"></i></a>
                     ';
@@ -57,34 +59,34 @@ class RoomController extends Controller
             ->make();
     }
 
-    public function create($id)
+    public function create(TypeRoom $typeRoom)
     {
-        $idTypeRoom = $id;
+        $idTypeRoom = $typeRoom->id;
         $status = $this->statusService->getStatus();
         $images = $this->imageService->getImages();
         return view('admin.room.form', compact('idTypeRoom', 'status', 'images'));
     }
 
-    public function actionCreate($id, RoomRequest $roomRequest)
+    public function actionCreate(TypeRoom $typeRoom, RoomRequest $roomRequest)
     {
-        $this->roomService->create($id, $roomRequest);
+        $this->roomService->create($typeRoom->id, $roomRequest);
 
-        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $id)->with('message', 'Create Room Successfully !');
+        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $typeRoom->id)->with('message', 'Create Room Successfully !');
     }
 
-    public function edit($id, $roomId)
+    public function edit(TypeRoom $typeRoom, Room $room)
     {
-        $room = $this->roomService->find($roomId);
+        $room = $this->roomService->find($room->id);
         $status = $this->statusService->getStatus();
 
         return view('admin.room.form', compact('room', 'status'));
     }
 
-    public function actionEdit($id, $roomId, RoomRequest $request)
+    public function actionEdit(TypeRoom $typeRoom, Room $room, RoomRequest $request)
     {
-        $this->roomService->actionCreateOrUpdate($request, $id, $roomId);
+        $this->roomService->actionCreateOrUpdate($request, $typeRoom->id, $room->id);
 
-        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $id)->with('message', 'Update Room Successfully !');
+        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $typeRoom->id)->with('message', 'Update Room Successfully !');
     }
 
     public function delete($id, $roomId)

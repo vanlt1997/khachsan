@@ -12,4 +12,8 @@ class Payment extends Model
         'name'
     ];
 
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
 }

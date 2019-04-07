@@ -19,6 +19,11 @@ class UserService
         return $this->user->all();
     }
 
+    public function find($userID)
+    {
+        return $this->user->find($userID);
+    }
+
     public function createOrUpdate($user, $id = null)
     {
         $action = $this->user->find($id) ?? new User();
