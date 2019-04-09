@@ -33,6 +33,8 @@
                 </div>
             </div>
 
+            @include('common.client.search-room')
+
             <div class="col-md-12 ftco-animate">
                 <div class="carousel-room owl-carousel">
                     @foreach($typeRoom->images as $image)
@@ -58,10 +60,6 @@
                             <tr>
                                 <th width="50px">Sale</th>
                                 <td class="text-danger">{{$typeRoom->sale != 0 ?$typeRoom->sale : '0%'}}</td>
-                            </tr>
-                            <tr>
-                                <th width="50px">Status</th>
-                                <td class="text-danger"></td>
                             </tr>
                         </thead>
                     </table>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
+use App\Http\Requests\SearchRoomRequest;
 use App\Service\ContactService;
+use App\Service\OrderService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Service;
@@ -22,6 +24,7 @@ class IndexController extends Controller
     protected $imageService;
     protected $promotionService;
     protected $contactService;
+    protected $orderService;
 
     public function __construct(
         SlideBarService $slideBarService,
@@ -29,7 +32,8 @@ class IndexController extends Controller
         TypeRoomService $typeRoomService,
         ImageService $imageService,
         PromotionService $promotionService,
-        ContactService $contactService
+        ContactService $contactService,
+        OrderService $orderService
     ) {
         $this->slideBarService = $slideBarService;
         $this->serviceService = $serviceService;
@@ -37,6 +41,7 @@ class IndexController extends Controller
         $this->imageService = $imageService;
         $this->promotionService = $promotionService;
         $this->contactService = $contactService;
+        $this->orderService = $orderService;
         session_start();
     }
 
@@ -114,5 +119,37 @@ class IndexController extends Controller
         $promotions = $this->promotionService->getPromotions();
 
         return view('client.promotion', compact('slidebars', 'images', 'promotions'));
+    }
+
+    public function searchRoom(SearchRoomRequest $request)
+    {
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
+        $typeRooms = $this->orderService->actionQuery($request, 'client');
+        $totalPeople = 0;
+        foreach ($typeRooms as $typeRoom) {
+            $totalPeople += (int)$typeRoom->total_room*(int)$typeRoom->number_people;
+        }
+
+        if ($totalPeople < $request->number_people) {
+            return redirect()->back()->with('error', 'Haven\'t room for you !');
+        }
+
+        return view('client.typeroom.search-type-room', compact('slidebars', 'images', 'typeRooms'));
+    }
+
+    public function searchRoomOfDetailTypeRoom(TypeRoom $typeRoom, SearchRoomRequest $request)
+    {
+        $typeRooms = $this->orderService->actionQuery($request, 'client');
+        $totalPeople = 0;
+        foreach ($typeRooms as $typeRoom) {
+            $totalPeople += (int)$typeRoom->total_room*(int)$typeRoom->number_people;
+        }
+
+        if ($totalPeople < $request->number_people) {
+            return redirect()->back()->with('error', 'Haven\'t room for you !');
+        }
+
+        return redirect()->route('client.typerooms.detail', $typeRoom->id)->with('message', "Have $typeRoom->total_room rooms you can choose !")->withInput();
     }
 }

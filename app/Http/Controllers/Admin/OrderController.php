@@ -81,9 +81,12 @@ class OrderController extends Controller
 
     public function searchRoom(Request $request)
     {
-        $rooms = $this->orderService->showRoom($request);
-
-        return response()->json($rooms, 200);
+        $rooms = $this->orderService->checkRoom($request);
+        if ($rooms['total_people'] < $request->number_people) {
+            return response()->json(0, 200);
+        } else {
+            return response()->json($rooms['rooms'], 200);
+        }
     }
 
     public function selectUser(Request $request)

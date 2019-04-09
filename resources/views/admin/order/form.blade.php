@@ -163,6 +163,7 @@
                             </div>
                             <div class="col-md-12 mt-2">
                                 <button type="button" class="btn btn-outline-primary btn-sm" id="btnSearchRoom">Search</button>
+                                <button type="button" class="btn btn-outline-success btn-sm" id="btnCalculate">Calculate</button>
                             </div>
                             <div class="row col-md-12" id="showRoom">
                                 <input type="text" name="nameRoom" id="nameRoom" hidden>
@@ -217,10 +218,17 @@
                 success: function (data) {
                     var html = '';
                     $('.img-modal').remove();
-                    data.forEach(function (room) {
-                        console.log(room);
-                        html += '<div class="col-md-2 text-center text-danger bg-gray p-3 m-3 style-room img-modal" id="'+ room.room_name +'" onclick="chooseRoom('+room.name+')">'+room.name+'</div>'
-                    });
+                    if (data == 0) {
+                        html +='<p class="mb-4 text-danger img-modal">Can\'t room for you !</p>'
+                    } else {
+                        data.forEach(function (room) {
+                            html += '<div class="col-md-3 text-center text-danger p-3 m-3 style-room img-modal" ' +
+                                'id="'+ room.room_name +'" onclick="chooseRoom('+room.room_name+')"><p>'+room.type_room_name
+                                +'</p><p>Room '+room.room_name+'</p><p>'+room.number_people+' people/room</p><p>$' +room.price+
+                                '/day</p>  </div>'
+
+                        });
+                    }
                     $('#showRoom').append(html);
                 }
 

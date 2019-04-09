@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 /*Client*/
 Route::get('/', 'IndexController@index')->name('client.index');
+Route::post('/', 'IndexController@searchRoom')->name('client.index');
 Route::get('introduction', 'IndexController@introduction')->name('client.introduction');
 Route::get('contact', 'IndexController@contact')->name('client.contact');
 Route::post('contact', 'IndexController@sendMail')->name('client.contact');
@@ -17,6 +18,7 @@ Route::group(['prefix' => 'services'], function () {
 Route::group(['prefix' => 'typerooms'], function () {
     Route::get('/', 'IndexController@typeRoom')->name('client.typerooms.index');
     Route::get('{typeRoom}', 'IndexController@detailTypeRoom')->name('client.typerooms.detail');
+    Route::post('{typeRoom}', 'IndexController@searchRoomOfDetailTypeRoom')->name('client.typerooms.detail');
 });
 /*Admin*/
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {

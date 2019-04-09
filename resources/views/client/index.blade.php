@@ -24,25 +24,41 @@
             <div class="row justify-content-end ftco-animate">
                 <div class="col-lg-4 col-md-5 reservation p-md-5">
                     <div class="block-17">
-                        <form action="" method="post" class="d-block">
+                        <form method="post" class="d-block">
+                            @csrf
                             <div class="fields d-block">
-
                                 <div class="book-date one-third">
                                     <label for="check-in">Checkin:</label>
-                                    <input type="text" id="checkin_date" class="form-control" placeholder="M/D/YYYY">
+                                    <input type="date" name="startDate" class="form-control" placeholder="M/D/YYYY">
+                                    @if($errors->has('startDate'))
+                                        <p class="text-danger"><i
+                                                    class="fa fa-exclamation-circle"></i> {{$errors->first('startDate')}}</p>
+                                    @endif
                                 </div>
 
                                 <div class="book-date one-third">
                                     <label for="check-out">Checkout:</label>
-                                    <input type="text" id="checkout_date" class="form-control" placeholder="M/D/YYYY">
+                                    <input type="date" name="endDate" class="form-control" placeholder="M/D/YYYY">
+                                    @if($errors->has('endDate'))
+                                        <p class="text-danger"><i
+                                                    class="fa fa-exclamation-circle"></i> {{$errors->first('endDate')}}</p>
+                                    @endif
                                 </div>
 
                                 <div class="one-third">
                                     <label for="Guest">Number people:</label>
                                     <div class="select-wrap">
-                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                        <input type="number" id="people" class="form-control" min="0">
+                                        <input type="number" id="number_people" name="number_people" class="form-control" min="0" placeholder="Number">
+                                        @if($errors->has('number_people'))
+                                            <p class="text-danger"><i
+                                                        class="fa fa-exclamation-circle"></i> {{$errors->first('number_people')}}</p>
+                                        @endif
                                     </div>
+                                </div>
+                                <div class="one-third">
+                                    @if(Session::has('error'))
+                                        <strong class="text-danger">{{Session::get('error')}}</strong>
+                                    @endif
                                 </div>
                             </div>
                             <input type="submit" class="search-submit btn btn-primary" value="Book">
