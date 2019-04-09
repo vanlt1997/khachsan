@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-3 mt-4">
                     <label for="number_people">People</label>
-                    <input type="number" name="number_people" class="form-control" value="{{old('number_people')}}">
+                    <input type="number" name="number_people" class="form-control" placeholder="Number" value="{{old('number_people')}}">
                     @if($errors->has('number_people'))
                         <p class="text-danger"><i
                                     class="fa fa-exclamation-circle"></i> {{$errors->first('number_people')}}</p>

@@ -19,6 +19,7 @@ Route::group(['prefix' => 'typerooms'], function () {
     Route::get('/', 'IndexController@typeRoom')->name('client.typerooms.index');
     Route::get('{typeRoom}', 'IndexController@detailTypeRoom')->name('client.typerooms.detail');
     Route::post('{typeRoom}', 'IndexController@searchRoomOfDetailTypeRoom')->name('client.typerooms.detail');
+    Route::post('{typeRoom}/booking', 'IndexController@booking')->name('client.typerooms.booking');
 });
 /*Admin*/
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {

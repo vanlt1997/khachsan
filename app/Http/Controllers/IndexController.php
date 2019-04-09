@@ -150,6 +150,12 @@ class IndexController extends Controller
             return redirect()->back()->with('error', 'Haven\'t room for you !');
         }
 
-        return redirect()->route('client.typerooms.detail', $typeRoom->id)->with('message', "Have $typeRoom->total_room rooms you can choose !")->withInput();
+        return redirect()->route('client.typerooms.detail', $typeRoom->id)
+            ->with('message', "Have $typeRoom->total_room rooms you can choose !")->withInput();
+    }
+
+    public function booking(TypeRoom $typeRoom)
+    {
+//        action book
     }
 }
