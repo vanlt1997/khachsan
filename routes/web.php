@@ -8,6 +8,7 @@ Route::get('introduction', 'IndexController@introduction')->name('client.introdu
 Route::get('contact', 'IndexController@contact')->name('client.contact');
 Route::post('contact', 'IndexController@sendMail')->name('client.contact');
 Route::get('promotions', 'IndexController@promotion')->name('client.promotions');
+Route::get('booking', 'IndexController@listTypeRoomBook')->name('client.booking');
 
 
 Route::group(['prefix' => 'services'], function () {
@@ -19,7 +20,7 @@ Route::group(['prefix' => 'typerooms'], function () {
     Route::get('/', 'IndexController@typeRoom')->name('client.typerooms.index');
     Route::get('{typeRoom}', 'IndexController@detailTypeRoom')->name('client.typerooms.detail');
     Route::post('{typeRoom}', 'IndexController@searchRoomOfDetailTypeRoom')->name('client.typerooms.detail');
-    Route::post('{typeRoom}/booking', 'IndexController@booking')->name('client.typerooms.booking');
+    Route::get('{typeRoom}/booking', 'IndexController@booking')->name('client.typerooms.booking');
 });
 /*Admin*/
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {

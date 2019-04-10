@@ -150,7 +150,7 @@
                                             <span class="d-block mb-2"><i class="icon-check mr-2"></i> Full facilities</span>
                                             <span class="d-block mb-2"><i class="icon-check mr-2"></i> 24-hour reception</span>
                                         </p>
-                                        <p><a href="" class="btn btn-primary">Book room</a></p>
+                                        <p><a href="{{route('client.typerooms.booking', $typeRoom->id)}}" class="btn btn-primary">Book room</a></p>
                                     </div>
                                 </div>
                             </div>

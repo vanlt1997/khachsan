@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests\SearchRoomRequest;
+use App\Models\Cart;
 use App\Service\ContactService;
 use App\Service\OrderService;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use App\Models\Service;
 use App\Models\TypeRoom;
 use App\Service\ImageService;
@@ -15,6 +14,8 @@ use App\Service\PromotionService;
 use App\Service\ServiceService;
 use App\Service\SlideBarService;
 use App\Service\TypeRoomService;
+use Illuminate\Http\Request;
+use Session;
 
 class IndexController extends Controller
 {
@@ -156,6 +157,17 @@ class IndexController extends Controller
 
     public function booking(TypeRoom $typeRoom)
     {
-//        action book
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->addTypeRoom($typeRoom->id, $typeRoom, null, null, 1, 1);
+        session()->put('cart', $cart);
+        return redirect()->back();
+    }
+
+    public function listTypeRoomBook()
+    {
+        $cart = Session::get('cart');
+
+        dd($cart);
     }
 }

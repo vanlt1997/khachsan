@@ -63,7 +63,7 @@
                             </tr>
                         </thead>
                     </table>
-                    <a href="#" class="btn btn-primary btn-sm">Booking Now</a>
+                    <a href="{{route('client.typerooms.booking', $typeRoom->id)}}" class="btn btn-primary btn-sm">Booking Now</a>
                 </div>
                 <div class="col-md-8">
                     <table class="table table-hover table-bordered">

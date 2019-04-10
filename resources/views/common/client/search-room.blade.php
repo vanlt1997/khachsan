@@ -1,5 +1,6 @@
 <div class="col-md-12 amenities d-md-flex ftco-animate mb-5">
     <div style="width: 100%; background-color: #fff">
+        <h5 class="text-primary text-center mt-5">Check room of {{$typeRoom->name}}</h5>
         <form method="post" class="col-md-12 row">
             @csrf
             <div class="form-group row col-md-12 ">
@@ -32,12 +33,14 @@
                 </div>
             </div>
             <div class="form-group col-md-12">
-                @if(Session::has('error'))
-                    <strong class="text-danger">{{Session::get('error')}}</strong>
-                @endif
-                @if(Session::has('message'))
-                    <strong class="text-danger">{{Session::get('message')}}</strong>
-                @endif
+                <div class="text-center">
+                    @if(Session::has('error'))
+                        <h5 class="text-danger">{{Session::get('error')}}</h5>
+                    @endif
+                    @if(Session::has('message'))
+                        <h5 class="text-danger">{{Session::get('message')}}</h5>
+                    @endif
+                </div>
             </div>
         </form>
     </div>

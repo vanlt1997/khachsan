@@ -77,5 +77,12 @@ class OrderService
         ];
     }
 
-
+    public function checkRoomWhenBooking($typeRoom)
+    {
+        $query = DB::table('type_rooms')->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
+            ->leftJoin('order_detail', 'rooms.id', '=', 'order_detail.room_id')
+            ->where('rooms.status_id', '!=', 4)
+            ->where('type_rooms.id', $typeRoom->id)
+            ->whereNull('start_date');
+    }
 }
