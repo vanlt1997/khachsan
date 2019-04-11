@@ -2,6 +2,7 @@
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700" rel="stylesheet">
 
 <link rel="stylesheet" href="{{asset('css/open-iconic-bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{asset('css/animate.css')}}">
 
 <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">

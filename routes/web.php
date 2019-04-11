@@ -8,8 +8,13 @@ Route::get('introduction', 'IndexController@introduction')->name('client.introdu
 Route::get('contact', 'IndexController@contact')->name('client.contact');
 Route::post('contact', 'IndexController@sendMail')->name('client.contact');
 Route::get('promotions', 'IndexController@promotion')->name('client.promotions');
-Route::get('booking', 'IndexController@listTypeRoomBook')->name('client.booking');
-
+Route::group(['prefix' => 'booking'], function () {
+    Route::get('/', 'IndexController@listTypeRoomBook')->name('client.booking');
+    Route::post('/{typeRoom}/edit', 'IndexController@editTypeRoom')->name('client.booking.edit');
+    Route::get('/{typeRoom}/delete', 'IndexController@delete')->name('client.booking.delete');
+    Route::get('/delete-all', 'IndexController@deleteAll')->name('client.booking.delete-all');
+    Route::post('confirm', 'IndexController@confirm')->name('client.booking.confirm');
+});
 
 Route::group(['prefix' => 'services'], function () {
     Route::get('/', 'IndexController@services')->name('client.services.index');

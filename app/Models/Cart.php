@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    protected $typeRooms = null;
-    protected $sumRoom = 0;
-    protected $paymentTotal = 0;
+    public $typeRooms = null;
+    public $sumRoom = 0;
+    public $paymentTotal = 0;
 
     public function __construct($oldCart)
     {
@@ -22,33 +22,34 @@ class Cart extends Model
 
     public function addTypeRoom($id, $typeRoom, $startDate, $endDate, $number_people, $number_room)
     {
-        $cart = ['number_room' => $number_room, 'price' => $typeRoom->price, 'sale' => $typeRoom->sale,
+        $cart = ['number_room' => $number_room, 'price' => $typeRoom->price, 'sale' => $typeRoom->sale ?? 0,
                  'typeRoom' => $typeRoom, 'startDate' => $startDate, 'endDate'=> $endDate,
-                 'number_people' => $number_people, 'total' => 0];
+                 'number_people' => $number_people ?? 1, 'total' => 0];
         if ($this->typeRooms) {
             if (array_key_exists($id, $this->typeRooms)) {
-                $cart = $this->typeRooms[$id];
+                $this->delete($id);
             }
         }
-        $startDate = $startDate ? Carbon::parse($cart['startDate']): 0;
-        $endDate = $endDate ? Carbon::parse($cart['endDate']) : 0;
+        $startDate = $startDate !== null ? Carbon::parse($cart['startDate']): 0;
+        $endDate = $endDate !== null ? Carbon::parse($cart['endDate']) : 0;
         $sum_day= $startDate && $endDate ? (int)($endDate->diffInDays($startDate)) : 0;
-        if ($typeRoom->sale !== null && $typeRoom->sale > 0) {
-            $cart['total'] = $typeRoom->price*$cart['number_room'].$sum_day*(100 + $typeRoom->sale)/100;
+        if ($typeRoom->sale > 0) {
+            $cart['total'] = $typeRoom->price*$cart['number_room']*$sum_day*(100 + $typeRoom->sale)/100;
         } else {
-            $cart['total'] = $typeRoom->price*$cart['number_room'].$sum_day;
+            $cart['total'] = $typeRoom->price*$cart['number_room']*$sum_day;
         }
+
         $this->typeRooms[$id] = $cart;
         $this->sumRoom++;
         $this->paymentTotal += $cart['total'];
     }
 
-    /*public function delete($id)
+    public function delete($id)
     {
         $this->sumRoom--;
-        $this->paymentTotal -=$this->typeRooms[$id]['price'];
+        $this->paymentTotal -=$this->typeRooms[$id]['total'];
         unset($this->typeRooms[$id]);
-    }*/
+    }
 
     /*public function update($id, $startDate, $endDate, $number_people)
     {

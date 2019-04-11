@@ -81,3 +81,22 @@ a.navbar-brand {
     width: 100%;
 }
 
+#headerBooking{
+    border-bottom: 2px solid #0b93d5;
+    margin-bottom: 50px;
+}
+
+#tableBooking tr td, #tableBooking tr th{
+    vertical-align: middle;
+    text-align: center;
+}
+
+#formBooking .form-control{
+    height: 40px !important;
+    border-radius: 10px;
+}
+
+#formBooking .name-typeRoom h5{
+    border-left: 3px solid #3f9ae5;
+}
+

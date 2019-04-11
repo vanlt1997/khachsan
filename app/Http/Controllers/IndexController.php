@@ -166,8 +166,37 @@ class IndexController extends Controller
 
     public function listTypeRoomBook()
     {
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
         $cart = Session::get('cart');
+        return view('client.book.index', compact('cart', 'images', 'slidebars'));
+    }
 
-        dd($cart);
+    public function editTypeRoom(TypeRoom $typeRoom)
+    {
+
+    }
+
+    public function delete(TypeRoom $typeRoom)
+    {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->delete($typeRoom->id);
+        if (count($cart->typeRooms) > 0) {
+            Session::put('cart', $cart);
+        } else {
+            Session::forget('cart');
+        }
+        return redirect()->back();
+    }
+
+    public function deleteAll()
+    {
+
+    }
+
+    public function confirm()
+    {
+
     }
 }
