@@ -79,6 +79,25 @@
                 <div class="form-group">
                     <div class="row col-md-12">
                         <div class="col-md-3 text-right">
+                            <label for="sale">Code <span>&hercon;</span></label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" name="code" id="code" class="form-control" placeholder="Sale" value="{{$promotion->code ?? null}}">
+                            <div class="error-content">
+                                @if($errors->has('code'))
+                                    <p class="text-danger"><i
+                                                class="fa fa-exclamation-circle"></i> {{$errors->first('code')}}</p>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-sm btn-outline-success form-control" id="btnGenCode" style="height: 38px">Generate</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row col-md-12">
+                        <div class="col-md-3 text-right">
                             <label for="description">Description</label>
                         </div>
                         <div class="col-md-9">
@@ -105,5 +124,11 @@
 @endsection
 @push('scripts')
     <script src="{{asset('js/admin/main.js')}}"></script>
+    <script>
+        $('#btnGenCode').on('click', function () {
+            var code = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            $('#code').val(code)
+        });
+    </script>
 @endpush
 

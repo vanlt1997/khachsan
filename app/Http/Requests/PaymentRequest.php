@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PromotionRequest extends FormRequest
+class PaymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,11 @@ class PromotionRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->promotion? $this->promotion->id : null;
-
         return [
-            'title' => 'required|unique:promotions,title,'.$id,
-            'sale' => 'required|integer',
-            'startDate' => 'required',
-            'endDate' => 'required',
-            'code' => 'required'
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|numeric',
+            'payment' => 'required'
         ];
     }
 }

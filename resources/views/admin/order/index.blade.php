@@ -32,15 +32,13 @@
             <tr>
                 <th>ID</th>
                 <th>User Name</th>
-                <th>Type Room</th>
                 <th>Payment Method</th>
                 <th>Status</th>
                 <th>Number</th>
-                <th>Price</th>
-                <th>Sale (%)</th>
                 <th>Total</th>
-                <th>Start Date</th>
-                <th>End Date</th>
+                <th>Promotion</th>
+                <th>Payment Total</th>
+                <th>Order Date</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -70,18 +68,8 @@
                         }
                     },
                     {
-                        data: null,
-                        name: 'type_room',
-                        render: function (data) {
-                            return data.type_room;
-                        }
-                    },
-                    {
-                        data: null,
+                        data: 'payment_method',
                         name: 'payment_method',
-                        render: function (data) {
-                            return data.payment_method;
-                        }
                     },
                     {
                         data: null,
@@ -91,11 +79,10 @@
                         }
                     },
                     {data: 'quantity', name: 'quantity'},
-                    {data: 'price', name: 'price'},
-                    {data: 'sale', name: 'sale'},
                     {data: 'total', name: 'total'},
-                    {data: 'start_date', name: 'start_date'},
-                    {data: 'end_date', name: 'end_date'},
+                    {data: 'promotion', name: 'promotion'},
+                    {data: 'payment_total', name: 'payment_total'},
+                    {data: 'date', name: 'date'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });

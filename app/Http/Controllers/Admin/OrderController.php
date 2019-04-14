@@ -50,12 +50,6 @@ class OrderController extends Controller
             ->addColumn('user_name', function ($order) {
                 return $order->user->name;
             })
-            ->addColumn('type_room', function ($order) {
-                return $order->typeRoom->name;
-            })
-            ->addColumn('payment_method', function ($order) {
-                return $order->payment->name;
-            })
             ->addColumn('status', function ($order) {
                 return $order->statusOrder->name;
             })

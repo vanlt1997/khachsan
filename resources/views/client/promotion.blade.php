@@ -42,7 +42,7 @@
                                     <a href="{{route('client.typerooms.index')}}" class="btn btn-primary btn-sm">Booking Now</a>
                                 </div>
                                 <div id="promoton-sale">
-                                    Sale : {{$promotion->sale}}% <br> for {{Carbon\Carbon::now()->diffInDays($promotion->endDate)}} day
+                                    Sale : $ {{$promotion->sale}} <br> for {{Carbon\Carbon::now()->diffInDays($promotion->endDate)}} day
                                 </div>
                             </div>
                         </div>

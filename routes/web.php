@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 /*Client*/
 Route::get('/', 'IndexController@index')->name('client.index');
-Route::post('/', 'IndexController@searchRoom')->name('client.index');
+Route::get('/search', 'IndexController@searchRoom')->name('client.search');
 Route::get('introduction', 'IndexController@introduction')->name('client.introduction');
 Route::get('contact', 'IndexController@contact')->name('client.contact');
 Route::post('contact', 'IndexController@sendMail')->name('client.contact');
@@ -11,9 +11,12 @@ Route::get('promotions', 'IndexController@promotion')->name('client.promotions')
 Route::group(['prefix' => 'booking'], function () {
     Route::get('/', 'IndexController@listTypeRoomBook')->name('client.booking');
     Route::post('/{typeRoom}/edit', 'IndexController@editTypeRoom')->name('client.booking.edit');
-    Route::get('/{typeRoom}/delete', 'IndexController@delete')->name('client.booking.delete');
-    Route::get('/delete-all', 'IndexController@deleteAll')->name('client.booking.delete-all');
-    Route::post('confirm', 'IndexController@confirm')->name('client.booking.confirm');
+    Route::get('/{typeRoom}/delete', 'IndexController@deleteTypeRoom')->name('client.booking.delete');
+    Route::get('/delete-all', 'IndexController@deleteTypeRooms')->name('client.booking.delete-all');
+    Route::get('next', 'IndexController@infoCustomer')->name('client.booking.next');
+    Route::post('next', 'IndexController@confirm')->name('client.booking.next');
+    Route::get('finish', 'IndexController@finish')->name('client.booking.finish');
+    Route::post('check', 'IndexController@checkCodePromotion')->name('client.booking.check');
 });
 
 Route::group(['prefix' => 'services'], function () {
@@ -25,7 +28,7 @@ Route::group(['prefix' => 'typerooms'], function () {
     Route::get('/', 'IndexController@typeRoom')->name('client.typerooms.index');
     Route::get('{typeRoom}', 'IndexController@detailTypeRoom')->name('client.typerooms.detail');
     Route::post('{typeRoom}', 'IndexController@searchRoomOfDetailTypeRoom')->name('client.typerooms.detail');
-    Route::get('{typeRoom}/booking', 'IndexController@booking')->name('client.typerooms.booking');
+    Route::get('{typeRoom}/booking/{startDate?}/{endDate?}/{number_people?}', 'IndexController@booking')->name('client.typerooms.booking');
 });
 /*Admin*/
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {

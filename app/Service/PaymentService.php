@@ -18,4 +18,9 @@ class PaymentService
     {
         return $this->payment->all();
     }
+
+    public function find($id)
+    {
+        return $this->payment->find($id);
+    }
 }

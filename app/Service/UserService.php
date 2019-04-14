@@ -27,13 +27,13 @@ class UserService
     public function createOrUpdate($user, $id = null)
     {
         $action = $this->user->find($id) ?? new User();
-        $action->name = $user->name;
-        $action->email = $user->email;
-        $action->password = $user->password?? null;
-        $action->sex = $user->sex;
-        $action->phone = $user->phone;
-        $action->address = $user->address;
-        $action->avatar = $user->avatar ?? null;
+        $action->name = $user['name'];
+        $action->email = $user['email'];
+        $action->password = $user['password']?? null;
+        $action->sex = $user['sex'];
+        $action->phone = $user['phone'];
+        $action->address = $user['address'];
+        $action->avatar = $user['avatar'] ?? null;
         $action->save();
     }
 
@@ -58,6 +58,11 @@ class UserService
         }
 
         return $count;
+    }
+
+    public function getUserByEmai($email)
+    {
+        return $this->user->whereEmail($email)->first();
     }
 }
 

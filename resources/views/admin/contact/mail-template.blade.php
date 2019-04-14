@@ -38,6 +38,7 @@
                 <th>Title</th>
                 <th>Sale (%)</th>
                 <th>Content</th>
+                <th>Code</th>
                 <th>Start Date</th>
                 <th>End Date</th>
             </tr>
@@ -48,6 +49,7 @@
                     <td>{{$promotion['title']}}</td>
                     <td>{{$promotion['sale']}}</td>
                     <td>{!! $promotion['description'] !!}</td>
+                    <td>{{$promotion['code']}}</td>
                     <td>{{$promotion['startDate']}}</td>
                     <td>{{$promotion['endDate']}}</td>
                 </tr>
@@ -58,7 +60,7 @@
 
 
     <h4>Please contact</h4>
-    <p class="text-primary">Email: maystar@gmail.com</p>
+    <p class="text-primary">Email: maystarhotel@gmail.com</p>
     <p class="text-primary">Hotline : 0335833102</p>
     <p class="text-primary">Address: Hotel MayStar, Da Nang</p>
     <p class="text-primary">Website: <a href="http://127.0.0.1:8000">maystar.com</a> </p>

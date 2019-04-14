@@ -76,7 +76,7 @@
                                 @endif
                                 <div class="col-md-12 booking text-right">
                                     <a href="{{route('client.typerooms.detail', $typeRoom->id)}}" class="btn btn-primary btn-xs">View...</a>
-                                    <a href="{{route('client.typerooms.booking', $typeRoom->id)}}" class="btn btn-outline-danger btn-xs">Booking Now</a>
+                                    <a href="{{route('client.typerooms.booking', ['typeRoom' => $typeRoom->id, 'startDate' => $request->startDate, 'endDate' => $request->endDate, 'number_people' => $request->number_people] )}}" class="btn btn-outline-danger btn-xs">Booking Now</a>
                                 </div>
                             </div>
                         </div>

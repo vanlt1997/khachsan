@@ -91,7 +91,7 @@ a.navbar-brand {
     text-align: center;
 }
 
-#formBooking .form-control{
+#formBooking .form-control, #formConfirm .form-control:not(textarea), #promotion{
     height: 40px !important;
     border-radius: 10px;
 }

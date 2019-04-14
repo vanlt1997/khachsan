@@ -24,8 +24,7 @@
             <div class="row justify-content-end ftco-animate">
                 <div class="col-lg-4 col-md-5 reservation p-md-5">
                     <div class="block-17">
-                        <form method="post" class="d-block">
-                            @csrf
+                        <form method="get" class="d-block" action="{{route('client.search')}}">
                             <div class="fields d-block">
                                 <div class="book-date one-third">
                                     <label for="check-in">Checkin:</label>

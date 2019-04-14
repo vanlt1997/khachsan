@@ -4,6 +4,7 @@
 .style-room{
     border: 2px solid lightgrey;
     background-color: #fff;
+    border-radius: 10px;
 }
 .style-room:hover{
     cursor: pointer;

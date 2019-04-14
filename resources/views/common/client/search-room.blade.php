@@ -3,6 +3,7 @@
         <h5 class="text-primary text-center mt-5">Check room of {{$typeRoom->name}}</h5>
         <form method="post" class="col-md-12 row">
             @csrf
+            <input type="number" name="typeRoom" class="form-control" value="{{$typeRoom->id}}" hidden>
             <div class="form-group row col-md-12 ">
                 <div class="col-md-4 mt-4">
                     <label for="startDate">Checkin</label>

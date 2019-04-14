@@ -38,6 +38,7 @@ class PromotionService
         $action->sale = $promotion->sale;
         $action->startDate = $promotion->startDate;
         $action->endDate = $promotion->endDate;
+        $action->code = $promotion->code;
         $action->description = $promotion->description;
         $action->save();
     }
@@ -73,5 +74,12 @@ class PromotionService
         }
 
         return $count;
+    }
+
+    public function checkCode($code)
+    {
+        return $this->promotion->where('code', '=', $code)
+                    ->where('endDate', '>=', Carbon::now()->format('Y-m-d'))
+                    ->first();
     }
 }

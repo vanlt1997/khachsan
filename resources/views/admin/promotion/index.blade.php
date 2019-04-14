@@ -32,9 +32,10 @@
             <tr>
                 <th>ID</th>
                 <th>Title</th>
-                <th>Sale (%)</th>
+                <th>Price</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Code</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -67,6 +68,7 @@
                     {data: 'sale', name: 'sale'},
                     {data: 'startDate', name: 'startDate'},
                     {data: 'endDate', name: 'endDate'},
+                    {data: 'code', name: 'code'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ],
                 rowCallback: function (row, data) {
