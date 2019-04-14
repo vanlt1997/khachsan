@@ -128,4 +128,9 @@ class OrderService
             $message->to($customer['email'], $customer['name'])->subject('Booking Success');
         });
     }
+
+    public function deleteOrder($order)
+    {
+        return $this->order->find($order->id)->delete();
+    }
 }

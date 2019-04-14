@@ -166,7 +166,7 @@
                                 <button type="button" class="btn btn-outline-success btn-sm" id="btnCalculate">Calculate</button>
                             </div>
                             <div class="row col-md-12" id="showRoom">
-                                <input type="text" name="nameRoom" id="nameRoom" hidden>
+                                <input type="text" name="nameRoom" id="nameRoom">
                             </div>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                $.ajax({
                    url: '{{route('admin.orders.select-user')}}',
                    type: 'POST',
-                   contentType: 'application/json,charset=utf8',
+                   contentType: 'application/json;charset=utf8',
                    data: JSON.stringify({'userID': userID}),
                    success: function (data) {
                         $('[name=name]').val(data.name);
@@ -213,7 +213,7 @@
             $.ajax({
                 url: '{{route('admin.orders.search-room')}}',
                 type: 'POST',
-                contentType: 'application/json,charset=utf8',
+                contentType: 'application/json;charset=utf8',
                 data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people}),
                 success: function (data) {
                     var html = '';
@@ -230,6 +230,25 @@
                         });
                     }
                     $('#showRoom').append(html);
+                }
+
+            })
+        });
+
+        $('#btnCalculate').on('click', function () {
+            let typeRoom = $('#selectTypeRoom').val();
+            let startDate = $('[name=startDate]').val();
+            let endData = $('[name=endDate]').val();
+            let number_people = $('[name=number_people]').val();
+            let nameRooms = $('#nameRoom').val();
+            console.log(nameRooms);
+            $.ajax({
+                url: '{{route('admin.orders.calculate')}}',
+                type: 'POST',
+                contentType: 'application/json;charset=utf8',
+                data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people, 'nameRooms': nameRooms}),
+                success: function (data) {
+
                 }
 
             })

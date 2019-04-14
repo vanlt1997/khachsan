@@ -50,7 +50,7 @@ class OrderController extends Controller
             ->addColumn('user_name', function ($order) {
                 return $order->user->name;
             })
-            ->addColumn('status', function ($order) {
+            ->addColumn('statu_name', function ($order) {
                 return $order->statusOrder->name;
             })
             ->addColumn('action', function ($order) {
@@ -90,6 +90,11 @@ class OrderController extends Controller
         return response()->json($user, 200);
     }
 
+    public function calculate(Request $request)
+    {
+        dd($request);
+
+    }
 
     public function edit(Order $order)
     {
@@ -103,7 +108,11 @@ class OrderController extends Controller
 
     public function delete(Order $order)
     {
+        if ($this->orderService->deleteOrder($order)) {
+            return redirect()->back()->with('message', 'Delete order successfully !');
+        }
 
+        return redirect()->back()->with('error', 'Don\'t order delete !');
     }
 
 }

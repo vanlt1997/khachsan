@@ -73,9 +73,9 @@
                     },
                     {
                         data: null,
-                        name: 'status',
+                        name: 'statu_name',
                         render: function (data) {
-                            return data.status;
+                            return data.statu_name;
                         }
                     },
                     {data: 'quantity', name: 'quantity'},

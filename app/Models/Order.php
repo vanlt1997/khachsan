@@ -36,4 +36,13 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\StatusOrder');
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function ($model) {
+            OrderTypeRoom::whereOrderId($model->id);
+        });
+    }
 }
