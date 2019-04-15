@@ -22,7 +22,7 @@
     </section>
 @endsection
 @section('content')
-    @if(isset($cart->typeRooms))
+    @if(isset($card->typeRooms))
         <section class="ftco-section contact-section" id="Booking">
             <div class="container bg-light">
             <div class="row" id="headerBooking">
@@ -59,7 +59,7 @@
             </div>
             <div class="row col-md-12 mt-5">
                 <div class="row col-md-12" id="formBooking">
-                    @foreach($cart->typeRooms as $typeRoom)
+                    @foreach($card->typeRooms as $typeRoom)
                     <form method="post" action="{{route('client.booking.edit', $typeRoom['typeRoom']->id)}}">
                         @csrf
                         <div class="row mb-5" style="border-bottom: 2px solid #fff">
@@ -137,9 +137,9 @@
             </div>
             <div class="row col-md-12">
                 <div class="col-md-12 mb-5 text-left">
-                    <h5 class="text-dark">Total : ${{$cart->total}}</h5>
-                    <h5 class="text-dark">Promotion : ${{$cart->promotion}}</h5>
-                    <h5 class="text-dark">Payment Total : ${{$cart->total - $cart->promotion}}</h5>
+                    <h5 class="text-dark">Total : ${{$card->total}}</h5>
+                    <h5 class="text-dark">Promotion : ${{$card->promotion}}</h5>
+                    <h5 class="text-dark">Payment Total : ${{$card->total - $card->promotion}}</h5>
                 </div>
                 <div class="col-md-12 text-left">
                     <a href="{{route('client.booking.next')}}" class="btn btn-sm btn-outline-success">Next</a>

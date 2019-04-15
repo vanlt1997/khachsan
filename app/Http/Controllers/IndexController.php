@@ -6,7 +6,7 @@ use App\Http\Requests\BookingRequest;
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests\PaymentRequest;
 use App\Http\Requests\SearchRoomRequest;
-use App\Models\Cart;
+use App\Models\Card;
 use App\Models\Order;
 use App\Models\User;
 use App\Service\ContactService;
@@ -22,6 +22,7 @@ use App\Service\TypeRoomService;
 use App\Service\UserService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Session;
 
 class IndexController extends Controller
@@ -169,16 +170,16 @@ class IndexController extends Controller
 
     public function checkCodePromotion(Request $request)
     {
-        $cart = Session::get('cart');
+        $card = Session::get('card');
         $promotion = $this->promotionService->checkCode(trim($request->promotion));
         if (!$promotion) {
-            $cart->promotion = 0;
-            Session::put('cart', $cart);
+            $card->promotion = 0;
+            Session::put('card', $card);
             Session::put('code', ['code' => $request->promotion, 'price' => 0]);
             return redirect()->back()->with('checkCode', 'Code don\'t use')->withInput();
         }
-        $cart->promotion = $promotion->sale;
-        Session::put('cart', $cart);
+        $card->promotion = $promotion->sale;
+        Session::put('card', $card);
         Session::put('code', ['code' => $request->promotion, 'price' => $promotion->sale]);
 
         return redirect()->back()->withInput();
@@ -186,20 +187,20 @@ class IndexController extends Controller
 
     public function listTypeRoomBook()
     {
-//        Session::forget('cart');
+//        Session::forget('card');
         $slidebars = $this->slideBarService->getSlideBars();
         $images = $this->imageService->getImagesFooter();
-        $cart = Session::get('cart');
-        return view('client.book.index', compact('cart', 'images', 'slidebars'));
+        $card = Session::get('card');
+        return view('client.book.index', compact('card', 'images', 'slidebars'));
     }
 
     public function booking(TypeRoom $typeRoom, $startDate = null, $endDate = null, $number_people = 1)
     {
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
+        $oldCard = Session::has('card') ? Session::get('card') : null;
+        $card = new Card($oldCard);
         $promotion = Session::has('code') ? Session::get('code')['price'] : null;
-        $cart->addTypeRoom($typeRoom->id, $typeRoom, $startDate, $endDate, $number_people, $promotion);
-        Session::put('cart', $cart);
+        $card->addTypeRoom($typeRoom->id, $typeRoom, $startDate, $endDate, $number_people, $promotion);
+        Session::put('card', $card);
         return redirect()->back();
     }
 
@@ -212,11 +213,11 @@ class IndexController extends Controller
         if ($totalPeople < $request->number_people) {
             return redirect()->back()->with('error', 'Haven\'t room for you !')->withInput();
         }
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
+        $oldCard = Session::has('card') ? Session::get('card') : null;
+        $card = new Card($oldCard);
         $promotion = Session::has('code') ? Session::get('code')['price'] : 0;
-        $cart->updateTypeRoom($typeRoom->id, $typeRoom, $request->startDate, $request->endDate, $request->number_people, $promotion);
-        Session::put('cart', $cart);
+        $card->updateTypeRoom($typeRoom->id, $typeRoom, $request->startDate, $request->endDate, $request->number_people, $promotion);
+        Session::put('card', $card);
 
         return redirect()->route('client.booking')->with('message', "Have $total_room type $nameType  you can choose !")
             ->withInput();
@@ -224,13 +225,13 @@ class IndexController extends Controller
 
     public function deleteTypeRoom(TypeRoom $typeRoom)
     {
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->deleteTypeRoom($typeRoom->id);
-        if (count($cart->typeRooms) > 0) {
-            Session::put('cart', $cart);
+        $oldCard = Session::has('card') ? Session::get('card') : null;
+        $card = new Card($oldCard);
+        $card->deleteTypeRoom($typeRoom->id);
+        if (count($card->typeRooms) > 0) {
+            Session::put('card', $card);
         } else {
-            Session::forget('cart');
+            Session::forget('card');
             Session::forget('code');
         }
         return redirect()->back();
@@ -238,7 +239,7 @@ class IndexController extends Controller
 
     public function deleteTypeRooms()
     {
-        session()->forget('cart');
+        session()->forget('card');
         session()->forget('code');
 
         return redirect()->back();
@@ -249,9 +250,9 @@ class IndexController extends Controller
         $slidebars = $this->slideBarService->getSlideBars();
         $images = $this->imageService->getImagesFooter();
         $payments = $this->paymentService->payments();
-        $cart = Session::get('cart');
+        $card = Session::get('card');
 
-        return view('client.book.info-booking', compact('slidebars', 'images', 'cart', 'payments'));
+        return view('client.book.info-booking', compact('slidebars', 'images', 'card', 'payments'));
     }
 
     public function confirm(PaymentRequest $request)
@@ -270,9 +271,9 @@ class IndexController extends Controller
         ];
         Session::put('infoBooking', $infoBooling);
         $info = Session::get('infoBooking');
-        $cart = Session::get('cart');
+        $card = Session::get('card');
 
-        return view('client.book.confirm', compact('info', 'slidebars', 'images', 'cart'));
+        return view('client.book.confirm', compact('info', 'slidebars', 'images', 'card'));
     }
 
     public function finish()
@@ -280,32 +281,32 @@ class IndexController extends Controller
         $slidebars = $this->slideBarService->getSlideBars();
         $images = $this->imageService->getImagesFooter();
 
-        $cart = Session::get('cart');
+        $card = Session::get('card');
         $customer = Session::get('infoBooking');
         $promotion = Session::get('code');
-        $user = $this->userService->find($customer['email']);
-        if (!$user) {
+        $newUser = $this->userService->getUserByEmai($customer['email']);
+        if (!$newUser) {
             $this->userService->createOrUpdate($customer);
         }
-        $newUser = $this->userService->getUserByEmai($customer['email']);
         $order = new Order();
         $order->user_id = $newUser->id;
         $order->status_order_id =self::WAIT;
         $order->payment_method = $customer['payment']->name;
-        $order->quantity = $cart->sumRoom;
+        $order->quantity = $card->sumRoom;
         $order->promotion = $promotion['price']??0;
-        $order->total = $cart->total;
-        $order->payment_total = $cart->paymentTotal;
+        $order->total = $card->total;
+        $order->payment_total = $card->paymentTotal;
         $order->date = Carbon::now()->format('Y-m-d');
+        DB::transaction(function () use ($order, $card, $customer) {
+            $this->orderService->createOrUpdate($order);
+            $orderID = Order::max('id');
+            foreach ($card->typeRooms as $typeRoom) {
+                $this->orderService->createOrderTypeRoom($orderID, $typeRoom, 0);
+            }
+            $this->orderService->sendMailBooking($customer, $card);
+        });
 
-        $this->orderService->createOrUpdate($order);
-        $orderID = Order::max('id');
-        foreach ($cart->typeRooms as $typeRoom) {
-            $this->orderService->createOrderTypeRoom($orderID, $typeRoom);
-        }
-
-        $this->orderService->sendMailBooking($customer, $cart);
-        Session::forget('cart');
+        Session::forget('card');
         Session::forget('infoBooking');
         Session::forget('code');
 

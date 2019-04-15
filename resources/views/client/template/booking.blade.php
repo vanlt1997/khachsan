@@ -19,7 +19,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($cart->typeRooms as $typeRoom)
+        @foreach($card->typeRooms as $typeRoom)
             <tr>
                 <td>{{$typeRoom['typeRoom']->name}}</td>
                 <td>$ {{$typeRoom['price']}}</td>
@@ -32,15 +32,15 @@
         @endforeach
         <tr>
             <td colspan="5">Total</td>
-            <td>$ {{$cart->total}}</td>
+            <td>$ {{$card->total}}</td>
         </tr>
         <tr>
             <td colspan="5">Promotion</td>
-            <td>$ {{$cart->promotion}}</td>
+            <td>$ {{$card->promotion}}</td>
         </tr>
         <tr>
             <td colspan="5">Payment Total</td>
-            <td>$ {{$cart->paymentTotal}}</td>
+            <td>$ {{$card->paymentTotal}}</td>
         </tr>
     </tbody>
 </table>

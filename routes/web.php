@@ -128,6 +128,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/', 'OrderController@index')->name('index');
         Route::get('/getList', 'OrderController@getList')->name('getList');
         Route::get('/create', 'OrderController@create')->name('create');
+        Route::post('/create', 'OrderController@actionCreate')->name('create');
         Route::get('/{order}/edit', 'OrderController@edit')->name('edit');
         Route::post('/{order}/edit', 'OrderController@actionEdit')->name('edit');
         Route::get('/{order}/delete', 'OrderController@delete')->name('delete');

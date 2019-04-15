@@ -122,7 +122,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($cart->typeRooms as $typeRoom)
+                            @foreach($card->typeRooms as $typeRoom)
                                 <tr>
                                     <td>
                                         <img src="{{asset('images/admin/library-images')}}/{{$typeRoom['typeRoom']->images->first()['url']}}"
@@ -139,15 +139,15 @@
                             @endforeach
                             <tr class="text-danger">
                                 <td colspan="7" class="text-right">Total</td>
-                                <td>$ {{$cart->total}}</td>
+                                <td>$ {{$card->total}}</td>
                             </tr>
                             <tr class="text-danger">
                                 <td colspan="7" class="text-right">Promotion</td>
-                                <td>$ {{$cart->promotion}}</td>
+                                <td>$ {{$card->promotion}}</td>
                             </tr>
                             <tr class="text-danger">
                                 <td colspan="7" class="text-right">Payment Total</td>
-                                <td>$ {{$cart->paymentTotal}}</td>
+                                <td>$ {{$card->paymentTotal}}</td>
                             </tr>
                         </tbody>
                     </table>

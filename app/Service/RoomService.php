@@ -64,4 +64,9 @@ class RoomService
     {
         return $this->room->groupBy(['id','type_room_id'])->get();
     }
+
+    public function getRoomByName($name)
+    {
+        return $this->room->whereName($name)->first();
+    }
 }

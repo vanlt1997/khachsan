@@ -25,5 +25,10 @@ function chooseRoom(name) {
 
     this.styleRoomChoose();
     $('#nameRoom').val(rooms);
+    if ($('#nameRoom').val() === null || $('#nameRoom').val() === '') {
+        $('#btnCalculate').prop("disabled", true);
+    } else {
+        $('#btnCalculate').removeAttr("disabled");
+    }
 }
 

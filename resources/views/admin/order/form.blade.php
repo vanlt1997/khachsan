@@ -130,9 +130,9 @@
                             <label for="payment">Payment</label>
                         </div>
                         <div class="col-md-10">
-                            <select name="payment" class="form-control">
+                            <select name="payment_method" class="form-control">
                                 @foreach($payments as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    <option value="{{$item->name}}">{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -158,15 +158,34 @@
                             <div class="col-md-3">
                                 To <input type="date" name="endDate" class="form-control">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-1">
                                 Number <input type="number" name="number_people" class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                Promotion <input type="text" name="promotion" class="form-control">
                             </div>
                             <div class="col-md-12 mt-2">
                                 <button type="button" class="btn btn-outline-primary btn-sm" id="btnSearchRoom">Search</button>
-                                <button type="button" class="btn btn-outline-success btn-sm" id="btnCalculate">Calculate</button>
+                                <button type="button" class="btn btn-outline-success btn-sm ml-3" id="btnCalculate" disabled>Calculate</button>
                             </div>
-                            <div class="row col-md-12" id="showRoom">
-                                <input type="text" name="nameRoom" id="nameRoom">
+                            <div class="row col-md-12 mt-5" id="showRoom">
+                                <input type="text" name="nameRoom" id="nameRoom" hidden>
+                                @if($errors->has('nameRoom'))
+                                    <p class="text-danger"><i
+                                                class="fa fa-exclamation-circle"></i> {{$errors->first('nameRoom')}}</p>
+                                @endif
+                            </div>
+                            <div class="row col-md-12 text-danger">
+                                <h6 id="infoTotal">Total : $0</h6>
+                            </div>
+                            <div class="row col-md-12 text-danger">
+                                <h6 id="infoPromotion">Promotion : $0</h6>
+                            </div>
+                            <div class="row col-md-12 text-danger">
+                                <h6 id="infoPayment">Payment total : $0</h6>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button type="submit" class="btn btn-sm btn-outline-success">Save</button>
                             </div>
                         </div>
                     </div>
@@ -241,14 +260,23 @@
             let endData = $('[name=endDate]').val();
             let number_people = $('[name=number_people]').val();
             let nameRooms = $('#nameRoom').val();
-            console.log(nameRooms);
+            let promotion = $('[name=promotion]').val();
             $.ajax({
                 url: '{{route('admin.orders.calculate')}}',
                 type: 'POST',
                 contentType: 'application/json;charset=utf8',
-                data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people, 'nameRooms': nameRooms}),
+                data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people, 'nameRooms': nameRooms, 'promotion': promotion}),
                 success: function (data) {
+                    console.log(data);
 
+                    $('#infoTotal').text('Total : $0');
+                    $('#infoPromotion').text('Promotion : $0');
+                    $('#infoPayment').text('Payment total : $0');
+                    if (data) {
+                        $('#infoTotal').text('Total : $'+ data.total);
+                        $('#infoPromotion').text('Promotion : $' + data.promotion);
+                        $('#infoPayment').text('Payment total : $' + data.payment);
+                    }
                 }
 
             })

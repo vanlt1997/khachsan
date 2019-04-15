@@ -9,6 +9,7 @@
 namespace App\Service;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\OrderTypeRoom;
 use App\Models\Room;
 use App\Models\TypeRoom;
@@ -24,13 +25,15 @@ class OrderService
     protected $typeRoom;
     protected $room;
     protected $orderTypeRoom;
+    protected $orderDetail;
 
-    public function __construct(Order $order, TypeRoom $typeRoom, Room $room, OrderTypeRoom $orderTypeRoom)
+    public function __construct(Order $order, TypeRoom $typeRoom, Room $room, OrderTypeRoom $orderTypeRoom, OrderDetail $orderDetail)
     {
         $this->order = $order;
         $this->typeRoom = $typeRoom;
         $this->room = $room;
         $this->orderTypeRoom = $orderTypeRoom;
+        $this->orderDetail = $orderDetail;
     }
 
     public function orders()
@@ -108,11 +111,13 @@ class OrderService
         $action->save();
     }
 
-    public function createOrderTypeRoom($id, $typeRoom)
+    public function createOrderTypeRoom($id, $typeRoom, $number_room, $orderId = null)
     {
-        $action = new OrderTypeRoom();
+        $action =$this->orderTypeRoom->find($orderId)??new OrderTypeRoom();
         $action->order_id = $id;
         $action->type_room_id = $typeRoom['typeRoom']->id;
+        $action->number_people = $typeRoom['number_people'];
+        $action->number_room= $number_room;
         $action->price = $typeRoom['price'];
         $action->sale = $typeRoom['sale'];
         $action->total = $typeRoom['total'];
@@ -122,9 +127,9 @@ class OrderService
         $action->save();
     }
 
-    public function sendMailBooking($customer, $cart)
+    public function sendMailBooking($customer, $card)
     {
-        Mail::send('client.template.booking', ['customer' => $customer, 'cart' => $cart], function ($message) use ($customer) {
+        Mail::send('client.template.booking', ['customer' => $customer, 'cart' => $card], function ($message) use ($customer) {
             $message->to($customer['email'], $customer['name'])->subject('Booking Success');
         });
     }
@@ -132,5 +137,17 @@ class OrderService
     public function deleteOrder($order)
     {
         return $this->order->find($order->id)->delete();
+    }
+
+    public function createOrUpdateOrderDetail($order, $id = null)
+    {
+        $action = $this->orderDetail->find($id) ?? new OrderDetail();
+        $action->order_type_room_id = $order->order_type_room_id;
+        $action->room_id = $order->room_id;
+        $action->date = Carbon::now()->format('Y-m-d');
+        $action->start_date = $order->start_date;
+        $action->end_date = $order->end_date;
+
+        $action->save();
     }
 }
