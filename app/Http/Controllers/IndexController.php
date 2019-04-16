@@ -301,7 +301,7 @@ class IndexController extends Controller
             $this->orderService->createOrUpdate($order);
             $orderID = Order::max('id');
             foreach ($card->typeRooms as $typeRoom) {
-                $this->orderService->createOrderTypeRoom($orderID, $typeRoom, 0);
+                $this->orderService->createOrUpdateOrderTypeRoom($orderID, $typeRoom, 0);
             }
             $this->orderService->sendMailBooking($customer, $card);
         });

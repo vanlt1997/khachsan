@@ -76,14 +76,36 @@ class OrderService
         }
 
         if ($from !== null) {
-            $query->whereNull('start_date')->orWhere('start_date', '>=', $data->endDate)->orWhere('end_date', '<=', $data->startDate)
-                ->select(DB::raw('count(*) as total_room'), 'type_rooms.id as id','type_rooms.name as type_room_name', 'price',
-                'type_rooms.people as number_people', 'bed', 'extra_bed', 'acreage', 'view', 'type_rooms.description as description', 'sale')
-                ->groupBy('type_rooms.id');
+            $query->whereNull('start_date')->orWhere('start_date', '>=', $data->endDate)
+                ->orWhere('end_date', '<=', $data->startDate)
+                ->select(
+                    DB::raw('count(*) as total_room'),
+                    'type_rooms.id as id',
+                    'type_rooms.name as type_room_name',
+                    'price',
+                    'type_rooms.people as number_people',
+                    'bed',
+                    'extra_bed',
+                    'acreage',
+                    'view',
+                    'type_rooms.description as description',
+                    'sale'
+                )->groupBy('type_rooms.id');
         } else {
-            $query->select('type_rooms.name as type_room_name', 'type_rooms.price as price',
-                'type_rooms.people as number_people', 'rooms.name as room_name', 'bed', 'start_date', 'end_date',
-                'extra_bed', 'acreage', 'view', 'type_rooms.description as description', 'sale');
+            $query->select(
+                'type_rooms.name as type_room_name',
+                'type_rooms.price as price',
+                'type_rooms.people as number_people',
+                'rooms.name as room_name',
+                'bed',
+                'start_date',
+                'end_date',
+                'extra_bed',
+                'acreage',
+                'view',
+                'type_rooms.description as description',
+                'sale'
+            );
         }
         return $query->get();
     }
@@ -123,7 +145,7 @@ class OrderService
         $action = $this->order->find($id)?? new Order();
 
         $action->user_id = $order->user_id;
-        $action->status_order_id = self::WAIT;
+        $action->status_order_id = $order->status_order_id;
         $action->payment_method = $order->payment_method;
         $action->quantity = $order->quantity;
         $action->promotion = $order->promotion;
@@ -134,9 +156,9 @@ class OrderService
         $action->save();
     }
 
-    public function createOrderTypeRoom($id, $typeRoom, $number_room, $orderId = null)
+    public function createOrUpdateOrderTypeRoom($id, $typeRoom, $number_room, $orderId = null)
     {
-        $action =$this->orderTypeRoom->find($orderId)??new OrderTypeRoom();
+        $action =$this->orderTypeRoom->whereOrderId($orderId)->first()?? new OrderTypeRoom();
         $action->order_id = $id;
         $action->type_room_id = $typeRoom['typeRoom']->id;
         $action->number_people = $typeRoom['number_people'];
@@ -152,7 +174,10 @@ class OrderService
 
     public function sendMailBooking($customer, $card)
     {
-        Mail::send('client.template.booking', ['customer' => $customer, 'cart' => $card], function ($message) use ($customer) {
+        Mail::send('client.template.booking', [
+            'customer' => $customer,
+            'cart' => $card
+        ], function ($message) use ($customer) {
             $message->to($customer['email'], $customer['name'])->subject('Booking Success');
         });
     }
@@ -172,5 +197,44 @@ class OrderService
         $action->end_date = $order->end_date;
 
         $action->save();
+    }
+
+    public function getOrderDetailsByOrder($order)
+    {
+        $query =  DB::table('orders')->join('order_type_room', 'orders.id', '=', 'order_type_room.order_id')
+                                ->join('type_rooms', 'order_type_room.type_room_id', '=', 'type_rooms.id')
+                                ->join('order_detail', 'order_type_room.id', '=', 'order_detail.order_type_room_id')
+                                ->join('rooms', 'order_detail.room_id', '=', 'rooms.id')
+                                ->where('orders.id', $order->id);
+        if ($order->status_order_id === self::HANDLED) {
+            $query->where('orders.status_order_id', self::HANDLED);
+        } else {
+            $query->where('orders.status_order_id', self::WAIT);
+
+        }
+
+        return $query->select(
+            'orders.promotion as promotion',
+            'orders.total as total',
+            'orders.payment_total as paymentToTal',
+            'type_rooms.name as nameTypeRoom',
+            'type_rooms.price as price',
+            'type_rooms.sale as sale',
+            'type_rooms.people as numberPeople',
+            'rooms.name as nameRoom'
+        )->get();
+    }
+
+    public function getOrderTypeRoomsByOrder($order)
+    {
+        return $this->orderTypeRoom->whereOrderId($order->id)->get();
+    }
+
+    public function deleteOrderTypeRoom($order)
+    {
+        return DB::table('order_type_room')
+            ->where('order_id', $order->id)
+            ->join('order_detail', 'order_type_room.id', '=', 'order_detail.order_type_room_id')
+            ->delete();
     }
 }

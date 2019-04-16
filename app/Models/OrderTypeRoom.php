@@ -25,9 +25,5 @@ class OrderTypeRoom extends Model
     public static function boot()
     {
         parent::boot();
-
-        self::deleting(function ($model) {
-            OrderDetail::whereOrderTypeRoomId($model->id)->delete();
-        });
     }
 }

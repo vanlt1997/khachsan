@@ -1,4 +1,11 @@
-var rooms = [], i;
+var rooms = [], i, check;
+
+check = document.getElementsByClassName('img-choosed');
+for (i = 0 ; i < check.length; i++)
+{
+    rooms.push(check[i].getAttribute('data-content'));
+}
+document.getElementById('nameRoom').value = rooms;
 
 function styleRoomChoose() {
     var imgModal, icon;

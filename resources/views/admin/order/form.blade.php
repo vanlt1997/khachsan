@@ -118,7 +118,7 @@
                         <div class="col-md-10">
                             <select name="status" class="form-control">
                                 @foreach($status as $item)
-                                    <option value="{{$item->id}}" @if(isset($order) && $order->status_order_id === $item->id) selected @endif >{{$item->name}}</option>
+                                    <option value="{{$item->id}}" @if(isset($order) && $order->status_order_id === $item->id || $item->id === 2) selected @endif >{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -169,14 +169,17 @@
                                 <button type="button" class="btn btn-outline-success btn-sm ml-3" id="btnCalculate" disabled>Calculate</button>
                             </div>
                             <div class="row col-md-12 mt-5" id="showRoom">
-                                @if(isset($order))
-                                    @foreach($order->orderTypeRooms as $item)
-                                        <div class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal" >
-                                            <p>{{$item->orderDetails->room->name}}</p>
+                                <input type="text" name="nameRoom" id="nameRoom">
+                                @if(isset($rooms) && isset($order))
+                                    @foreach($rooms as $room)
+                                        <div data-content="{{$room->nameRoom}}" class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal img-choosed" id="{{$room->nameRoom}}" onclick="chooseRoom('{{$room->nameRoom}}')">
+                                            <p>{{$room->nameTypeRoom}}</p>
+                                            <p>Room {{$room->nameRoom}}</p>
+                                            <p>{{$room->numberPeople}} people/room</p>
+                                            <p>Sale {{$room->sale ?? 0 }} %</p>
                                         </div>
                                     @endforeach
                                 @endif
-                                <input type="text" name="nameRoom" id="nameRoom" hidden>
                                 @if($errors->has('nameRoom'))
                                     <p class="text-danger"><i
                                                 class="fa fa-exclamation-circle"></i> {{$errors->first('nameRoom')}}</p>
@@ -236,6 +239,12 @@
             let startDate = $('[name=startDate]').val();
             let endData = $('[name=endDate]').val();
             let number_people = $('[name=number_people]').val();
+            let nameRooms = $('#nameRoom').val();
+            let arrNameRooms= [];
+            if (nameRooms) {
+                arrNameRooms = nameRooms.split(',');
+            }
+
             $.ajax({
                 url: '{{route('admin.orders.search-room')}}',
                 type: 'POST',
@@ -248,10 +257,18 @@
                         html +='<p class="mb-4 text-danger img-modal">Can\'t room for you !</p>'
                     } else {
                         data.forEach(function (room) {
-                            html += '<div class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal" ' +
+                            var sale = room.sale === null ? 0 : room.sale;
+                            var hasSelected = '';
+                            if(arrNameRooms) {
+                                console.log(1);
+                                if(arrNameRooms.indexOf(room.room_name) > -1) {
+                                    hasSelected = 'img-choosed';
+                                }
+                            }
+                            html += '<div class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal ' + hasSelected + '" ' +
                                 'id="'+ room.room_name +'" onclick="chooseRoom('+room.room_name+')"><p>'+room.type_room_name
                                 +'</p><p>Room '+room.room_name+'</p><p>'+room.number_people+' people/room</p><p>$' +room.price+
-                                '/day</p><p>Sale '+ room.sale ? room.sale : 0 +'%</p></div>'
+                                '/day</p><p>Sale '+ sale +'%</p></div>';
 
                         });
                     }
