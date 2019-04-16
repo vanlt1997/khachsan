@@ -127,10 +127,19 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/', 'OrderController@index')->name('index');
         Route::get('/getList', 'OrderController@getList')->name('getList');
+        Route::get('/wait', 'OrderController@orderWait')->name('wait');
+        Route::get('/list-order-wait', 'OrderController@getOrderWait')->name('list-wait');
+        Route::get('/handled', 'OrderController@orderHandles')->name('handled');
+        Route::get('/list-order-handled', 'OrderController@getOrderHandled')->name('list-handled');
         Route::get('/create', 'OrderController@create')->name('create');
         Route::post('/create', 'OrderController@actionCreate')->name('create');
-        Route::get('/{order}/edit', 'OrderController@edit')->name('edit');
-        Route::post('/{order}/edit', 'OrderController@actionEdit')->name('edit');
+//        Wait
+        Route::get('/wait/{order}/edit', 'OrderController@editWait')->name('wait.edit');
+        Route::post('/wait/{order}/edit', 'OrderController@actionEditWait')->name('wait.edit');
+//        Handle
+        Route::get('/handled/{order}/edit', 'OrderController@editHandled')->name('handled.edit');
+        Route::post('/handled/{order}/edit', 'OrderController@actionEditHandled')->name('handled.edit');
+
         Route::get('/{order}/delete', 'OrderController@delete')->name('delete');
         Route::post('/select-user', 'OrderController@selectUser')->name('select-user');
         Route::post('/select-room', 'OrderController@searchRoom')->name('search-room');

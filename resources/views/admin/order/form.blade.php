@@ -24,7 +24,7 @@
                         <select class="form-control select-user" name="selectUsers" id="selectUser">
                             <option value="">Choose user</option>
                             @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->email}}</option>
+                                <option value="{{$user->id}}" @if( isset($order) && $order->user->id === $user->id) selected @endif>{{$user->email}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -118,7 +118,7 @@
                         <div class="col-md-10">
                             <select name="status" class="form-control">
                                 @foreach($status as $item)
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    <option value="{{$item->id}}" @if(isset($order) && $order->status_order_id === $item->id) selected @endif >{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -132,7 +132,7 @@
                         <div class="col-md-10">
                             <select name="payment_method" class="form-control">
                                 @foreach($payments as $item)
-                                    <option value="{{$item->name}}">{{$item->name}}</option>
+                                    <option value="{{$item->name}}" @if(isset($order) && $order->payment_method === $item->name) selected @endif>{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -148,27 +148,34 @@
                                 Type Room <select name="typeRooms" class="form-control" id="selectTypeRoom">
                                     <option value="">--Select Type Room--</option>
                                 @foreach($typeRooms as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                        <option value="{{$item->id}}" @if(isset($order) && count($order->orderTypeRooms) ===1 && $order->orderTypeRooms[0]->type_room_id === $item->id) selected @endif>{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                From <input type="date" name="startDate" class="form-control">
+                                From <input type="date" name="startDate" class="form-control" value="{{$order->orderTypeRooms[0]->start_date ?? null}}">
                             </div>
                             <div class="col-md-3">
-                                To <input type="date" name="endDate" class="form-control">
+                                To <input type="date" name="endDate" class="form-control" value="{{$order->orderTypeRooms[0]->end_date ?? null}}">
                             </div>
                             <div class="col-md-1">
-                                Number <input type="number" name="number_people" class="form-control">
+                                Number <input type="number" name="number_people" class="form-control" value="{{$order->orderTypeRooms[0]->number_people ?? null}}">
                             </div>
                             <div class="col-md-2">
-                                Promotion <input type="text" name="promotion" class="form-control">
+                                Promotion <input type="text" name="promotion" class="form-control" >
                             </div>
                             <div class="col-md-12 mt-2">
                                 <button type="button" class="btn btn-outline-primary btn-sm" id="btnSearchRoom">Search</button>
                                 <button type="button" class="btn btn-outline-success btn-sm ml-3" id="btnCalculate" disabled>Calculate</button>
                             </div>
                             <div class="row col-md-12 mt-5" id="showRoom">
+                                @if(isset($order))
+                                    @foreach($order->orderTypeRooms as $item)
+                                        <div class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal" >
+                                            <p>{{$item->orderDetails->room->name}}</p>
+                                        </div>
+                                    @endforeach
+                                @endif
                                 <input type="text" name="nameRoom" id="nameRoom" hidden>
                                 @if($errors->has('nameRoom'))
                                     <p class="text-danger"><i
@@ -176,13 +183,13 @@
                                 @endif
                             </div>
                             <div class="row col-md-12 text-danger">
-                                <h6 id="infoTotal">Total : $0</h6>
+                                <h6 id="infoTotal">Total : $ {{$order->total ?? 0}}</h6>
                             </div>
                             <div class="row col-md-12 text-danger">
-                                <h6 id="infoPromotion">Promotion : $0</h6>
+                                <h6 id="infoPromotion">Promotion : $ {{$order->promotion ?? 0}}</h6>
                             </div>
                             <div class="row col-md-12 text-danger">
-                                <h6 id="infoPayment">Payment total : $0</h6>
+                                <h6 id="infoPayment">Payment total : $ {{$order->payment_total ?? 0}}</h6>
                             </div>
                             <div class="col-md-12 mt-5">
                                 <button type="submit" class="btn btn-sm btn-outline-success">Save</button>
@@ -244,7 +251,7 @@
                             html += '<div class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal" ' +
                                 'id="'+ room.room_name +'" onclick="chooseRoom('+room.room_name+')"><p>'+room.type_room_name
                                 +'</p><p>Room '+room.room_name+'</p><p>'+room.number_people+' people/room</p><p>$' +room.price+
-                                '/day</p>  </div>'
+                                '/day</p><p>Sale '+ room.sale ? room.sale : 0 +'%</p></div>'
 
                         });
                     }

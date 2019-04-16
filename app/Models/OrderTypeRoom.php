@@ -11,4 +11,23 @@ class OrderTypeRoom extends Model
     protected $fillable = [
         'order_id', 'type_room_id', 'number_people', 'number_room', 'price', 'sale', 'total', 'start_date', 'end_date'
     ];
+
+    public function rooms()
+    {
+        return $this->belongsToMany('App\Models\Room');
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany('App\Models\OrderDetail');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function ($model) {
+            OrderDetail::whereOrderTypeRoomId($model->id)->delete();
+        });
+    }
 }

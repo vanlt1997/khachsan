@@ -24,6 +24,7 @@ use Yajra\DataTables\DataTables;
 class OrderController extends Controller
 {
     const HANDLED = 2;
+    const WAIT = 1;
 
     protected $orderService;
     protected $userService;
@@ -56,20 +57,63 @@ class OrderController extends Controller
         return view('admin.order.index');
     }
 
+    public function orderWait()
+    {
+        return view('admin.order.wait');
+    }
+
+    public function orderHandles()
+    {
+        return view('admin.order.handled');
+    }
+
     public function getList()
     {
         return DataTables::of($this->orderService->orders())
             ->addColumn('user_name', function ($order) {
                 return $order->user->name;
             })
-            ->addColumn('statu_name', function ($order) {
+            ->addColumn('status_name', function ($order) {
                 return $order->statusOrder->name;
             })
             ->addColumn('action', function ($order) {
+                $html = null;
+                if ($order->status_order_id === self::WAIT) {
+                    $html = '<a href="orders/wait/' . $order->id . '/edit" class="btn btn-sm btn-outline-primary" > <i class="fa fa-pencil"></i></a>';
+                } else {
+                    $html = '<a href="orders/handled/' . $order->id . '/edit" class="btn btn-sm btn-outline-primary" > <i class="fa fa-pencil"></i></a>';
+                }
                 return
-                    '<a href="orders/' . $order->id . '/edit" class="btn btn-sm btn-outline-primary" > <i class="fa fa-pencil"></i></a>
-                    <a href="orders/' . $order->id . '/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Are you sure ?\')"> <i class="fa fa-trash-o"></i></a>
-    
+                    $html.'<a href="orders/' . $order->id . '/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Are you sure ?\')"> <i class="fa fa-trash-o"></i></a>';
+            })
+            ->make(true);
+    }
+
+    public function getOrderWait()
+    {
+        return DataTables::of($this->orderService->getOrderWait())
+            ->addColumn('user_name', function ($order) {
+                return $order->user->name;
+            })
+            ->addColumn('action', function ($order) {
+                return
+                    '<a href="wait/' . $order->id . '/edit" class="btn btn-sm btn-outline-primary" > <i class="fa fa-pencil"></i></a>
+                    <a href="' . $order->id . '/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Are you sure ?\')"> <i class="fa fa-trash-o"></i></a>
+                    ';
+            })
+            ->make(true);
+    }
+
+    public function getOrderHandled()
+    {
+        return DataTables::of($this->orderService->getOrderHanded())
+            ->addColumn('user_name', function ($order) {
+                return $order->user->name;
+            })
+            ->addColumn('action', function ($order) {
+                return
+                    '<a href="handled/' . $order->id . '/edit" class="btn btn-sm btn-outline-primary" > <i class="fa fa-pencil"></i></a>
+                    <a href="' . $order->id . '/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Are you sure ?\')"> <i class="fa fa-trash-o"></i></a>
                     ';
             })
             ->make(true);
@@ -93,7 +137,6 @@ class OrderController extends Controller
         if (! $user) {
             $this->userService->createOrUpdate($request);
         }
-        //dd($card);
         $order = new Order();
         $order->user_id = $user->id;
         $order->status_order_id = $request->status;
@@ -127,6 +170,8 @@ class OrderController extends Controller
             }
         });
 
+        Session::forget('card');
+        Session::forget('rooms');
         return redirect()->route('admin.orders.index')->with('message', 'Create Order Successfully !')->withInput();
     }
 
@@ -195,12 +240,27 @@ class OrderController extends Controller
         return response()->json($data, 200);
     }
 
-    public function edit(Order $order)
+    public function editHandled(Order $order)
+    {
+        $users = $this->userService->users();
+        $status = $this->statusOrderService->statusOrders();
+        $payments = $this->paymentService->payments();
+        $typeRooms = $this->typeRoomService->getTypeRooms();
+
+        return view('admin.order.form', compact('order', 'users', 'status', 'payments', 'typeRooms'));
+    }
+
+    public function actionEditHandled(Order $order)
     {
 
     }
 
-    public function actionEdit(Order $order)
+    public function editWait(Order $order)
+    {
+
+    }
+
+    public function actionEditWait(Order $order)
     {
 
     }

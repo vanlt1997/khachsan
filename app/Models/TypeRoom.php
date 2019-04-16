@@ -29,7 +29,7 @@ class TypeRoom extends Model
 
     public function orders()
     {
-        return $this->hasMany('App\Models\Order');
+        return $this->belongsToMany('App\Models\Order');
     }
 
 

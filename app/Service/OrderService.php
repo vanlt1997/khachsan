@@ -21,14 +21,22 @@ class OrderService
 {
     const STATUS_ROOM = [3, 4];
     const WAIT = 1;
+    const HANDLED = 2;
+
     protected $order;
     protected $typeRoom;
     protected $room;
     protected $orderTypeRoom;
     protected $orderDetail;
 
-    public function __construct(Order $order, TypeRoom $typeRoom, Room $room, OrderTypeRoom $orderTypeRoom, OrderDetail $orderDetail)
-    {
+    public function __construct(
+        Order $order,
+        TypeRoom $typeRoom,
+        Room $room,
+        OrderTypeRoom
+        $orderTypeRoom,
+        OrderDetail $orderDetail
+    ) {
         $this->order = $order;
         $this->typeRoom = $typeRoom;
         $this->room = $room;
@@ -38,7 +46,22 @@ class OrderService
 
     public function orders()
     {
-        return $this->order->with(['payment', 'user', 'promotions', 'typeRoom', 'statusOrder'])
+        return $this->order->with(['payment', 'user', 'promotions', 'typeRooms', 'statusOrder'])
+            ->orderBy('status_order_id', 'asc')
+            ->get();
+    }
+
+    public function getOrderWait()
+    {
+        return $this->order->with(['payment', 'user', 'promotions', 'typeRooms', 'statusOrder'])
+            ->where('status_order_id', self::WAIT)
+            ->get();
+    }
+
+    public function getOrderHanded()
+    {
+        return $this->order->with(['payment', 'user', 'promotions', 'typeRooms', 'statusOrder'])
+            ->where('status_order_id', self::HANDLED)
             ->get();
     }
 

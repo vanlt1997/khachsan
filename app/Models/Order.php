@@ -27,9 +27,9 @@ class Order extends Model
         return $this->belongsTo('App\Models\Payment');
     }
 
-    public function typeRoom()
+    public function typeRooms()
     {
-        return $this->belongsTo('App\Models\TypeRoom');
+        return $this->belongsToMany('App\Models\TypeRoom');
     }
 
     public function statusOrder()
@@ -37,12 +37,17 @@ class Order extends Model
         return $this->belongsTo('App\Models\StatusOrder');
     }
 
+    public function orderTypeRooms()
+    {
+        return $this->hasMany('App\Models\OrderTypeRoom');
+    }
+
     public static function boot()
     {
         parent::boot();
 
         self::deleting(function ($model) {
-            OrderTypeRoom::whereOrderId($model->id);
+            OrderTypeRoom::whereOrderId($model->id)->delete();
         });
     }
 }

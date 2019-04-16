@@ -131,9 +131,29 @@
                     <a href="{{route('admin.orders.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-money"></i>
                         <p>
-                            Orders
+                            Orders <i class="fa fa-angle-left right"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.orders.index')}}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>List Order</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.orders.wait')}}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>List Order Waiting</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.orders.handled')}}" class="nav-link">
+                                <i class="fa fa-circle-o nav-icon"></i>
+                                <p>List Order Handled</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="{{route('admin.type-rooms.index')}}" class="nav-link">

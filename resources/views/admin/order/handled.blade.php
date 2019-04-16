@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Orders')
+@section('title','Orders Handled')
 @section('css')
     <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/alert.css')}}">
@@ -8,7 +8,7 @@
 @section('header')
     <div class="container">
         <div class="title-header">
-            <h3 class="text-center">Orders</h3>
+            <h3 class="text-center">Orders Handled</h3>
         </div>
     </div>
 
@@ -27,13 +27,12 @@
                 {{Session::get('error')}}
             </div>
         @endif
-        <table class="table table-striped table-bordered" id="orders-table">
+        <table class="table table-striped table-bordered" id="orders-handled-table">
             <thead>
             <tr>
                 <th>ID</th>
                 <th>User Name</th>
                 <th>Payment Method</th>
-                <th>Status</th>
                 <th>Type Room Number</th>
                 <th>Total</th>
                 <th>Promotion</th>
@@ -44,15 +43,19 @@
             </thead>
         </table>
     </div>
+    <div class="container" style="clear: both">
+        <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-outline-info"><i
+                    class="fa fa-plus-circle"></i> Add</a>
+    </div>
 @endsection
 @push('scripts')
     <script>
         $(function () {
-            $('#orders-table').DataTable({
+            $('#orders-handled-table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: '{{route('admin.orders.getList')}}',
+                    url: '{{route('admin.orders.list-handled')}}',
                 },
                 columns: [
                     {data: 'id', name: 'id'},
@@ -66,13 +69,6 @@
                     {
                         data: 'payment_method',
                         name: 'payment_method',
-                    },
-                    {
-                        data: null,
-                        name: 'status_name',
-                        render: function (data) {
-                            return data.status_name;
-                        }
                     },
                     {data: 'quantity', name: 'quantity'},
                     {data: 'total', name: 'total'},
