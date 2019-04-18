@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\OrderRequest;
 use App\Models\Card;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\OrderTypeRoom;
 use App\Models\Room;
+use App\Models\User;
 use App\Service\OrderService;
 use App\Http\Controllers\Controller;
 use App\Service\PaymentService;
@@ -124,64 +126,19 @@ class OrderController extends Controller
         $users = $this->userService->users();
         $status = $this->statusOrderService->statusOrders();
         $payments = $this->paymentService->payments();
-        $typeRooms = $this->typeRoomService->getTypeRooms();
+        $infoTypeRooms = $this->orderService->getNumberRoomsMoreDateNow();
 
-        return view('admin.order.form', compact('users', 'status', 'payments', 'typeRooms'));
-    }
-
-    public function actionCreate(OrderRequest $request)
-    {
-        $card = Session::get('card');
-        $rooms = Session::get('rooms');
-        $user = $this->userService->getUserByEmai($request->email);
-        if (! $user) {
-            $this->userService->createOrUpdate($request);
-        }
-        $order = new Order();
-        $order->user_id = $user->id;
-        $order->status_order_id = $request->status;
-        $order->payment_method = $request->payment_method;
-        $order->quantity = $card->sumRoom;
-        $order->promotion = $card->promotion;
-        $order->total = $card->total;
-        $order->payment_total = $card->paymentTotal;
-        $order->date = Carbon::now()->format('Y-m-d');
-
-        DB::transaction(function () use ($order, $card, $rooms, $request) {
-            $this->orderService->createOrUpdate($order);
-            $orderID = Order::max('id');
-            foreach ($card->typeRooms as $typeRoom) {
-                $this->orderService->createOrUpdateOrderTypeRoom($orderID, $typeRoom, 0);
-                $orderTypeRoomId = OrderTypeRoom::max('id');
-                $number_room = 0;
-                foreach ($rooms as $room) {
-                    if ($typeRoom['typeRoom']->id === $room->typeRoom->id) {
-                        $number_room++;
-                        $orderDetail = new OrderTypeRoom();
-                        $orderDetail->order_type_room_id = $orderTypeRoomId;
-                        $orderDetail->room_id = $room->id;
-                        $orderDetail->date = Carbon::now()->format('Y-m-d');
-                        $orderDetail->start_date = $request->startDate;
-                        $orderDetail->end_date = $request->endDate;
-                        $this->orderService->createOrUpdateOrderDetail($orderDetail);
-                    }
-                }
-                $this->orderService->createOrUpdateOrderTypeRoom($orderID, $typeRoom, $number_room, $orderTypeRoomId);
-            }
-        });
-
-        Session::forget('card');
-        Session::forget('rooms');
-        return redirect()->route('admin.orders.handled')->with('message', 'Create Order Successfully !');
+        return view('admin.order.form', compact('users', 'status', 'payments', 'infoTypeRooms'));
     }
 
     public function searchRoom(Request $request)
     {
-        $rooms = $this->orderService->checkRoom($request);
-        if ($rooms['total_people'] < $request->number_people) {
+        $rooms = $this->orderService->getRoomsWhenSearchInAdmin($request);
+        $typeRoom = $this->orderService->actionQuery($request);
+        if ($typeRoom[0]->total_room*$typeRoom[0]->number_people < $request->number_people) {
             return response()->json(0, 200);
         } else {
-            return response()->json($rooms['rooms'], 200);
+            return response()->json($rooms, 200);
         }
     }
 
@@ -194,61 +151,106 @@ class OrderController extends Controller
 
     public function calculate(Request $request)
     {
-        Session::forget('card');
-        Session::forget('rooms');
         $typeRoomId = $request->typeRoom;
         $startDate = $request->startDate;
         $endDate = $request->endDate;
         $number_people = $request->number_people;
+
+        if (!$startDate && !$endDate && !$number_people) {
+            return response()->json(null, 200);
+        }
         $nameRooms = $request->nameRooms;
-        $code = $request->promotion;
-        $promotion = $this->promotionService->checkCode($code);
-        $pricePromotion = $promotion? $promotion->sale : 0;
         $arrRoom = [];
         $arrNameRooms = explode(',', $nameRooms);
         foreach ($arrNameRooms as $nameRoom) {
-            $arrRoom[] = $this->roomService->getRoomByName($nameRoom);
-        }
-
-        if ($typeRoomId) {
-            $oldCard = Session::has('card') ? Session::get('card') : null;
-            $order = new Card($oldCard);
-            $typeRoom = $this->typeRoomService->find($typeRoomId);
-            $order->addTypeRoom($typeRoomId, $typeRoom, $startDate, $endDate, $number_people, $pricePromotion);
-            Session::put('card', $order);
-        } else {
-            $typeRooms = [];
-            foreach ($arrRoom as $room) {
-                if (! array_key_exists($room->typeRoom->id, $typeRooms)) {
-                    $typeRooms[$room->typeRoom->id] = $room->typeRoom;
-                }
-            }
-            $oldCard = Session::has('card') ? Session::get('card') : null;
-            $order = new Card($oldCard);
-            foreach ($typeRooms as $typeRoom) {
-                $order->addTypeRoom($typeRoom->id, $typeRoom, $startDate, $endDate, $number_people, $pricePromotion);
-                Session::put('card', $order);
+            $room = $this->roomService->getRoomByName($nameRoom);
+            if ((int)$room->type_room_id === (int)$typeRoomId) {
+                $arrRoom[] = $room;
             }
         }
-        if ($arrRoom) {
-            Session::put('rooms', $arrRoom);
-        }
+        $oldCard = Session::has('card') ? Session::get('card') : null;
+        $card = new Card($oldCard);
+        $typeRoom = $this->typeRoomService->find($typeRoomId);
+        $card->addTypeRoom($typeRoomId, $typeRoom, $startDate, $endDate, $number_people, 0, $arrRoom);
+        Session::put('card', $card);
 
         $card = Session::get('card');
-        $data = ['total' => $card->total, 'promotion' => $card->promotion, 'payment' => $card->paymentTotal];
+        $data = $card->total;
 
         return response()->json($data, 200);
     }
 
+    public function actionCreate(OrderRequest $request)
+    {
+        $card = Session::get('card');
+        $promotion = $this->promotionService->checkCode(trim($request->promotion));
+        if ($promotion) {
+            $card->promotion = $promotion->sale;
+            $card->paymentTotal = $card->total - $promotion->sale;
+        }
+        Session::put('card', $card);
+        $card = Session::get('card');
+        //dd($card->typeRooms[1]['rooms']);
+        $infoBooling = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'sex' => $request->sex,
+            'address' => $request->address,
+            'payment' => $request->payment_method
+        ];
+        Session::put('infoBooking', $infoBooling);
+
+        return view('admin.order.confirm', compact('request', 'card'));
+    }
+
+    public function finishCreate()
+    {
+        $card = Session::get('card');
+        $customer = Session::get('infoBooking');
+        $newUser = $this->userService->getUserByEmai($customer['email']);
+        if (!$newUser) {
+            $this->userService->createOrUpdate($customer);
+        }
+        $newUser = $this->userService->getUserByEmai($customer['email']);
+        $order = new Order();
+        $order->user_id = $newUser->id;
+        $order->status_order_id =self::HANDLED;
+        $order->payment_method = $customer['payment'];
+        $order->quantity = $card->sumRoom;
+        $order->promotion = $card->promotion;
+        $order->total = $card->total;
+        $order->payment_total = $card->paymentTotal;
+        $order->date = Carbon::now()->format('Y-m-d');
+        DB::transaction(function () use ($order, $card, $customer) {
+            $this->orderService->createOrUpdate($order);
+            $orderID = Order::max('id');
+            foreach ($card->typeRooms as $typeRoom) {
+                $this->orderService->createOrUpdateOrderTypeRoom($orderID, $typeRoom, count($typeRoom['typeRoom']->rooms) ?? 0);
+                if ($typeRoom['typeRoom']->rooms) {
+                    foreach ($typeRoom['typeRoom']->rooms as $room) {
+                        $orderTypeRoomId = OrderTypeRoom::max('id');
+                        $orderDetail = new OrderTypeRoom();
+                        $orderDetail->order_type_room_id = $orderTypeRoomId;
+                        $orderDetail->room_id = $room->id;
+                        $orderDetail->date = Carbon::now()->format('Y-m-d');
+                        $orderDetail->start_date = $typeRoom['startDate'];
+                        $orderDetail->end_date = $typeRoom['endDate'];
+                        $this->orderService->createOrUpdateOrderDetail($orderDetail);
+                    }
+                }
+            }
+        });
+
+        Session::forget('card');
+        Session::forget('infoBooking');
+
+        return redirect()->route('admin.orders.handled')->with('message', 'Create Order Successfully !');
+    }
+
     public function editHandled(Order $order)
     {
-        $users = $this->userService->users();
-        $status = $this->statusOrderService->statusOrders();
-        $payments = $this->paymentService->payments();
-        $typeRooms = $this->typeRoomService->getTypeRooms();
-        $rooms = $this->orderService->getOrderDetailsByOrder($order);
 
-        return view('admin.order.form', compact('order', 'users', 'status', 'payments', 'typeRooms', 'rooms'));
     }
 
     public function deleteOrder(Order $order)
@@ -262,47 +264,7 @@ class OrderController extends Controller
 
     public function actionEditHandled(Order $order, OrderRequest $request)
     {
-        $card = Session::get('card');
-        $rooms = Session::get('rooms');
-        $user = $this->userService->getUserByEmai($request->email);
 
-        $this->userService->createOrUpdate($request, $user->id);
-
-        $order->user_id = $user->id;
-        $order->status_order_id = $request->status;
-        $order->payment_method = $request->payment_method;
-        $order->quantity = $card->sumRoom;
-        $order->promotion = $card->promotion;
-        $order->total = $card->total;
-        $order->payment_total = $card->paymentTotal;
-        $order->date = Carbon::now()->format('Y-m-d');
-
-        DB::transaction(function () use ($order, $card, $rooms, $request) {
-            $this->orderService->createOrUpdate($order, $order->id);
-            $this->orderService->deleteOrderTypeRoom($order);
-            foreach ($card->typeRooms as $typeRoom) {
-                $this->orderService->createOrUpdateOrderTypeRoom($order->id, $typeRoom, 0);
-                $orderTypeRoomId = OrderTypeRoom::max('id');
-                $number_room = 0;
-                foreach ($rooms as $room) {
-                    if ($typeRoom['typeRoom']->id === $room->typeRoom->id) {
-                        $number_room++;
-                        $orderDetail = new OrderTypeRoom();
-                        $orderDetail->order_type_room_id = $orderTypeRoomId;
-                        $orderDetail->room_id = $room->id;
-                        $orderDetail->date = Carbon::now()->format('Y-m-d');
-                        $orderDetail->start_date = $request->startDate;
-                        $orderDetail->end_date = $request->endDate;
-                        $this->orderService->createOrUpdateOrderDetail($orderDetail);
-                    }
-                }
-                $this->orderService->createOrUpdateOrderTypeRoom($order->id, $typeRoom, $number_room, $orderTypeRoomId);
-            }
-        });
-
-        Session::forget('card');
-        Session::forget('rooms');
-        return redirect()->route('admin.orders.index')->with('message', 'Create Order Successfully !');
     }
 
     public function editWait(Order $order)
@@ -313,6 +275,13 @@ class OrderController extends Controller
     public function actionEditWait(Order $order)
     {
 
+    }
+
+    public function delete()
+    {
+        Session::forget('card');
+
+        return response()->json(null, 200);
     }
 
 }

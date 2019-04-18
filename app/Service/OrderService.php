@@ -66,69 +66,87 @@ class OrderService
     }
 
 
-    public function actionQuery($data, $from = null)
+    public function actionQuery($data)
     {
         $query = DB::table('type_rooms')->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
-                                        ->leftJoin('order_detail', 'rooms.id', '=', 'order_detail.room_id')
                                         ->where('rooms.status_id', '!=', 4);
         if ($data->typeRoom !== null) {
             $query->where('type_rooms.id', $data->typeRoom);
         }
+        $query->whereIn('rooms.id', function ($query) use ($data) {
+            $query->select('rooms.id')
+                ->from('type_rooms')
+                ->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
+                ->leftjoin('order_detail', 'rooms.id', '=', 'order_detail.room_id')
+                ->whereNull('order_detail.start_date')
+                ->orWhere('order_detail.start_date', '>=', $data->endDate)
+                ->orWhere('order_detail.end_date', '<=', $data->startDate);
+        })->select(
+            DB::raw('count(*) as total_room'),
+            'type_rooms.id as id',
+            'type_rooms.name as type_room_name',
+            'price',
+            'type_rooms.people as number_people',
+            'bed',
+            'extra_bed',
+            'acreage',
+            'view',
+            'type_rooms.description as description',
+            'sale'
+        )->groupBy('type_rooms.id');
+        return $query->get();
+    }
 
-        if ($from !== null) {
-            $query->whereNull('start_date')->orWhere('start_date', '>=', $data->endDate)
-                ->orWhere('end_date', '<=', $data->startDate)
-                ->select(
-                    DB::raw('count(*) as total_room'),
-                    'type_rooms.id as id',
-                    'type_rooms.name as type_room_name',
-                    'price',
-                    'type_rooms.people as number_people',
-                    'bed',
-                    'extra_bed',
-                    'acreage',
-                    'view',
-                    'type_rooms.description as description',
-                    'sale'
-                )->groupBy('type_rooms.id');
-        } else {
-            $query->select(
+    public function getNumberRoomsMoreDateNow()
+    {
+        $query = DB::table('type_rooms')->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
+            ->where('rooms.status_id', '!=', 4)
+            ->whereIn('rooms.id', function ($query) {
+                $query->select('rooms.id')
+                    ->from('type_rooms')
+                    ->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
+                    ->leftjoin('order_detail', 'rooms.id', '=', 'order_detail.room_id')
+                    ->whereNull('order_detail.start_date')
+                    ->orWhere('order_detail.start_date', '>=', Carbon::now()->format('Y-m-d'))
+                    ->orWhere('order_detail.end_date', '>=', Carbon::now()->format('Y-m-d'));
+            })->select(
+                DB::raw('count(*) as total_room'),
+                'type_rooms.id as id',
                 'type_rooms.name as type_room_name',
-                'type_rooms.price as price',
+                'price',
                 'type_rooms.people as number_people',
-                'rooms.name as room_name',
                 'bed',
-                'start_date',
-                'end_date',
                 'extra_bed',
                 'acreage',
                 'view',
                 'type_rooms.description as description',
                 'sale'
-            );
-        }
+            )->groupBy('type_rooms.id');
+
         return $query->get();
     }
 
-    public function checkRoom($data)
+    public function getRoomsWhenSearchInAdmin($data)
     {
-        $rooms = [];
-        $totalPeople = 0;
-        $listRooms = $this->actionQuery($data);
-        foreach ($listRooms as $item) {
-            if ($item->start_date == null && $item->end_date == null) {
-                $rooms[] = $item;
-                $totalPeople+= $item->number_people;
-            } elseif ($data->endDate <= $item->start_date || $data->startDate >= $item->end_date) {
-                $rooms[] = $item;
-                $totalPeople+= $item->number_people;
-            }
-        }
+        $query = DB::table('rooms')
+            ->where('rooms.type_room_id', $data->typeRoom)
+            ->where('rooms.status_id', '!=', 4)
+            ->whereIn('rooms.id', function ($query) use ($data) {
+                $query->select('rooms.id')
+                    ->from('rooms')
+                    ->leftjoin('order_detail', 'rooms.id', '=', 'order_detail.room_id')
+                    ->whereNull('order_detail.start_date')
+                    ->orWhere('order_detail.start_date', '>=', $data->endDate)
+                    ->orWhere('order_detail.end_date', '<=', $data->startDate);
+            })
+            ->join('type_rooms', 'rooms.type_room_id', '=', 'type_rooms.id')
+            ->select(
+                'rooms.id as id',
+                'rooms.name as name',
+                'type_rooms.name as name_type_room'
+            );
 
-        return [
-            'rooms' => $rooms,
-            'total_people' => $totalPeople
-        ];
+        return $query->get();
     }
 
     public function checkRoomWhenBooking($typeRoom)
@@ -176,7 +194,7 @@ class OrderService
     {
         Mail::send('client.template.booking', [
             'customer' => $customer,
-            'cart' => $card
+            'card' => $card
         ], function ($message) use ($customer) {
             $message->to($customer['email'], $customer['name'])->subject('Booking Success');
         });

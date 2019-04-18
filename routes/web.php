@@ -133,6 +133,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/list-order-handled', 'OrderController@getOrderHandled')->name('list-handled');
         Route::get('/create', 'OrderController@create')->name('create');
         Route::post('/create', 'OrderController@actionCreate')->name('create');
+        Route::get('/finish', 'OrderController@finishCreate')->name('finish');
 //        Wait
         Route::get('/wait/{order}/edit', 'OrderController@editWait')->name('wait.edit');
         Route::post('/wait/{order}/edit', 'OrderController@actionEditWait')->name('wait.edit');
@@ -144,5 +145,6 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::post('/select-user', 'OrderController@selectUser')->name('select-user');
         Route::post('/select-room', 'OrderController@searchRoom')->name('search-room');
         Route::post('/calculate', 'OrderController@calculate')->name('calculate');
+        Route::post('/delete', 'OrderController@delete')->name('delete');
     });
 });

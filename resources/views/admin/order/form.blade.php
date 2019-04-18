@@ -141,14 +141,47 @@
                 <div class="form-group">
                     <div class="row col-md-12">
                         <div class="col-md-2">
+                            <label for="payment">Promotion</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input type="text" name="promotion" class="form-control" id="promotion">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row col-md-12">
+                        <div class="col-md-2">
+                            <label for="payment">Information Type Room</label>
+                        </div>
+                        <div class="col-md-10 row">
+                            @foreach($infoTypeRooms as $typeRoom)
+                                <div class="col-md-6">
+                                    <ul class="text-danger">
+                                        <li>{{$typeRoom->type_room_name}}
+                                            <ul>
+                                                <li>Free rooms : {{$typeRoom->total_room}}</li>
+                                                <li>Number/Room : {{$typeRoom->number_people}}</li>
+                                                <li>Price : {{$typeRoom->price}}</li>
+                                                <li>Sale : {{$typeRoom->sale}} %</li>
+                                                <li>acreage : {{$typeRoom->acreage ?? 0}} m <sup>2</sup></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row col-md-12">
+                        <div class="col-md-2">
                             <label for="typeRoom">Type Room</label>
                         </div>
                         <div class="col-md-10 row">
                             <div class="col-md-3">
-                                Type Room <select name="typeRooms" class="form-control" id="selectTypeRoom">
-                                    <option value="">--Select Type Room--</option>
-                                @foreach($typeRooms as $item)
-                                        <option value="{{$item->id}}" @if(isset($order) && count($order->orderTypeRooms) ===1 && $order->orderTypeRooms[0]->type_room_id === $item->id) selected @endif>{{$item->name}}</option>
+                                Type Room <select name="typeRoom" class="form-control" id="selectTypeRoom">
+                                @foreach($infoTypeRooms as $item)
+                                        <option value="{{$item->id}}" >{{$item->type_room_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -158,15 +191,13 @@
                             <div class="col-md-3">
                                 To <input type="date" name="endDate" class="form-control" value="{{$order->orderTypeRooms[0]->end_date ?? null}}">
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-3">
                                 Number <input type="number" name="number_people" class="form-control" value="{{$order->orderTypeRooms[0]->number_people ?? null}}">
-                            </div>
-                            <div class="col-md-2">
-                                Promotion <input type="text" name="promotion" class="form-control" >
                             </div>
                             <div class="col-md-12 mt-2">
                                 <button type="button" class="btn btn-outline-primary btn-sm" id="btnSearchRoom">Search</button>
-                                <button type="button" class="btn btn-outline-success btn-sm ml-3" id="btnCalculate" disabled>Calculate</button>
+                                <button type="button" class="btn btn-outline-success btn-sm ml-3" id="btnCalculate" disabled>Add</button>
+                                <button type="button" class="btn btn-outline-danger btn-sm ml-3" id="btnDelete">Delete</button>
                             </div>
                             <div class="row col-md-12 mt-5" id="showRoom">
                                 <input type="text" name="nameRoom" id="nameRoom">
@@ -188,14 +219,11 @@
                             <div class="row col-md-12 text-danger">
                                 <h6 id="infoTotal">Total : $ {{$order->total ?? 0}}</h6>
                             </div>
-                            <div class="row col-md-12 text-danger">
-                                <h6 id="infoPromotion">Promotion : $ {{$order->promotion ?? 0}}</h6>
-                            </div>
-                            <div class="row col-md-12 text-danger">
-                                <h6 id="infoPayment">Payment total : $ {{$order->payment_total ?? 0}}</h6>
+                            <div class="row col-md-12 text-success">
+                                <p id="choosedRoom"></p>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button type="submit" class="btn btn-sm btn-outline-success">Save</button>
+                                <button type="submit" class="btn btn-sm btn-outline-success">Next</button>
                             </div>
                         </div>
                     </div>
@@ -235,6 +263,7 @@
         });
 
         $('#btnSearchRoom').on('click', function () {
+            $('.img-modal').remove();
             let typeRoom = $('#selectTypeRoom').val();
             let startDate = $('[name=startDate]').val();
             let endData = $('[name=endDate]').val();
@@ -251,28 +280,28 @@
                 contentType: 'application/json;charset=utf8',
                 data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people}),
                 success: function (data) {
+                    console.log(data);
                     var html = '';
-                    $('.img-modal').remove();
                     if (data == 0) {
                         html +='<p class="mb-4 text-danger img-modal">Can\'t room for you !</p>'
                     } else {
                         data.forEach(function (room) {
-                            var sale = room.sale === null ? 0 : room.sale;
+                            $('#'+room.name).remove();
                             var hasSelected = '';
                             if(arrNameRooms) {
-                                console.log(1);
-                                if(arrNameRooms.indexOf(room.room_name) > -1) {
+                                if(arrNameRooms.indexOf(room.name) > -1) {
                                     hasSelected = 'img-choosed';
                                 }
                             }
+
                             html += '<div class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal ' + hasSelected + '" ' +
-                                'id="'+ room.room_name +'" onclick="chooseRoom('+room.room_name+')"><p>'+room.type_room_name
-                                +'</p><p>Room '+room.room_name+'</p><p>'+room.number_people+' people/room</p><p>$' +room.price+
-                                '/day</p><p>Sale '+ sale +'%</p></div>';
+                                'id="'+ room.name +'" onclick="chooseRoom('+room.name+')"><p>Room '+room.name
+                                +'</q><p>'+ room.name_type_room +'</p></div>';
 
                         });
                     }
                     $('#showRoom').append(html);
+                    $('#nameRoom').val('');
                 }
 
             })
@@ -291,18 +320,27 @@
                 contentType: 'application/json;charset=utf8',
                 data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people, 'nameRooms': nameRooms, 'promotion': promotion}),
                 success: function (data) {
-                    console.log(data);
-
                     $('#infoTotal').text('Total : $0');
                     $('#infoPromotion').text('Promotion : $0');
                     $('#infoPayment').text('Payment total : $0');
                     if (data) {
-                        $('#infoTotal').text('Total : $'+ data.total);
-                        $('#infoPromotion').text('Promotion : $' + data.promotion);
-                        $('#infoPayment').text('Payment total : $' + data.payment);
+                        $('#infoTotal').text('Total : $'+ data);
+                        $('[name=startDate]').val('');
+                        $('[name=endDate]').val('');
+                        $('[name=number_people]').val('');
+                    } else {
+                        $('#showRoom').text('Please complete all information !');
                     }
                 }
 
+            })
+        });
+
+        $('#btnDelete').on('click', function () {
+            $.ajax({
+                url: '{{route('admin.orders.delete')}}',
+                type: 'POST',
+                contentType: 'application/json;charset=utf8',
             })
         });
 

@@ -55,4 +55,6 @@ class TypeRoomService
         return $this->typeRoom->orderBy('sale', 'desc')->get();
     }
 
+
+
 }

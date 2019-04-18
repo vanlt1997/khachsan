@@ -58,15 +58,14 @@ class TypeRoomController extends Controller
         $this->typeRoomService->createOrUpdate($request);
         $typeRoom = $this->typeRoomService->getItemLast();
         $this->deviceService->saveDeviceTypeRoom($typeRoom->id, $request->devices);
-        $this->imageService->saveImageTypeRoom( $typeRoom->id, $request->images);
+        $this->imageService->saveImageTypeRoom($typeRoom->id, $request->images);
 
         return redirect()->route('admin.type-rooms.index')->with('message', 'Create TypeRoom Successfully !');
     }
 
     public function delete($id)
     {
-        if ($this->typeRoomService->find($id)->rooms->isEmpty())
-        {
+        if ($this->typeRoomService->find($id)->rooms->isEmpty()) {
             $this->typeRoomService->delete($id);
             return redirect()->route('admin.type-rooms.index')->with('message', 'Delete TypeRoom Successfully !');
         }
@@ -95,7 +94,7 @@ class TypeRoomController extends Controller
     public function actionEdit($id, TypeRoomRequest $request)
     {
         $this->typeRoomService->createOrUpdate($request, $id);
-        $this->imageService->saveImageTypeRoom( $id, $request->images);
+        $this->imageService->saveImageTypeRoom($id, $request->images);
         $this->deviceService->saveDeviceTypeRoom($id, $request->devices);
 
         return redirect()->route('admin.type-rooms.index')->with('message', 'Update TypeRoom Successfully !');

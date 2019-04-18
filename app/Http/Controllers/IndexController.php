@@ -142,7 +142,7 @@ class IndexController extends Controller
     {
         $slidebars = $this->slideBarService->getSlideBars();
         $images = $this->imageService->getImagesFooter();
-        $typeRooms = $this->orderService->actionQuery($request, 'client');
+        $typeRooms = $this->orderService->actionQuery($request);
         $totalPeople = 0;
         foreach ($typeRooms as $typeRoom) {
             $totalPeople += (int)$typeRoom->total_room*(int)$typeRoom->number_people;
@@ -157,7 +157,7 @@ class IndexController extends Controller
 
     public function searchRoomOfDetailTypeRoom(TypeRoom $typeRoom, SearchRoomRequest $request)
     {
-        $typeRooms = $this->orderService->actionQuery($request, 'client');
+        $typeRooms = $this->orderService->actionQuery($request);
         $totalPeople = (int)$typeRooms[0]->total_room*(int)$typeRooms[0]->number_people;
         $total_room = $typeRooms[0]->total_room;
         if ($totalPeople < $request->number_people) {
@@ -187,7 +187,6 @@ class IndexController extends Controller
 
     public function listTypeRoomBook()
     {
-//        Session::forget('card');
         $slidebars = $this->slideBarService->getSlideBars();
         $images = $this->imageService->getImagesFooter();
         $card = Session::get('card');
@@ -206,7 +205,7 @@ class IndexController extends Controller
 
     public function editTypeRoom(TypeRoom $typeRoom, SearchRoomRequest $request)
     {
-        $typeRooms = $this->orderService->actionQuery($request, 'client');
+        $typeRooms = $this->orderService->actionQuery($request);
         $nameType = $typeRoom->name;
         $totalPeople = (int)$typeRooms[0]->total_room*(int)$typeRooms[0]->number_people;
         $total_room = $typeRooms[0]->total_room;
@@ -289,6 +288,7 @@ class IndexController extends Controller
             $this->userService->createOrUpdate($customer);
         }
         $order = new Order();
+        $newUser = $this->userService->getUserByEmai($customer['email']);
         $order->user_id = $newUser->id;
         $order->status_order_id =self::WAIT;
         $order->payment_method = $customer['payment']->name;
@@ -297,6 +297,7 @@ class IndexController extends Controller
         $order->total = $card->total;
         $order->payment_total = $card->paymentTotal;
         $order->date = Carbon::now()->format('Y-m-d');
+
         DB::transaction(function () use ($order, $card, $customer) {
             $this->orderService->createOrUpdate($order);
             $orderID = Order::max('id');
@@ -305,7 +306,6 @@ class IndexController extends Controller
             }
             $this->orderService->sendMailBooking($customer, $card);
         });
-
         Session::forget('card');
         Session::forget('infoBooking');
         Session::forget('code');

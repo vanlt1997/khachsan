@@ -14,7 +14,9 @@ function styleRoomChoose() {
         imgModal[i].className = imgModal[i].className.replace(" img-choosed", "");
     }
     for (i=0; i<rooms.length; i++) {
-        document.getElementById(rooms[i]).className += " img-choosed";
+        if (document.getElementById(rooms[i])) {
+            document.getElementById(rooms[i]).className += " img-choosed";
+        }
     }
 }
 
@@ -29,9 +31,9 @@ function chooseRoom(name) {
     } else {
         rooms.push(name);
     }
-
     this.styleRoomChoose();
     $('#nameRoom').val(rooms);
+    $('#choosedRoom').text(rooms);
     if ($('#nameRoom').val() === null || $('#nameRoom').val() === '') {
         $('#btnCalculate').prop("disabled", true);
     } else {

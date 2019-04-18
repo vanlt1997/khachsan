@@ -19,14 +19,12 @@ class RoomController extends Controller
     protected $imageService;
     protected $typeRoomService;
 
-    public function __construct
-    (
+    public function __construct(
         RoomService $roomService,
         StatusService $statusService,
         ImageService $imageService,
         TypeRoomService $typeRoomService
-    )
-    {
+    ) {
         $this->roomService = $roomService;
         $this->statusService = $statusService;
         $this->imageService = $imageService;

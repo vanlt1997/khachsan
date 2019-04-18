@@ -42,7 +42,7 @@
                 </li>
                 <li class="nav-item"><a href="{{route('client.contact')}}" class="nav-link">CONTACT</a></li>
                 <li class="nav-item"><a href="{{route('client.promotions')}}" class="nav-link">PROMOTIONS</a></li>
-                <li class="nav-item"><a href="{{route('client.booking')}}" class="nav-link">@if(Session::has('cart'))<span class="badge badge-pill badge-danger">{{Session('cart')->sumRoom}}</span> @else <span class="badge badge-pill badge-danger">0</span>@endif BOOKING</a></li>
+                <li class="nav-item"><a href="{{route('client.booking')}}" class="nav-link">@if(Session::has('card'))<span class="badge badge-pill badge-danger">{{Session::get('card')->sumRoom}}</span> @else <span class="badge badge-pill badge-danger">0</span>@endif BOOKING</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">REGISTRATION</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">LOGIN</a></li>
             </ul>
