@@ -127,15 +127,16 @@ class OrderController extends Controller
         $status = $this->statusOrderService->statusOrders();
         $payments = $this->paymentService->payments();
         $infoTypeRooms = $this->orderService->getNumberRoomsMoreDateNow();
+        $typeRooms = $this->typeRoomService->getTypeRooms();
 
-        return view('admin.order.form', compact('users', 'status', 'payments', 'infoTypeRooms'));
+        return view('admin.order.form', compact('users', 'status', 'payments', 'infoTypeRooms', 'typeRooms'));
     }
 
     public function searchRoom(Request $request)
     {
         $rooms = $this->orderService->getRoomsWhenSearchInAdmin($request);
         $typeRoom = $this->orderService->actionQuery($request);
-        if ($typeRoom[0]->total_room*$typeRoom[0]->number_people < $request->number_people) {
+        if ($typeRoom->isEmpty() || $typeRoom[0]->total_room*$typeRoom[0]->number_people < $request->number_people) {
             return response()->json(0, 200);
         } else {
             return response()->json($rooms, 200);
@@ -175,7 +176,10 @@ class OrderController extends Controller
         Session::put('card', $card);
 
         $card = Session::get('card');
-        $data = $card->total;
+        foreach ($card->typeRooms as $typeRoom) {
+            $nameTypeRooms[] = $typeRoom['typeRoom']->name;
+        }
+        $data = ['total' => $card->total, 'nameTypeRooms' => $nameTypeRooms ];
 
         return response()->json($data, 200);
     }
@@ -183,6 +187,7 @@ class OrderController extends Controller
     public function actionCreate(OrderRequest $request)
     {
         $card = Session::get('card');
+        $typeRooms = $this->typeRoomService->getTypeRooms();
         $promotion = $this->promotionService->checkCode(trim($request->promotion));
         if ($promotion) {
             $card->promotion = $promotion->sale;
@@ -201,7 +206,22 @@ class OrderController extends Controller
         ];
         Session::put('infoBooking', $infoBooling);
 
-        return view('admin.order.confirm', compact('request', 'card'));
+        return view('admin.order.confirm', compact('request', 'card', 'typeRooms'));
+    }
+
+    public function deleteTypeRoomWhenBooking(Request $request)
+    {
+        $oldCard = Session::has('card') ? Session::get('card') : null;
+        $card = new Card($oldCard);
+        $card->deleteTypeRoom($request->id);
+        $data = null;
+        if (count($card->typeRooms) > 0) {
+            Session::put('card', $card);
+            $data = ['total' => $card->total, 'promotion' => $card->promotion, 'paymentTotal' => $card->paymentTotal];
+        } else {
+            Session::forget('card');
+        }
+        return response()->json($data, 200);
     }
 
     public function finishCreate()
@@ -281,7 +301,7 @@ class OrderController extends Controller
     {
         Session::forget('card');
 
-        return response()->json(null, 200);
+        return response()->json(null, 204);
     }
 
 }

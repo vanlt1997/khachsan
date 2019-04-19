@@ -180,13 +180,13 @@
                         <div class="col-md-10 row">
                             <div class="col-md-3">
                                 Type Room <select name="typeRoom" class="form-control" id="selectTypeRoom">
-                                @foreach($infoTypeRooms as $item)
-                                        <option value="{{$item->id}}" >{{$item->type_room_name}}</option>
+                                @foreach($typeRooms as $item)
+                                        <option value="{{$item->id}}" >{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                From <input type="date" name="startDate" class="form-control" value="{{$order->orderTypeRooms[0]->start_date ?? null}}">
+                                From <input type="date" name="startDate" class="form-control" value="{{$order->orderTypeRooms[0]->start_date ?? null}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                             </div>
                             <div class="col-md-3">
                                 To <input type="date" name="endDate" class="form-control" value="{{$order->orderTypeRooms[0]->end_date ?? null}}">
@@ -200,7 +200,7 @@
                                 <button type="button" class="btn btn-outline-danger btn-sm ml-3" id="btnDelete">Delete</button>
                             </div>
                             <div class="row col-md-12 mt-5" id="showRoom">
-                                <input type="text" name="nameRoom" id="nameRoom">
+                                <input type="text" name="nameRoom" id="nameRoom" hidden>
                                 @if(isset($rooms) && isset($order))
                                     @foreach($rooms as $room)
                                         <div data-content="{{$room->nameRoom}}" class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal img-choosed" id="{{$room->nameRoom}}" onclick="chooseRoom('{{$room->nameRoom}}')">
@@ -216,14 +216,14 @@
                                                 class="fa fa-exclamation-circle"></i> {{$errors->first('nameRoom')}}</p>
                                 @endif
                             </div>
+                            <div class="row col-md-12 text-success">
+                                <p id="nameChooseTypeRoom"></p>
+                            </div>
                             <div class="row col-md-12 text-danger">
                                 <h6 id="infoTotal">Total : $ {{$order->total ?? 0}}</h6>
                             </div>
-                            <div class="row col-md-12 text-success">
-                                <p id="choosedRoom"></p>
-                            </div>
                             <div class="col-md-12 mt-5">
-                                <button type="submit" class="btn btn-sm btn-outline-success">Next</button>
+                                <button type="submit" class="btn btn-sm btn-outline-success" id="btnNext" disabled >Next</button>
                             </div>
                         </div>
                     </div>
@@ -308,6 +308,7 @@
         });
 
         $('#btnCalculate').on('click', function () {
+            $('.nameTypeRoom').remove();
             let typeRoom = $('#selectTypeRoom').val();
             let startDate = $('[name=startDate]').val();
             let endData = $('[name=endDate]').val();
@@ -321,13 +322,19 @@
                 data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people, 'nameRooms': nameRooms, 'promotion': promotion}),
                 success: function (data) {
                     $('#infoTotal').text('Total : $0');
-                    $('#infoPromotion').text('Promotion : $0');
-                    $('#infoPayment').text('Payment total : $0');
                     if (data) {
-                        $('#infoTotal').text('Total : $'+ data);
+                        $('#infoTotal').text('Total : $'+ data['total']);
                         $('[name=startDate]').val('');
                         $('[name=endDate]').val('');
                         $('[name=number_people]').val('');
+                        var html = '<ul class="nameTypeRoom">';
+                        data['nameTypeRooms'].forEach(function (name) {
+                            html += '<li>'+ name +'</li>'
+                        });
+                        html += '</ul>';
+                        console.log(html);
+                        $('#nameChooseTypeRoom').append(html);
+                        $('#btnNext').removeAttr('disabled');
                     } else {
                         $('#showRoom').text('Please complete all information !');
                     }
@@ -341,6 +348,12 @@
                 url: '{{route('admin.orders.delete')}}',
                 type: 'POST',
                 contentType: 'application/json;charset=utf8',
+                success: function () {
+                    $("#btnNext").prop('disabled', true);
+                    $('#infoTotal').text('');
+                    $('.nameTypeRoom').remove();
+                    $('.img-modal').remove();
+                }
             })
         });
 

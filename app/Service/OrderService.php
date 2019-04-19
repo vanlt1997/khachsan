@@ -101,14 +101,12 @@ class OrderService
     {
         $query = DB::table('type_rooms')->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
             ->where('rooms.status_id', '!=', 4)
-            ->whereIn('rooms.id', function ($query) {
-                $query->select('rooms.id')
-                    ->from('type_rooms')
-                    ->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
+            ->orWhereIn('rooms.type_room_id', function ($query) {
+                $query->select('rooms.type_room_id')
+                    ->from('rooms')
                     ->leftjoin('order_detail', 'rooms.id', '=', 'order_detail.room_id')
                     ->whereNull('order_detail.start_date')
-                    ->orWhere('order_detail.start_date', '>=', Carbon::now()->format('Y-m-d'))
-                    ->orWhere('order_detail.end_date', '>=', Carbon::now()->format('Y-m-d'));
+                    ->orWhere('order_detail.start_date', '>=', Carbon::now()->format('Y-m-d'));
             })->select(
                 DB::raw('count(*) as total_room'),
                 'type_rooms.id as id',

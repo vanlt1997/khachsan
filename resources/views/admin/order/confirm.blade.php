@@ -41,8 +41,9 @@
             </div>
         </div>
         <div class="row">
-            <h4 class="text-primary col-md-12 mt-5 mb-5">Infomition Type Room</h4>
-            <table class="table table-hover table-striped">
+            <h4 class="text-primary col-md-12 mt-5 mb-5" id="title-info">Infomition Type Room</h4>
+            @if(isset($card))
+                <table class="table table-hover table-striped" id="card">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -52,21 +53,42 @@
                         <th>Checkin</th>
                         <th>Checkout</th>
                         <th>Total</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($card->typeRooms as $typeRoom)
-                        <tr>
-                            <td>{{$typeRoom['typeRoom']->name}}</td>
-                            <td>$ {{$typeRoom['price']}}</td>
-                            <td>{{$typeRoom['sale']}} %</td>
-                            <td>{{$typeRoom['number_people']}}</td>
-                            <td>{{$typeRoom['startDate']}}</td>
-                            <td>{{$typeRoom['endDate']}}</td>
-                            <td>$ {{$typeRoom['total']}}</td>
+                        <tr id="order-{{$typeRoom['typeRoom']->id}}">
+                            <td>
+                                <select name="typeRoom" class="form-control" id="selectTypeRoom">
+                                    @foreach($typeRooms as $item)
+                                        <option value="{{$item->id}}" @if($item->id === $typeRoom['typeRoom']->id) selected @endif>{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" name="price" id="price" value="{{$typeRoom['price']}}" class="form-control" readonly>
+                            </td>
+                            <td>
+                                <input type="text" name="sale" id="sale" value="{{$typeRoom['sale']}}" class="form-control" readonly>
+                            </td>
+                            <td>
+                                <input type="text" name="number_people" id="number_people" value="{{$typeRoom['number_people']}}" class="form-control">
+                            </td>
+                            <td>
+                                <input type="date" name="startDate" id="startDate" value="{{$typeRoom['startDate']}}" class="form-control">
+                            </td>
+                            <td>
+                                <input type="date" name="endDate" id="endDate" value="{{$typeRoom['endDate']}}" class="form-control">
+                            </td>
+                            <td>{{$typeRoom['total']}}</td>
+                            <td>
+                                <button onclick="editTypeRoom('{{$typeRoom['typeRoom']->id}}')" type="button" class="btn btn-sm btn-outline-primary mb-2"><i class="fa fa-pencil-square-o"></i></button>
+                                <button onclick="deleteTypeRoom('{{$typeRoom['typeRoom']->id}}')" type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash-o"></i></button>
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="7">
+                            <td colspan="8">
                                 @if($typeRoom['rooms'])
                                     <ul>
                                         @foreach($typeRoom['rooms'] as $room)
@@ -78,23 +100,42 @@
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="6" class="text-right">Total</td>
-                        <td>$ {{$card->total}}</td>
+                        <td colspan="7" class="text-right">Total</td>
+                        <td id="total">$ {{$card->total}}</td>
                     </tr>
                     <tr>
-                        <td colspan="6" class="text-right">Promotion</td>
-                        <td>$ {{$card->promotion}}</td>
+                        <td colspan="7" class="text-right">Promotion</td>
+                        <td id="promotion">$ {{$card->promotion}}</td>
                     </tr>
                     <tr>
-                        <td colspan="6" class="text-right">Payment Total</td>
-                        <td>$ {{$card->paymentTotal}}</td>
+                        <td colspan="7" class="text-right">Payment Total</td>
+                        <td id="paymentTotal">$ {{$card->paymentTotal}}</td>
                     </tr>
                 </tbody>
             </table>
-            <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-outline-info mr-3">Back</a>
-            <a href="{{route('admin.orders.finish')}}" class="btn btn-sm btn-outline-success">Finish</a>
+                <a href="{{route('admin.orders.finish')}}" class="btn btn-sm btn-outline-success  mr-3" id="btnFinish">Finish</a>
+            @endif
+            <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-outline-info">Back</a>
+
 
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        function deleteTypeRoom(id) {
+            if (id) {
+                $.ajax({
+                    url: '{{route('admin.orders.delete-booking')}}',
+                    type: 'POST',
+                    contentType: 'application/json;charset=utf8',
+                    data : JSON.stringify({ 'id': id}),
+                    success: function (data) {
+                        location. reload(true);
+                    }
+                })
+            }
+        }
+    </script>
+@endpush
 

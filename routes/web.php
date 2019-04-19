@@ -132,7 +132,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/handled', 'OrderController@orderHandles')->name('handled');
         Route::get('/list-order-handled', 'OrderController@getOrderHandled')->name('list-handled');
         Route::get('/create', 'OrderController@create')->name('create');
-        Route::post('/create', 'OrderController@actionCreate')->name('create');
+        Route::post('/create', 'OrderController@actionCreate')->name('create-post');
+        Route::post('/confirm-booking', 'OrderController@deleteTypeRoomWhenBooking')->name('delete-booking');
         Route::get('/finish', 'OrderController@finishCreate')->name('finish');
 //        Wait
         Route::get('/wait/{order}/edit', 'OrderController@editWait')->name('wait.edit');
