@@ -289,12 +289,38 @@ class OrderController extends Controller
 
     public function editWait(Order $order)
     {
+        $status = $this->statusOrderService->statusOrders();
+        $payments = $this->paymentService->payments();
+        $infoTypeRooms = $this->orderService->getNumberRoomsMoreDateNow();
+        $typeRooms = $this->typeRoomService->getTypeRooms();
+        //dd($order->orderTypeRooms[0]->typeRoom->name);
 
+        return view('admin.order.wait.form', compact('order', 'status', 'payments', 'typeRooms', 'infoTypeRooms'));
     }
 
-    public function actionEditWait(Order $order)
+    public function actionEditWait(Order $order, Request $request)
     {
+        DB::transaction(function () use ($order, $request) {
+            foreach ($order->orderTypeRooms as $orderTypeRoom) {
+                $nameRooms = $request['nameRoom'.$orderTypeRoom->type_room_id];
+                $arrNameRooms = explode(',', $nameRooms);
+                foreach ($arrNameRooms as $nameRoom) {
+                    $room = $this->roomService->getRoomByName($nameRoom);
+                    $orderDetail = new OrderTypeRoom();
+                    $orderDetail->order_type_room_id = $orderTypeRoom->type_room_id;
+                    $orderDetail->room_id = $room->id;
+                    $orderDetail->date = Carbon::now()->format('Y-m-d');
+                    $orderDetail->start_date = $orderTypeRoom->start_date;
+                    $orderDetail->end_date = $orderTypeRoom->end_date;
+                    $this->orderService->createOrUpdateOrderDetail($orderDetail);
+                }
+            }
+            $order->status_order_id = self::HANDLED;
+            $this->orderService->createOrUpdate($order, $order->id);
+        });
 
+
+        return redirect()->route('admin.orders.wait')->with('message', 'Order '.$order->id.' Handled Successfully !');
     }
 
     public function delete()

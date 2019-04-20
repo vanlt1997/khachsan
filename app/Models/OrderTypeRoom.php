@@ -22,6 +22,11 @@ class OrderTypeRoom extends Model
         return $this->hasMany('App\Models\OrderDetail');
     }
 
+    public function typeRoom()
+    {
+        return $this->belongsTo('App\Models\TypeRoom');
+    }
+
     public static function boot()
     {
         parent::boot();
