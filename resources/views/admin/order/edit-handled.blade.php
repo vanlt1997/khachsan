@@ -66,6 +66,15 @@
                             <td>{{$orderTypeRoom['end_date']}}</td>
                             <td>{{$orderTypeRoom['total']}}</td>
                         </tr>
+                        <tr>
+                            <td colspan="6">
+                                <ul class="text-info">
+                                    @foreach($orderTypeRoom['rooms'] as $room)
+                                        <li>Room {{$room->name}}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                        </tr>
                     @endforeach
                     <tr class="text-danger">
                         <td colspan="2" class="text-right">Total Old</td>
