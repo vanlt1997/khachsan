@@ -1,5 +1,12 @@
-var rooms = [], i;
+var rooms = [], i, check ;
 
+
+check = document.getElementsByClassName('img-choosed');
+for (i = 0 ; i < check.length; i++)
+{
+    rooms.push(check[i].getAttribute('data-content'));
+}
+document.getElementById('nameRoom').value = rooms;
 
 function styleRoomChoose() {
     var imgModal, icon;
@@ -14,7 +21,7 @@ function styleRoomChoose() {
     }
 }
 
-function chooseRoom(name, id) {
+function chooseRoom(name) {
     if (rooms.includes(name)) {
         var key = rooms.indexOf(name);
         if (key == -1) {
@@ -26,7 +33,7 @@ function chooseRoom(name, id) {
         rooms.push(name);
     }
     this.styleRoomChoose();
-    $('#nameRoom'+id).val(rooms);
+    $('#nameRoom').val(rooms);
 }
 
 

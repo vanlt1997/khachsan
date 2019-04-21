@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title',"Order" )
+@section('title',"Order Handled" )
 @section('css')
     <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/order.css')}}">
@@ -15,21 +15,6 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="form-group col-md-12">
-                <div class="row col-md-12">
-                    <div class="col-md-2">
-                        <label for="user_name">Choose user</label>
-                    </div>
-                    <div class="col-md-10">
-                        <select class="form-control select-user" name="selectUsers" id="selectUser">
-                            <option value="">Choose user</option>
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}" @if( isset($order) && $order->user->id === $user->id) selected @endif>{{$user->email}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </div>
             <form method="post" role="form" class="form-horizontal col-md-12">
                 @csrf
                 <hr>
@@ -118,7 +103,7 @@
                         <div class="col-md-10">
                             <select name="status" class="form-control">
                                 @foreach($status as $item)
-                                    <option value="{{$item->id}}" @if(isset($order) && $order->status_order_id === $item->id || $item->id === 2) selected @endif >{{$item->name}}</option>
+                                    <option value="{{$item->id}}" @if(isset($order) && $order->status_order_id === $item->id) selected @endif >{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -144,7 +129,7 @@
                             <label for="payment">Promotion</label>
                         </div>
                         <div class="col-md-10">
-                            <input type="text" name="promotion" class="form-control" id="promotion">
+                            <input type="text" name="promotion" class="form-control" id="promotion" value="{{$order->promotion}}">
                         </div>
                     </div>
                 </div>
@@ -178,39 +163,55 @@
                             <label for="typeRoom">Type Room</label>
                         </div>
                         <div class="col-md-10 row">
-                            <div class="col-md-3">
-                                Type Room <select name="typeRoom" class="form-control" id="selectTypeRoom">
-                                @foreach($typeRooms as $item)
-                                        <option value="{{$item->id}}" >{{$item->name}}</option>
+                            @foreach($order->orderTypeRooms as $orderTypeRoom)
+                                <div class="col-md-3">
+                                    Type Room <input type="text" value="{{$orderTypeRoom->typeRoom->name}}" readonly class="form-control typeRoom">
+                                </div>
+                                <div class="col-md-3">
+                                    From <input type="date" name="startDate{{$orderTypeRoom->type_room_id}}" class="form-control" value="{{$orderTypeRoom->start_date ?? null}}">
+                                </div>
+                                <div class="col-md-3">
+                                    To <input type="date" name="endDate{{$orderTypeRoom->type_room_id}}" class="form-control" value="{{$orderTypeRoom->end_date ?? null}}" >
+                                </div>
+                                <div class="col-md-3">
+                                    Number <input type="number" name="number_people{{$orderTypeRoom->type_room_id}}" class="form-control" value="{{$orderTypeRoom->number_people ?? 0}}">
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="searchRoom('{{$orderTypeRoom->type_room_id}}')">Search</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="saveRoom({{$orderTypeRoom->type_room_id}})">Save</button>
+                                </div>
+                                <div class="row col-md-12" id="messageErrorSearch{{$orderTypeRoom->type_room_id}}">
+
+                                </div>
+                                <div class="row col-md-12" id="showRoom{{$orderTypeRoom->type_room_id}}">
+
+                                    {{--Show room is choosed--}}
+                                    @foreach($orderTypeRoom->orderDetails as $orderDetail)
+                                        <div class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal  room-show"
+                                             onclick="chooseRoom('{{$orderDetail->room->name}}')"
+                                             data-content="{{$orderDetail->room->name}}"
+                                             id="{{$orderDetail->room->name}}">
+                                            <p>Room {{$orderDetail->room->name}}</p>
+                                            <p>{{$orderTypeRoom->typeRoom->name}}</p>
+                                        </div>
                                     @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                From <input type="date" name="startDate" class="form-control" value="{{$order->orderTypeRooms[0]->start_date ?? null}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
-                            </div>
-                            <div class="col-md-3">
-                                To <input type="date" name="endDate" class="form-control" value="{{$order->orderTypeRooms[0]->end_date ?? null}}">
-                            </div>
-                            <div class="col-md-3">
-                                Number <input type="number" name="number_people" class="form-control" value="{{$order->orderTypeRooms[0]->number_people ?? null}}">
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <button type="button" class="btn btn-outline-primary btn-sm" id="btnSearchRoom">Search</button>
-                                <button type="button" class="btn btn-outline-success btn-sm ml-3" id="btnCalculate" disabled>Add</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm ml-3" id="btnDelete">Delete</button>
-                            </div>
-                            <div class="row col-md-12 mt-5" id="showRoom">
-                                <input type="text" name="nameRoom" id="nameRoom" hidden>
-                            </div>
-                            <div class="row col-md-12 text-success">
-                                <p id="nameChooseTypeRoom"></p>
-                            </div>
-                            <div class="row col-md-12 text-danger">
-                                <h6 id="infoTotal">Total : $ {{$order->total ?? 0}}</h6>
-                            </div>
-                            <div class="col-md-12 mt-5">
-                                <button type="submit" class="btn btn-sm btn-outline-success" id="btnNext" disabled >Next</button>
-                            </div>
+                                </div>
+                            @endforeach
+                                <input type="text" name="nameRoom"  id="nameRoom" hidden>
+                                <div class="row col-md-6">
+                                    <div class="row col-md-12 text-danger">
+                                        <h6 id="infoTotal">Total Old: $ {{$order->total ?? 0}}</h6>
+                                    </div>
+                                    <div class="row col-md-12 text-danger">
+                                        <h6 id="infoTotal">Promotion : $ {{$order->promotion ?? 0}}</h6>
+                                    </div>
+                                    <div class="row col-md-12 text-danger">
+                                        <h6 id="infoTotal">Payment Old : $ {{$order->payment_total ?? 0}}</h6>
+                                    </div>
+                                    <div class="col-md-12 mt-5">
+                                        <button type="submit" class="btn btn-sm btn-outline-success">Next</button>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -226,123 +227,45 @@
         /*$(document).ready(function () {
             $('.select-user').select2();
         });*/
-
-        $('#selectUser').on('change', function () {
-           var userID = $(this).val();
-           console.log(userID);
-           if (userID !== null){
-               $.ajax({
-                   url: '{{route('admin.orders.select-user')}}',
-                   type: 'POST',
-                   contentType: 'application/json;charset=utf8',
-                   data: JSON.stringify({'userID': userID}),
-                   success: function (data) {
-                        $('[name=name]').val(data.name);
-                        $('[name=email]').val(data.email);
-                        $('#sex option[value='+data.sex+']').attr('selected', 'selected');
-                        $('[name=phone]').val(data.phone);
-                        $('[name=address]').val(data.address);
-
-                   }
-               })
-           }
-        });
-
-        $('#btnSearchRoom').on('click', function () {
-            $('.img-modal').remove();
-            let typeRoom = $('#selectTypeRoom').val();
-            let startDate = $('[name=startDate]').val();
-            let endData = $('[name=endDate]').val();
-            let number_people = $('[name=number_people]').val();
+        function searchRoom(typeRoomId) {
+            let typeRoom = typeRoomId;
+            let startDate = $('[name=startDate'+typeRoomId+']').val();
+            let endData = $('[name=endDate'+typeRoomId+']').val();
+            let number_people = $('[name=number_people'+typeRoomId+']').val();
             let nameRooms = $('#nameRoom').val();
             let arrNameRooms= [];
             if (nameRooms) {
                 arrNameRooms = nameRooms.split(',');
             }
-
+            $('.error-'+typeRoom).remove();
+            $('.img-modal-' + typeRoom).remove();
             $.ajax({
                 url: '{{route('admin.orders.search-room')}}',
                 type: 'POST',
                 contentType: 'application/json;charset=utf8',
                 data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people}),
                 success: function (data) {
-                    console.log(data);
                     var html = '';
                     if (data == 0) {
-                        html +='<p class="mb-4 text-danger img-modal">Can\'t room for you !</p>'
+                        $('.img-modal-' +typeRoom).remove();
+                        html +='<p class="col-md-12 mt-4 text-danger error-'+ typeRoom +'">Can\'t room for you !</p>';
+                        $('#messageErrorSearch'+typeRoom).append(html);
                     } else {
                         data.forEach(function (room) {
-                            $('#'+room.name).remove();
-                            var hasSelected = '';
                             if(arrNameRooms) {
-                                if(arrNameRooms.indexOf(room.name) > -1) {
-                                    hasSelected = 'img-choosed';
+                                if(arrNameRooms.indexOf(room.name) === -1) {
+                                    html += '<div class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal img-modal-'+typeRoomId +'" ' +
+                                        'id="'+ room.name +'" onclick="chooseRoom('+room.name+')"><p>Room '+room.name
+                                        +'</q><p>'+ room.name_type_room +'</p></div>';
                                 }
                             }
-
-                            html += '<div class="col-md-2 text-center text-danger p-3 m-3 style-room img-modal ' + hasSelected + '" ' +
-                                'id="'+ room.name +'" onclick="chooseRoom('+room.name+')"><p>Room '+room.name
-                                +'</q><p>'+ room.name_type_room +'</p></div>';
-
                         });
-                    }
-                    $('#showRoom').append(html);
-                    $('#nameRoom').val('');
-                }
-
-            })
-        });
-
-        $('#btnCalculate').on('click', function () {
-            $('.nameTypeRoom').remove();
-            let typeRoom = $('#selectTypeRoom').val();
-            let startDate = $('[name=startDate]').val();
-            let endData = $('[name=endDate]').val();
-            let number_people = $('[name=number_people]').val();
-            let nameRooms = $('#nameRoom').val();
-            let promotion = $('[name=promotion]').val();
-            $.ajax({
-                url: '{{route('admin.orders.calculate')}}',
-                type: 'POST',
-                contentType: 'application/json;charset=utf8',
-                data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people, 'nameRooms': nameRooms, 'promotion': promotion}),
-                success: function (data) {
-                    $('#infoTotal').text('Total : $0');
-                    if (data) {
-                        $('#infoTotal').text('Total : $'+ data['total']);
-                        $('[name=startDate]').val('');
-                        $('[name=endDate]').val('');
-                        $('[name=number_people]').val('');
-                        var html = '<ul class="nameTypeRoom">';
-                        data['nameTypeRooms'].forEach(function (name) {
-                            html += '<li>'+ name +'</li>'
-                        });
-                        html += '</ul>';
-                        console.log(html);
-                        $('#nameChooseTypeRoom').append(html);
-                        $('#btnNext').removeAttr('disabled');
-                    } else {
-                        $('#showRoom').text('Please complete all information !');
+                        $('#showRoom'+typeRoom).append(html);
                     }
                 }
 
             })
-        });
-
-        $('#btnDelete').on('click', function () {
-            $.ajax({
-                url: '{{route('admin.orders.delete')}}',
-                type: 'POST',
-                contentType: 'application/json;charset=utf8',
-                success: function () {
-                    $("#btnNext").prop('disabled', true);
-                    $('#infoTotal').text('');
-                    $('.nameTypeRoom').remove();
-                    $('.img-modal').remove();
-                }
-            })
-        });
-
+        }
     </script>
 @endpush
 

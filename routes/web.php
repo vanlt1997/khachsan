@@ -140,7 +140,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::post('/wait/{order}/edit', 'OrderController@actionEditWait')->name('wait.edit');
 //        Handle
         Route::get('/handled/{order}/edit', 'OrderController@editHandled')->name('handled.edit');
-        Route::post('/handled/{order}/edit', 'OrderController@actionEditHandled')->name('handled.edit');
+        Route::post('/handled/{order}/edit', 'OrderController@confirm')->name('handled.edit');
+        Route::get('/handled/finish', 'OrderController@finishEditHandled')->name('handled.finish');
 
         Route::get('/{order}/delete', 'OrderController@deleteOrder')->name('delete');
         Route::post('/select-user', 'OrderController@selectUser')->name('select-user');

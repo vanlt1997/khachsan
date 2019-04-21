@@ -178,12 +178,12 @@
                                     Number <input type="number" name="number_people{{$orderTypeRoom->type_room_id}}" class="form-control" value="{{$orderTypeRoom->number_people ?? 0}}" readonly>
                                 </div>
                                 <div class="col-md-12 mt-2">
-                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="searchRoom({{$orderTypeRoom->type_room_id}})">Search</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="searchRoom('{{$orderTypeRoom->type_room_id}}')">Search</button>
                                 </div>
                                 <div class="row col-md-12 mt-5" id="showRoom{{$orderTypeRoom->type_room_id}}">
-                                    <input type="text" name="nameRoom{{$orderTypeRoom->type_room_id}}"  id="nameRoom{{$orderTypeRoom->type_room_id}}" hidden>
                                 </div>
                             @endforeach
+                                <input type="text" name="nameRoom"  id="nameRoom">
                             <div class="row col-md-12 text-danger">
                                 <h6 id="infoTotal">Total : $ {{$order->total ?? 0}}</h6>
                             </div>
@@ -212,18 +212,17 @@
             $('.select-user').select2();
         });*/
         function searchRoom(typeRoomId) {
-            $('.img-modal').remove();
             let typeRoom = typeRoomId;
             let startDate = $('[name=startDate'+typeRoomId+']').val();
             let endData = $('[name=endDate'+typeRoomId+']').val();
             let number_people = $('[name=number_people'+typeRoomId+']').val();
+            var html = '';
             $.ajax({
                 url: '{{route('admin.orders.search-room')}}',
                 type: 'POST',
                 contentType: 'application/json;charset=utf8',
                 data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people}),
                 success: function (data) {
-                    var html = '';
                     if (data == 0) {
                         html +='<p class="mb-4 text-danger img-modal">Can\'t room for you !</p>'
                     } else {

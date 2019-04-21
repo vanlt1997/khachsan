@@ -48,7 +48,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Sale</th>
+                        <th>Sale (%)</th>
                         <th>People</th>
                         <th>Checkin</th>
                         <th>Checkout</th>

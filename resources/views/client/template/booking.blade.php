@@ -7,7 +7,7 @@
 <p>Sex : {{$customer['sex']}}</p>
 <p>Address : {{$customer['address']}}</p>
 </br>
-<table border="1" cellpadding="0" cellspacing="0">
+<table border="1" cellpadding="15px" cellspacing="0">
     <thead>
         <tr>
             <th>Name</th>
@@ -45,7 +45,7 @@
     </tbody>
 </table>
 <br>
-<h4>All information please contact via</h4>
+<h4>All information please contact with us</h4>
 <p class="text-primary">Email: maystarhotel@gmail.com</p>
 <p class="text-primary">Hotline : 0335833102</p>
 <p class="text-primary">Address: Hotel MayStar, Da Nang</p>

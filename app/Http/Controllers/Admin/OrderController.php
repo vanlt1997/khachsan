@@ -270,7 +270,122 @@ class OrderController extends Controller
 
     public function editHandled(Order $order)
     {
+        $status = $this->statusOrderService->statusOrders();
+        $payments = $this->paymentService->payments();
+        $infoTypeRooms = $this->orderService->getNumberRoomsMoreDateNow();
+        $typeRooms = $this->typeRoomService->getTypeRooms();
 
+        return view('admin.order.form-edit', compact('order', 'status', 'payments', 'typeRooms', 'infoTypeRooms'));
+    }
+
+    public function confirm(Order $order, Request $request)
+    {
+        $total = 0;
+        $info = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'sex' => $request->sex,
+            'address' => $request->address,
+            'payment' => $order->payment_method,
+        ];
+
+        foreach ($order->orderTypeRooms as $orderTypeRoom) {
+            $typeRoom = $orderTypeRoom->typeRoom;
+            $startDate =Carbon::parse($request['startDate'.$orderTypeRoom->type_room_id]);
+            $endDate =Carbon::parse($request['endDate'.$orderTypeRoom->type_room_id]);
+            $sum_day=(int)($endDate->diffInDays($startDate));
+            if ($typeRoom->sale > 0) {
+                $totalType = $typeRoom->price * $sum_day * $request['number_people'.$orderTypeRoom->type_room_id]
+                    * (100 - $typeRoom->sale) /100;
+            } else {
+                $totalType = $typeRoom->price * $sum_day * $request['number_people'.$orderTypeRoom->type_room_id];
+            }
+
+            $total += $totalType;
+
+            $nameRooms = $request['nameRoom'];
+            $arrNameRooms = explode(',', $nameRooms);
+            foreach ($arrNameRooms as $nameRoom) {
+                $room = $this->roomService->getRoomByName($nameRoom);
+                if ($room->typeRoom->id === $orderTypeRoom->type_room_id) {
+                    $rooms[] = $room;
+                }
+            }
+            $infoTypeRoom = [
+                'id' => $orderTypeRoom->id,
+                'typeRoom' => $typeRoom,
+                'rooms' => $rooms,
+                'start_date' => $request['startDate'.$orderTypeRoom->type_room_id],
+                'end_date' => $request['endDate'.$orderTypeRoom->type_room_id],
+                'number_people' => $request['number_people'.$orderTypeRoom->type_room_id],
+                'total' => $totalType
+            ];
+            $rooms = [];
+            $orders[] = $infoTypeRoom;
+        }
+        Session::put('order', [
+            'orderOld' => $order,
+            'info' => $info,
+            'orders' => $orders,
+            'total' => $total,
+            'promotion' => $request->promotion,
+            'paymentTotal' => $total - $request->promotion,
+            'paymentNew' => $total - $request->promotion - $order->payment_total
+        ]);
+
+        $order = Session::get('order');
+        //dd($order['id']);
+        return view('admin.order.edit-handled', compact('order'));
+    }
+
+    public function finishEditHandled()
+    {
+        $order = Session::get('order');
+        DB::transaction(function () use ($order) {
+            $user = $this->userService->getUserByEmai($order['info']['email']);
+            if (!$user) {
+                $this->userService->createOrUpdate($order['info']);
+            }
+            $user = $this->userService->getUserByEmai($order['info']['email']);
+            $orderNew = $this->orderService->find($order['orderOld']->id);
+            $orderNew->user_id = $user->id;
+            $orderNew->quantity = count($order['orders']);
+            $orderNew->promotion = $order['promotion'];
+            $orderNew->total = $order['total'];
+            $orderNew->payment_total = $order['paymentTotal'];
+            $orderNew->date = Carbon::now()->format('Y-m-d');
+            $orderNew->save();
+            // Update order type room
+            foreach ($order['orders'] as $item) {
+                $orderTypeRoom = $this->orderService->findOrderTypeRoom($item['id']);
+                $orderTypeRoom->number_people = $item['number_people'];
+                $orderTypeRoom->number_room = count($item['rooms']);
+                $orderTypeRoom->price = $item['typeRoom']->price;
+                $orderTypeRoom->sale = $item['typeRoom']->sale;
+                $orderTypeRoom->total = $item['total'];
+                $orderTypeRoom->start_date = $item['start_date'];
+                $orderTypeRoom->end_date = $item['end_date'];
+
+                $orderTypeRoom->save();
+                $this->orderService->deleteOrderDetailByOrderTypeRoom($item['id']);
+
+                foreach ($item['rooms'] as $room) {
+                    $orderDetail = new OrderDetail();
+                    $orderDetail->order_type_room_id = $item['id'];
+                    $orderDetail->room_id = $room->id;
+                    $orderDetail->date = Carbon::now()->format('Y-m-d');
+                    $orderDetail->start_date = $item['start_date'];
+                    $orderDetail->end_date = $item['end_date'];
+
+                    $orderDetail->save();
+
+                }
+            }
+        });
+
+        return redirect()->route('admin.orders.handled')
+            ->with('message', 'Update '.$order['orderOld']->id.' Successfully !');
     }
 
     public function deleteOrder(Order $order)
@@ -280,11 +395,6 @@ class OrderController extends Controller
         }
 
         return redirect()->back()->with('error', 'Don\'t order delete !');
-    }
-
-    public function actionEditHandled(Order $order, OrderRequest $request)
-    {
-
     }
 
     public function editWait(Order $order)
@@ -302,17 +412,19 @@ class OrderController extends Controller
     {
         DB::transaction(function () use ($order, $request) {
             foreach ($order->orderTypeRooms as $orderTypeRoom) {
-                $nameRooms = $request['nameRoom'.$orderTypeRoom->type_room_id];
+                $nameRooms = $request['nameRoom'];
                 $arrNameRooms = explode(',', $nameRooms);
                 foreach ($arrNameRooms as $nameRoom) {
                     $room = $this->roomService->getRoomByName($nameRoom);
-                    $orderDetail = new OrderTypeRoom();
-                    $orderDetail->order_type_room_id = $orderTypeRoom->type_room_id;
-                    $orderDetail->room_id = $room->id;
-                    $orderDetail->date = Carbon::now()->format('Y-m-d');
-                    $orderDetail->start_date = $orderTypeRoom->start_date;
-                    $orderDetail->end_date = $orderTypeRoom->end_date;
-                    $this->orderService->createOrUpdateOrderDetail($orderDetail);
+                    if ($room->typeRoom->id === $orderTypeRoom->type_room_id) {
+                        $orderDetail = new OrderTypeRoom();
+                        $orderDetail->order_type_room_id = $orderTypeRoom->id;
+                        $orderDetail->room_id = $room->id;
+                        $orderDetail->date = Carbon::now()->format('Y-m-d');
+                        $orderDetail->start_date = $orderTypeRoom->start_date;
+                        $orderDetail->end_date = $orderTypeRoom->end_date;
+                        $this->orderService->createOrUpdateOrderDetail($orderDetail);
+                    }
                 }
             }
             $order->status_order_id = self::HANDLED;

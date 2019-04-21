@@ -246,11 +246,26 @@ class OrderService
         return $this->orderTypeRoom->whereOrderId($order->id)->get();
     }
 
+    public function deleteOrderDetailByOrderTypeRoom($orderTypeRoomId)
+    {
+        return $this->orderDetail->whereOrderTypeRoomId($orderTypeRoomId)->delete();
+    }
+
     public function deleteOrderTypeRoom($order)
     {
         return DB::table('order_type_room')
             ->where('order_id', $order->id)
             ->join('order_detail', 'order_type_room.id', '=', 'order_detail.order_type_room_id')
             ->delete();
+    }
+
+    public function find($id)
+    {
+        return $this->order->find($id);
+    }
+
+    public function findOrderTypeRoom($id)
+    {
+        return $this->orderTypeRoom->find($id);
     }
 }

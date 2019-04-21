@@ -27,14 +27,6 @@ class OrderRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|numeric',
-            'nameRoom' => 'required'
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'nameRoom.required' => 'Choose type room before submit'
         ];
     }
 }
