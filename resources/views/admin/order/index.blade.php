@@ -33,7 +33,7 @@
                 <th>ID</th>
                 <th>User Name</th>
                 <th>Payment Method</th>
-                <th>Status</th>
+                <th class="text-danger">Status</th>
                 <th>Type Room Number</th>
                 <th>Total</th>
                 <th>Promotion</th>

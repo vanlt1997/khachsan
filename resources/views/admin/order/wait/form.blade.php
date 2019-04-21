@@ -8,7 +8,7 @@
 @section('header')
     <div class="container">
         <div class="title-header">
-            <h3 class="text-center">{{isset($order) ? 'Edit Order '.$order['id'] : 'Add Order'}}</h3>
+            <h3 class="text-center">{{isset($order) ? 'Edit Order '.$order['id'].' ( Wait )' : 'Add Order'}}</h3>
         </div>
     </div>
 @endsection
