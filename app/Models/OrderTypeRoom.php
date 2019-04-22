@@ -27,6 +27,11 @@ class OrderTypeRoom extends Model
         return $this->belongsTo('App\Models\TypeRoom');
     }
 
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order');
+    }
+
     public static function boot()
     {
         parent::boot();

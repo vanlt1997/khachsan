@@ -62,9 +62,29 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="container-fluid">
-                                            <div class="row">
-                                                <p>Làm sau khi choose room</p>
-                                            </div>
+                                            @foreach($room->orderDetails as $orderDetail)
+                                                @if($orderDetail->start_date >= \Carbon\Carbon::now()->format('Y-m-d'))
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <h5 class="text-danger">{{$orderDetail->start_date}} ~ {{$orderDetail->end_date}}</h5>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <h6 class="text-primary">Type Room : {{$room->typeRoom->name}}</h6>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <ul class="col-md-12">
+                                                                <li>Max people : {{$room->typeRoom->people}}</li>
+                                                                <li>Price : {{$room->typeRoom->price}}</li>
+                                                                @if($room->typeRoom->sale > 0)
+                                                                    <li>Sale : {{$room->typeRoom->sale}}</li>
+                                                                @endif
+                                                                <li>Price : {{$room->typeRoom->acreage}}</li>
+                                                                <li>Orderer : {{$orderDetail->orderTypeRoom->order->user->name}}</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="modal-footer">

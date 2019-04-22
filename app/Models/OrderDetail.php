@@ -16,4 +16,9 @@ class OrderDetail extends Model
     {
         return $this->belongsTo('App\Models\Room');
     }
+
+    public function orderTypeRoom()
+    {
+        return $this->belongsTo('App\Models\OrderTypeRoom');
+    }
 }
