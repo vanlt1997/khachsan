@@ -40,6 +40,8 @@
     <div class="container" style="clear: both">
         <a href="{{route('admin.devices.create')}}" class="btn btn-sm btn-outline-info"><i
                 class="fa fa-plus-circle"></i> Add</a>
+        <a href="{{route('admin.devices.export-pdf')}}" class="btn btn-sm btn-outline-info"><i class="fa fa-file-pdf-o"></i> Export PDF</a>
+        <a href="{{route('admin.devices.import-excel')}}" class="btn btn-sm btn-outline-primary"><i class="fa fa-file-excel-o"></i> Import Excel</a>
     </div>
 @endsection
 @push('scripts')

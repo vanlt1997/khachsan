@@ -43,6 +43,11 @@
             </tr>
             </thead>
         </table>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{route('admin.orders.export-pdfs')}}" class="btn btn-sm btn-outline-info"><i class="fa fa-file-pdf-o"></i> Export PDF</a>
+            </div>
+        </div>
     </div>
 @endsection
 @push('scripts')

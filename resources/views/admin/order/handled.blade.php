@@ -44,8 +44,9 @@
         </table>
     </div>
     <div class="container" style="clear: both">
-        <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-outline-info"><i
+        <a href="{{route('admin.orders.create')}}" class="btn btn-sm btn-outline-info mr-3"><i
                     class="fa fa-plus-circle"></i> Add</a>
+        <a href="{{route('admin.orders.export-pdfs')}}" class="btn btn-sm btn-outline-info"><i class="fa fa-file-pdf-o"></i> Export PDF</a>
     </div>
 @endsection
 @push('scripts')

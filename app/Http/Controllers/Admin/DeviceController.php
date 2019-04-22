@@ -7,7 +7,9 @@ use App\Models\Device;
 use App\Service\DeviceService;
 use App\Http\Controllers\Controller;
 use App\Service\ImageService;
+use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
+use PDF;
 
 class DeviceController extends Controller
 {
@@ -80,5 +82,19 @@ class DeviceController extends Controller
     public function detail(Device $device)
     {
         return view('admin.device.detail', compact('device'));
+    }
+
+    public function exportPDF()
+    {
+        $devices = $this->deviceService->getDevices();
+
+        $pdf = PDF::loadView('admin.export-pdf.devices', compact('devices'));
+        //$pdf->save(storage_path().'devices.pdf');
+        return $pdf->download('devices'.Carbon::now().'.pdf');
+    }
+
+    public function importExcel()
+    {
+
     }
 }

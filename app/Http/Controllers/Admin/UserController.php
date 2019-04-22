@@ -6,9 +6,11 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Service\PromotionService;
 use App\Service\UserService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
+use PDF;
 
 class UserController extends Controller
 {
@@ -85,6 +87,20 @@ class UserController extends Controller
         $count = $this->userService->sendMailFromAdmin($request->Ids, $promotions);
 
         return response()->json($count, 200);
+    }
+
+    public function exportPDF()
+    {
+        $users = $this->userService->users();
+
+        $pdf = PDF::loadView('admin.export-pdf.users', compact('users'));
+        //$pdf->save(storage_path().'_users.pdf');
+        return $pdf->download('users'.Carbon::now().'.pdf');
+    }
+
+    public function importExcel()
+    {
+
     }
 
 }

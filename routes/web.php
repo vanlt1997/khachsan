@@ -74,6 +74,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     Route::prefix('devices')->name('devices.')->group(function () {
         Route::get('/', 'DeviceController@index')->name('index');
+        Route::get('/export-pdf', 'DeviceController@exportPDF')->name('export-pdf');
+        Route::get('/import-excel', 'DeviceController@importExcel')->name('import-excel');
         Route::get('/getList', 'DeviceController@getList')->name('get-list');
         Route::get('/create', 'DeviceController@create')->name('create');
         Route::post('/create', 'DeviceController@actionCreate')->name('create');
@@ -114,7 +116,9 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', 'UserController@index')->name('index');
+        Route::post('/import-excel', 'UserController@importExcel')->name('import-excel');
         Route::get('/getList', 'UserController@getList')->name('getList');
+        Route::get('/export-pdf', 'UserController@exportPDF')->name('export-pdf');
         Route::get('/create', 'UserController@create')->name('create');
         Route::post('/create', 'UserController@actionCreate')->name('create');
         Route::post('/sendMail', 'UserController@sendMail')->name('sendMail');
@@ -127,6 +131,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/', 'OrderController@index')->name('index');
         Route::get('/getList', 'OrderController@getList')->name('getList');
+        Route::get('/export-pdf', 'OrderController@exportPDFs')->name('export-pdfs');
+        Route::get('/export-pdf/{order}', 'OrderController@exportPDF')->name('export-pdf');
         Route::get('/wait', 'OrderController@orderWait')->name('wait');
         Route::get('/list-order-wait', 'OrderController@getOrderWait')->name('list-wait');
         Route::get('/handled', 'OrderController@orderHandles')->name('handled');

@@ -7,8 +7,6 @@ use App\Models\Card;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderTypeRoom;
-use App\Models\Room;
-use App\Models\User;
 use App\Service\OrderService;
 use App\Http\Controllers\Controller;
 use App\Service\PaymentService;
@@ -17,6 +15,7 @@ use App\Service\RoomService;
 use App\Service\StatusOrderService;
 use App\Service\TypeRoomService;
 use App\Service\UserService;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -116,6 +115,7 @@ class OrderController extends Controller
                 return
                     '<a href="handled/' . $order->id . '/edit" class="btn btn-sm btn-outline-primary" > <i class="fa fa-pencil"></i></a>
                     <a href="' . $order->id . '/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Are you sure ?\')"> <i class="fa fa-trash-o"></i></a>
+                    <a href="export-pdf/'. $order->id.'" class="btn btn-sm btn-outline-info"><i class="fa fa-file-pdf-o"></i></a>
                     ';
             })
             ->make(true);
@@ -440,6 +440,22 @@ class OrderController extends Controller
         Session::forget('card');
 
         return response()->json(null, 204);
+    }
+
+    public function exportPDFs()
+    {
+        $orders = $this->orderService->getOrderHanded();
+
+        $pdf = PDF::loadView('admin.export-pdf.orders', compact('orders'));
+        //$pdf->save(storage_path().'_orders.pdf');
+        return $pdf->download('orders'.Carbon::now().'.pdf');
+    }
+
+    public function exportPDF(Order $order)
+    {
+        $pdf = PDF::loadView('admin.export-pdf.order', compact('order'));
+        //$pdf->save(storage_path().'_order.pdf');
+        return $pdf->download('orders'.Carbon::now().'.pdf');
     }
 
 }
