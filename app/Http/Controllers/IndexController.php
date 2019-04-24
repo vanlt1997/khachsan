@@ -24,6 +24,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
+use Stripe\Charge;
+use Stripe\Stripe;
 
 class IndexController extends Controller
 {
@@ -266,7 +268,8 @@ class IndexController extends Controller
             'phone' => $request->phone,
             'sex' => $request->sex,
             'address' => $request->address,
-            'payment' => $paymentMethod
+            'payment' => $paymentMethod,
+            'stripeToken' => $request->stripeToken ?? null,
         ];
         Session::put('infoBooking', $infoBooling);
         $info = Session::get('infoBooking');
@@ -283,9 +286,22 @@ class IndexController extends Controller
         $card = Session::get('card');
         $customer = Session::get('infoBooking');
         $promotion = Session::get('code');
+        if ($customer['stripeToken']) {
+            Stripe::setApiKey("sk_test_aBWzRKCBKy6L86mfuc3WqJgI");
+            $token = $customer['stripeToken'];
+//            Change price * 10
+            Charge::create([
+                "amount" => $card->paymentTotal * 100,
+                "currency" => "usd",
+                "source" => $token,
+                "description" => "Charge",
+            ]);
+        }
         $newUser = $this->userService->getUserByEmai($customer['email']);
         if (!$newUser) {
             $this->userService->createOrUpdate($customer);
+        } else {
+            $this->userService->createOrUpdate($customer, $newUser->id);
         }
         $order = new Order();
         $newUser = $this->userService->getUserByEmai($customer['email']);

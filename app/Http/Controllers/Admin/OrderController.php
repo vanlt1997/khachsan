@@ -20,6 +20,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Stripe\Charge;
+use Stripe\Stripe;
 use Yajra\DataTables\DataTables;
 
 class OrderController extends Controller
@@ -202,7 +204,8 @@ class OrderController extends Controller
             'phone' => $request->phone,
             'sex' => $request->sex,
             'address' => $request->address,
-            'payment' => $request->payment_method
+            'payment' => $request->payment_method,
+            'stripeToken' => $request->stripeToken ?? null,
         ];
         Session::put('infoBooking', $infoBooling);
 
@@ -228,9 +231,22 @@ class OrderController extends Controller
     {
         $card = Session::get('card');
         $customer = Session::get('infoBooking');
+        if ($customer['stripeToken']) {
+            Stripe::setApiKey("sk_test_aBWzRKCBKy6L86mfuc3WqJgI");
+            $token = $customer['stripeToken'];
+//            Change price * 10
+            Charge::create([
+                "amount" => $card->paymentTotal * 100,
+                "currency" => "usd",
+                "source" => $token,
+                "description" => "Charge",
+            ]);
+        }
         $newUser = $this->userService->getUserByEmai($customer['email']);
         if (!$newUser) {
             $this->userService->createOrUpdate($customer);
+        } else {
+            $this->userService->createOrUpdate($customer, $newUser->id);
         }
         $newUser = $this->userService->getUserByEmai($customer['email']);
         $order = new Order();
@@ -445,6 +461,7 @@ class OrderController extends Controller
     public function exportPDFs()
     {
         $orders = $this->orderService->getOrderHanded();
+        PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif', 'defaultPaperSize' => 'a4']);
 
         $pdf = PDF::loadView('admin.export-pdf.orders', compact('orders'));
         //$pdf->save(storage_path().'_orders.pdf');

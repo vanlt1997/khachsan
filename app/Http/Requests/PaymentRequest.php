@@ -27,7 +27,7 @@ class PaymentRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|numeric',
-            'payment' => 'required'
+            'payment' => 'required',
         ];
     }
 }

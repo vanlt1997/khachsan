@@ -1,6 +1,14 @@
+<style>
+    .page-break {
+        page-break-after: always;
+    }
+</style>
 @foreach($orders as $order)
-<div class="row">
-    <div class="col-md-12 text-center">
+<div class="row col-md-12">
+    <div class="col-md-6">
+        <h3>Date : {{\Carbon\Carbon::now()->format('Y-m-d')}}</h3>
+    </div>
+    <div class="col-md-6 text-center">
         <h3 class="text-danger">Hotel MayStar</h3>
     </div>
 </div>
@@ -60,4 +68,5 @@
         </table>
     </div>
 </div>
+<div class="page-break"></div>
 @endforeach

@@ -34,6 +34,8 @@ class UserService
         $action->phone = $user['phone'];
         $action->address = $user['address'];
         $action->avatar = $user['avatar'] ?? null;
+        $action->account = $user['stripeToken'] ?? null;
+
         $action->save();
     }
 

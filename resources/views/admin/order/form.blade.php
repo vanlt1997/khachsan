@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <form method="post" role="form" class="form-horizontal col-md-12">
+            <form method="post" role="form" class="form-horizontal col-md-12" id="formConfirm">
                 @csrf
                 <hr>
                 <div class="form-group">
@@ -130,11 +130,25 @@
                             <label for="payment">Payment</label>
                         </div>
                         <div class="col-md-10">
-                            <select name="payment_method" class="form-control">
+                            <select name="payment_method" class="form-control" id="selectPayment">
                                 @foreach($payments as $item)
                                     <option value="{{$item->name}}" @if(isset($order) && $order->payment_method === $item->name) selected @endif>{{$item->name}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="numberCard" hidden>
+                    <div class="row col-md-12">
+                        <div class="col-md-2">
+                            <label for="numberCard">Number Card</label>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-row">
+                                <div id="card-element" class="col-md-12">
+                                </div>
+                                <div id="card-errors" role="alert"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -221,6 +235,9 @@
 @push('scripts')
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/admin/order.js')}}"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script type="text/javascript" src="{{asset('js/client/checkout.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
         /*$(document).ready(function () {
@@ -246,6 +263,16 @@
                    }
                })
            }
+        });
+
+        $('#selectPayment').on('change', function () {
+            var  payment = $(this).val();
+            console.log(payment)
+            if (payment === 'Prepay') {
+                $('#numberCard').attr('hidden', true)
+            } else {
+                $('#numberCard').removeAttr('hidden');
+            }
         });
 
         $('#btnSearchRoom').on('click', function () {
