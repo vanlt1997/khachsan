@@ -212,7 +212,7 @@
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('admin.revenues.index')}}" class="nav-link">
                         <i class="fa fa-line-chart"></i>
                         <p>
                             Revenue
@@ -221,15 +221,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/forms/general.html" class="nav-link">
+                            <a href="{{route('admin.revenues.index')}}" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Revenue statistics</p>
+                                <p>Report</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="pages/forms/editors.html" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Report</p>
+                                <p>Report TypeRoom</p>
                             </a>
                         </li>
                     </ul>

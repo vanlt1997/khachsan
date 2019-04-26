@@ -28,7 +28,8 @@ Route::group(['prefix' => 'typerooms'], function () {
     Route::get('/', 'IndexController@typeRoom')->name('client.typerooms.index');
     Route::get('{typeRoom}', 'IndexController@detailTypeRoom')->name('client.typerooms.detail');
     Route::post('{typeRoom}', 'IndexController@searchRoomOfDetailTypeRoom')->name('client.typerooms.detail');
-    Route::get('{typeRoom}/booking/{startDate?}/{endDate?}/{number_people?}', 'IndexController@booking')->name('client.typerooms.booking');
+    Route::get('{typeRoom}/booking/{startDate?}/{endDate?}/{number_people?}', 'IndexController@booking')
+        ->name('client.typerooms.booking');
 });
 /*Admin*/
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
@@ -154,5 +155,9 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::post('/select-room', 'OrderController@searchRoom')->name('search-room');
         Route::post('/calculate', 'OrderController@calculate')->name('calculate');
         Route::post('/delete', 'OrderController@delete')->name('delete');
+    });
+
+    Route::prefix('revenues')->name('revenues.')->group(function () {
+        Route::get('/', 'RevenueController@reports')->name('index');
     });
 });
