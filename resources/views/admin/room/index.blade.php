@@ -74,11 +74,11 @@
                                                         <div class="col-md-12">
                                                             <ul class="col-md-12">
                                                                 <li>Max people : {{$room->typeRoom->people}}</li>
-                                                                <li>Price : {{$room->typeRoom->price}}</li>
+                                                                <li>Price : $ {{$room->typeRoom->price}}</li>
                                                                 @if($room->typeRoom->sale > 0)
-                                                                    <li>Sale : {{$room->typeRoom->sale}}</li>
+                                                                    <li>Sale : {{$room->typeRoom->sale}} %</li>
                                                                 @endif
-                                                                <li>Price : {{$room->typeRoom->acreage}}</li>
+                                                                <li>Acreage : {{$room->typeRoom->acreage}} m <sup>2</sup></li>
                                                                 <li>Orderer : {{$orderDetail->orderTypeRoom->order->user->name}}</li>
                                                             </ul>
                                                         </div>
@@ -99,3 +99,9 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+
+    </script>
+
+@endpush

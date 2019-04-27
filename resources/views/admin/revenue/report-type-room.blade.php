@@ -18,6 +18,12 @@
         <div id="curve_chart" style="width: 100%; height: 500px"></div>
         <div class="row">
             <div class="col-md-12">
+                <h3 class="text-danger pl-3 mt-5 mb-5" style="border-left: 3px solid #0b93d5">Report quarterly</h3>
+            </div>
+        </div>
+        <div id="curve_chart_quarterly" style="width: 100%; height: 500px"></div>
+        <div class="row">
+            <div class="col-md-12">
                 <h3 class="text-danger pl-3 mt-5 mb-5" style="border-left: 3px solid #0b93d5">Report percentage</h3>
             </div>
         </div>
@@ -29,6 +35,7 @@
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(reportTypeRoomMonth);
+        google.charts.setOnLoadCallback(reportTypeRoomQuarter);
         google.charts.setOnLoadCallback(reportTypeRoom);
 
         function reportTypeRoomMonth() {
@@ -41,6 +48,20 @@
             };
 
             var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+            chart.draw(data, options);
+        }
+
+        function reportTypeRoomQuarter() {
+            var data = google.visualization.arrayToDataTable(<?= json_encode($curveChartQuarter) ?>);
+
+            var options = {
+                title: 'Revenue type room by month',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart_quarterly'));
 
             chart.draw(data, options);
         }

@@ -29,6 +29,14 @@ class RevenueService
             ->get();
     }
 
+    public function reportYear()
+    {
+        return DB::table('orders')->select(DB::raw('SUM(payment_total) as total, YEAR(date) as year'))
+            ->groupBy(DB::raw('YEAR(date)'))
+            ->orderBy('year', 'asc')
+            ->get();
+    }
+
     public function reportTypeRoomMonth()
     {
         return DB::table('orders')
@@ -45,6 +53,16 @@ class RevenueService
             ->join('type_rooms', 'order_type_room.type_room_id', '=', 'type_rooms.id')
             ->select(DB::raw('name, SUM(order_type_room.total) as total'))
             ->groupBy(DB::raw('name'))
+            ->get();
+    }
+
+    public function reportTypeRoomQuarter()
+    {
+        return DB::table('orders')
+            ->join('order_type_room', 'orders.id', '=', 'order_type_room.order_id')
+            ->join('type_rooms', 'order_type_room.type_room_id', '=', 'type_rooms.id')
+            ->select(DB::raw('name, SUM(order_type_room.total) as total, QUARTER(date) as quarter'))
+            ->groupBy(DB::raw('name, QUARTER(date)'))
             ->get();
     }
 

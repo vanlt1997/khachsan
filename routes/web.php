@@ -17,6 +17,10 @@ Route::group(['prefix' => 'booking'], function () {
     Route::post('next', 'IndexController@confirm')->name('client.booking.next');
     Route::get('finish', 'IndexController@finish')->name('client.booking.finish');
     Route::post('check', 'IndexController@checkCodePromotion')->name('client.booking.check');
+    Route::get('/pusher', function (Illuminate\Http\Request $request) {
+        event(new App\Events\BookingPusherEvent($request));
+        return redirect()->route('client.booking.finish');
+    });
 });
 
 Route::group(['prefix' => 'services'], function () {
@@ -160,5 +164,9 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::prefix('revenues')->name('revenues.')->group(function () {
         Route::get('/', 'RevenueController@reports')->name('index');
         Route::get('/report-type-rooms', 'RevenueController@reportTypeRoom')->name('type-rooms');
+    });
+
+    Route::prefix('calendars')->name('calendars.')->group(function () {
+        Route::get('/', 'CalendarController@index')->name('rooms');
     });
 });

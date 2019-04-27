@@ -234,40 +234,13 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fa fa-pie-chart"></i>
+                <li class="nav-item">
+                    <a href="{{route('admin.calendars.rooms')}}" class="nav-link">
+                        <i class="nav-icon fa fa-calendar-check-o"></i>
                         <p>
-                            Statistical
-                            <i class="fa fa-angle-left right"></i>
+                            Calendar Room
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="pages/tables/simple.html" class="nav-link">
-                                <i class="fa fa-circle-o nav-icon"></i>
-                                <p>List Bill</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/tables/data.html" class="nav-link">
-                                <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Test $ Account</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/tables/data.html" class="nav-link">
-                                <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Business Results</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/tables/data.html" class="nav-link">
-                                <i class="fa fa-circle-o nav-icon"></i>
-                                <p>Report</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-header">Menu</li>
                 <li class="nav-item">

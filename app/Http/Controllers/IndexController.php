@@ -9,6 +9,7 @@ use App\Http\Requests\SearchRoomRequest;
 use App\Models\Card;
 use App\Models\Order;
 use App\Models\User;
+use App\Notifications\Booking;
 use App\Service\ContactService;
 use App\Service\OrderService;
 use App\Models\Service;
@@ -322,6 +323,7 @@ class IndexController extends Controller
             }
             $this->orderService->sendMailBooking($customer, $card);
         });
+
         Session::forget('card');
         Session::forget('infoBooking');
         Session::forget('code');

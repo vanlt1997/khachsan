@@ -64,12 +64,19 @@ class RevenueController extends Controller
             }
             $chatQuarter[] = [$values, $total];
         }
+        //      year
+        $dataYears = $this->revenueService->reportYear();
+        $chartYear [] = ['Year', 'Revenue'];
+        foreach ($dataYears as $year) {
+            $chartYear[] = [ "$year->year", $year->total];
+        }
 
-        return view('admin.revenue.report', compact('chatMonth', 'chatQuarter'));
+        return view('admin.revenue.report', compact('chatMonth', 'chatQuarter', 'chartYear'));
     }
 
     public function reportTypeRoom()
     {
+//        month
         $reportTypeRoomMonths = $this->revenueService->reportTypeRoomMonth();
         $typeRooms = $this->typeRoomService->getTypeRooms();
         $typeRoomNames = [
@@ -107,7 +114,30 @@ class RevenueController extends Controller
             }
             $curveChart[] = $row;
         }
-        // dd($curveChart);
+//       quarter
+        $dataQuarters = $this->revenueService->reportTypeRoomQuarter();
+        $quarter = [
+            'Quarter I',
+            'Quarter II',
+            'Quarter III',
+            'Quarter IV'
+        ];
+        $curveChartQuarter[] = $typeRoomNames;
+        foreach ($quarter as $index => $value) {
+            $row = [$value];
+            foreach ($typeRooms as $typeRoom) {
+                foreach ($dataQuarters as $dataQuarter) {
+                    $total = $typeRoom->name === $dataQuarter->name  && $index +1 === (int) $dataQuarter->quarter ? $dataQuarter->total : 0;
+                    if ($total > 0) {
+                        break;
+                    }
+                }
+                $row[] = $total;
+
+            }
+            $curveChartQuarter[] = $row;
+        }
+
         $reportTypeRooms = $this->revenueService->reportTypeRoom();
         $chartTypeRooms[] = ['TypeRoom', 'Price'];
         foreach ($reportTypeRooms as $reportTypeRoom) {
@@ -115,7 +145,6 @@ class RevenueController extends Controller
         }
 
 
-
-        return view('admin.revenue.report-type-room', compact('curveChart', 'chartTypeRooms'));
+        return view('admin.revenue.report-type-room', compact('curveChart', 'chartTypeRooms', 'curveChartQuarter'));
     }
 }
