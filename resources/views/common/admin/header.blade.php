@@ -8,21 +8,9 @@
             <a href="{{route('admin.index')}}" class="nav-link">Admin</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
+            <a href="{{route('admin.contacts.index')}}" class="nav-link">Contact</a>
         </li>
     </ul>
-
-    <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
-        </div>
-    </form>
 
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
@@ -109,8 +97,8 @@
     </ul>
 </nav>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="#" class="brand-link">
-        <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+    <a href="{{route('admin.index')}}" class="brand-link">
+        <img src="{{asset('images/star.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">MayStar</span>
     </a>
@@ -118,10 +106,10 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+                <img src="{{asset('images/admin/van.jpg')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Admin</a>
+                <a href="{{route('admin.index')}}" class="d-block">Admin</a>
             </div>
         </div>
 

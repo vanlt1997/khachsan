@@ -81,7 +81,7 @@
             var data = google.visualization.arrayToDataTable(<?= json_encode($chartYear) ?>);
 
             var options = {
-                title: 'Company Performance',
+                title: 'Report',
                 curveType: 'function',
                 legend: { position: 'bottom' }
             };
