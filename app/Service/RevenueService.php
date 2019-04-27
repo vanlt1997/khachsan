@@ -29,4 +29,23 @@ class RevenueService
             ->get();
     }
 
+    public function reportTypeRoomMonth()
+    {
+        return DB::table('orders')
+            ->join('order_type_room', 'orders.id', '=', 'order_type_room.order_id')
+            ->join('type_rooms', 'order_type_room.type_room_id', '=', 'type_rooms.id')
+            ->select(DB::raw('name, SUM(order_type_room.total) as total, MONTH(date) as month'))
+            ->groupBy(DB::raw('name, MONTH(date)'))
+            ->get();
+    }
+
+    public function reportTypeRoom()
+    {
+        return DB::table('order_type_room')
+            ->join('type_rooms', 'order_type_room.type_room_id', '=', 'type_rooms.id')
+            ->select(DB::raw('name, SUM(order_type_room.total) as total'))
+            ->groupBy(DB::raw('name'))
+            ->get();
+    }
+
 }

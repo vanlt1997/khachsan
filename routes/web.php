@@ -159,5 +159,6 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     Route::prefix('revenues')->name('revenues.')->group(function () {
         Route::get('/', 'RevenueController@reports')->name('index');
+        Route::get('/report-type-rooms', 'RevenueController@reportTypeRoom')->name('type-rooms');
     });
 });

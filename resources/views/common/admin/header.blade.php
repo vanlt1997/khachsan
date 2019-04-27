@@ -227,7 +227,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/forms/editors.html" class="nav-link">
+                            <a href="{{route('admin.revenues.type-rooms')}}" class="nav-link">
                                 <i class="fa fa-circle-o nav-icon"></i>
                                 <p>Report TypeRoom</p>
                             </a>
