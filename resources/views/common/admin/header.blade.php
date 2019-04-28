@@ -203,7 +203,7 @@
                     <a href="{{route('admin.revenues.index')}}" class="nav-link">
                         <i class="fa fa-line-chart"></i>
                         <p>
-                            Revenue
+                            Charts
                             <i class="fa fa-angle-left right"></i>
                         </p>
                     </a>

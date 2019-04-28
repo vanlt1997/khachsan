@@ -5,6 +5,11 @@
     $type_rooms = TypeRoom::all();
     $services = Service::all();
 ?>
+<style>
+    .nav-item{
+        font-weight: 700;
+    }
+</style>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{route('client.index')}}">Hotel MayStar</a>
@@ -43,8 +48,41 @@
                 <li class="nav-item"><a href="{{route('client.contact')}}" class="nav-link">CONTACT</a></li>
                 <li class="nav-item"><a href="{{route('client.promotions')}}" class="nav-link">PROMOTIONS</a></li>
                 <li class="nav-item"><a href="{{route('client.booking')}}" class="nav-link">@if(Session::has('card'))<span class="badge badge-pill badge-danger">{{Session::get('card')->sumRoom}}</span> @else <span class="badge badge-pill badge-danger">0</span>@endif BOOKING</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">REGISTRATION</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">LOGIN</a></li>
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">LOGIN</a>
+                    </li>
+                    <li class="nav-item">
+                        @if (Route::has('register'))
+                            <a class="nav-link" href="{{ route('register') }}">REGISTRATION</a>
+                        @endif
+                    </li>
+                @else
+                    <li  class="nav-item submenu dropdown">
+                        <a class="nav-link text-danger" data-toggle="dropdown" role="button"  aria-expanded="false">
+                            HELLO : {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if(Auth::user()->role == 1)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('admin.index')}}">Admin</a>
+                                </li>
+                            @endif
+                            @if(Auth::check())
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Information</a>
+                                </li>
+                            @endif
+                            <li class="nav-item" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"><a href="{{ route('logout') }}" class="nav-link">{{ __('LOGOUT') }}</a></li>
+
+                        </ul>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+            </li>
+        @endguest
             </ul>
         </div>
     </div>

@@ -27,38 +27,6 @@
                 {{Session::get('error')}}
             </div>
         @endif
-        <div class="row">
-            <form action="{{route('admin.users.import-excel')}}" method="post" class="col-md-12 pt-5 mb-5" style="border-bottom: 2px dotted #0b93d5">
-                @csrf
-                <div class="form-group row col-md-12">
-                    <div class="col-md-2">
-                        <label for="csv_file">CSV file to import</label>
-                    </div>
-                    <div class="col-md-10">
-                        <input type="file" name="csv_file" class="form-group">
-                        @if ($errors->has('csv_file'))
-                            <span class="help-block">
-                                        <strong>{{ $errors->first('csv_file') }}</strong>
-                                    </span>
-                        @endif
-                    </div>
-                </div>
-                <div class="form-group row col-md-12">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-10">
-                        <label>
-                            <input type="checkbox" name="header" checked> File contains header row?
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group row col-md-12">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-10">
-                        <button type="submit" class="btn btn-sm btn-outline-primary">Parse CSV</button>
-                    </div>
-                </div>
-            </form>
-        </div>
         <table class="table table-striped table-bordered" id="users-table">
             <thead>
             <tr>
@@ -79,7 +47,7 @@
         <a id="btnSendMail" href="javascript:void(0);" class="btn btn-sm btn-outline-success"><i
                     class="fa fa-send-o"></i> Send Mail</a>
         <a href="{{route('admin.users.export-pdf')}}" class="btn btn-sm btn-outline-info"><i class="fa fa-file-pdf-o"></i> Export PDF</a>
-        <a href="{{route('admin.users.import-excel')}}" class="btn btn-sm btn-outline-primary"><i class="fa fa-file-excel-o"></i> Import Excel</a>
+        <a href="{{route('admin.users.export-excel')}}" class="btn btn-sm btn-outline-primary"><i class="fa fa-file-excel-o"></i> Export Excel</a>
         <p class="text-danger">
             Choose row send mail promotions.
         </p>

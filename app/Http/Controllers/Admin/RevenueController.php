@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Service\RevenueService;
 use App\Service\TypeRoomService;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use Excel;
 
 class RevenueController extends Controller
 {

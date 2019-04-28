@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3 class="text-danger pl-3 mt-5 mb-5" style="border-left: 3px solid #0b93d5">Report month</h3>
+                <h3 class="text-danger pl-3 mt-5 mb-3" style="border-left: 3px solid #0b93d5">Report month</h3>
             </div>
         </div>
         <div id="chart_month" style="width: 100%; height: 500px;"></div>

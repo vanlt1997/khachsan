@@ -19,6 +19,11 @@ class UserService
         return $this->user->all();
     }
 
+    public function getUsers()
+    {
+
+    }
+
     public function find($userID)
     {
         return $this->user->find($userID);

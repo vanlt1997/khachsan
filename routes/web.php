@@ -121,7 +121,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', 'UserController@index')->name('index');
-        Route::post('/import-excel', 'UserController@importExcel')->name('import-excel');
+        Route::get('/export-excel', 'UserController@exportExcel')->name('export-excel');
         Route::get('/getList', 'UserController@getList')->name('getList');
         Route::get('/export-pdf', 'UserController@exportPDF')->name('export-pdf');
         Route::get('/create', 'UserController@create')->name('create');
@@ -170,3 +170,5 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
         Route::get('/', 'CalendarController@index')->name('rooms');
     });
 });
+
+Auth::routes();

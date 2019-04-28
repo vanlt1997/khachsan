@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UsersExport;
+use App\Http\Requests\CsvImportRequest;
 use App\Http\Requests\UserRequest;
+use App\Imports\UsersImport;
 use App\Models\User;
 use App\Service\PromotionService;
 use App\Service\UserService;
@@ -11,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 use PDF;
+use Excel;
 
 class UserController extends Controller
 {
@@ -98,9 +102,9 @@ class UserController extends Controller
         return $pdf->download('users'.Carbon::now().'.pdf');
     }
 
-    public function importExcel()
+    public function exportExcel()
     {
-
+        return Excel::download(new UsersExport, Carbon::now()->format('YmdH:i:s').'users.xlsx');
     }
 
 }
