@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BookingRequest;
 use App\Http\Requests\ContactRequest;
+use App\Http\Requests\InformationRequest;
 use App\Http\Requests\PaymentRequest;
 use App\Http\Requests\SearchRoomRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\Card;
 use App\Models\Order;
 use App\Models\User;
@@ -23,6 +25,7 @@ use App\Service\TypeRoomService;
 use App\Service\UserService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Stripe\Charge;
@@ -198,6 +201,10 @@ class IndexController extends Controller
 
     public function booking(TypeRoom $typeRoom, $startDate = null, $endDate = null, $number_people = 1)
     {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login');
+        }
         $oldCard = Session::has('card') ? Session::get('card') : null;
         $card = new Card($oldCard);
         $promotion = Session::has('code') ? Session::get('code')['price'] : null;
@@ -329,5 +336,37 @@ class IndexController extends Controller
         Session::forget('code');
 
         return view('client.book.finish', compact('slidebars', 'images'));
+    }
+
+    public function information()
+    {
+        $user = Auth::user();
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
+
+        return view('client.information', compact('user', 'slidebars', 'images'));
+    }
+
+    public function updateInformation(UserRequest $request)
+    {
+        $this->userService->createOrUpdate($request, Auth::id());
+
+        return redirect()->back()->with('message', 'Update information successfully !');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $this->validate(
+            $request,
+            [
+                'password_old' => 'required|string|min:6',
+                'password' => 'required|string|min:6|confirmed',
+            ]
+        );
+    }
+
+    public function history()
+    {
+
     }
 }

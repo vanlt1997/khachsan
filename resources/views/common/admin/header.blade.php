@@ -240,7 +240,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/calendar.html" class="nav-link">
+                    <a href="{{route('client.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-undo"></i>
                         <p>
                             Back Client

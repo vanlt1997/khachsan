@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary py-3 px-5">Send</button>
+                            <button type="submit" class="btn btn-sm btn-primary">Send</button>
                         </div>
                     </form>
 

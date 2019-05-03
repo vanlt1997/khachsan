@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 /*Client*/
 Route::get('/', 'IndexController@index')->name('client.index');
+Route::get('/information', 'IndexController@information')->name('client.information');
+Route::post('/update-information', 'IndexController@updateInformation')->name('client.update-information');
+Route::post('/update-password', 'IndexController@updatePassword')->name('client.update-password');
+Route::get('/history', 'IndexController@history')->name('client.history');
 Route::get('/search', 'IndexController@searchRoom')->name('client.search');
 Route::get('introduction', 'IndexController@introduction')->name('client.introduction');
 Route::get('contact', 'IndexController@contact')->name('client.contact');

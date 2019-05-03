@@ -38,7 +38,7 @@
                                     <label for="name">Name</label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input type="text" name="name" class="form-control" placeholder="Name">
+                                    <input type="text" name="name" class="form-control" placeholder="Name" value="{{Auth::user()->name}}">
                                 </div>
                                 @if($errors->has('name'))
                                     <p class="text-danger"><i
@@ -50,7 +50,7 @@
                                     <label for="email">Email</label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input type="email" name="email" class="form-control" placeholder="Email">
+                                    <input type="email" name="email" class="form-control" placeholder="Email" value="{{Auth::user()->email}}">
                                 </div>
                                 @if($errors->has('email'))
                                     <p class="text-danger"><i
@@ -62,7 +62,7 @@
                                     <label for="phone">Phone</label>
                                 </div>
                                 <div class="col-md-10">
-                                    <input type="number" name="phone" class="form-control" placeholder="Number">
+                                    <input type="number" name="phone" class="form-control" placeholder="Number" value="{{Auth::user()->phone}}">
                                 </div>
                                 @if($errors->has('phone'))
                                     <p class="text-danger"><i
@@ -75,9 +75,9 @@
                                 </div>
                                 <div class="col-md-10">
                                     <select name="sex" class="form-control" id="sex">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
+                                        <option value="Male" @if(Auth::user()->sex === 'Male') selected @endif>Male</option>
+                                        <option value="Female" @if(Auth::user()->sex === 'Female') selected @endif>Female</option>
+                                        <option value="Other" @if(Auth::user()->sex === 'Other') selected @endif>Other</option>
                                     </select>
                                 </div>
                             </div>

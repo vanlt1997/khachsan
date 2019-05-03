@@ -10,7 +10,6 @@ use Illuminate\Console\Command;
 class WordOfTheDay extends Command
 {
     const FREE = 1;
-    const SETED = 2;
     const USING = 3;
     /**
      * The name and signature of the console command.
@@ -50,8 +49,6 @@ class WordOfTheDay extends Command
                 $room->status_id = self::USING;
             } elseif ($orderDetail->end_date == Carbon::now()->format('Y-m-d')) {
                 $room->status_id = self::FREE;
-            } elseif ($orderDetail->start_date >= Carbon::now()->format('Y-m-d')) {
-                $room->status_id = self::SETED;
             }
 
             $room->save();

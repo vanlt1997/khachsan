@@ -24,6 +24,27 @@
 @endsection
 @section('content')
     <div class="container">
+        <div class="row mt-5 mb-3">
+            <div class="col-md-12">
+                <h4 class="text-danger">Note :</h4>
+            </div>
+            <div class="col-md-3">
+                <div class="bg-status-1"></div>
+                <p>Free</p>
+            </div>
+            <div class="col-md-3">
+                <div class="bg-status-2"></div>
+                <p>Reserved</p>
+            </div>
+            <div class="col-md-3">
+                <div class="bg-status-3"></div>
+                <p>Using</p>
+            </div>
+            <div class="col-md-3">
+                <div class="bg-status-4"></div>
+                <p>Expired</p>
+            </div>
+        </div>
         <div class="row col-md-12">
             @foreach($typeRooms as $typeRoom)
                 <div class="col-md-12 detail-typeRoom">
@@ -63,7 +84,7 @@
                                     <div class="modal-body">
                                         <div class="container-fluid">
                                             @foreach($room->orderDetails as $orderDetail)
-                                                @if($orderDetail->start_date >= \Carbon\Carbon::now()->format('Y-m-d'))
+                                                @if($orderDetail->start_date >= \Carbon\Carbon::now()->format('Y-m-d') || $orderDetail->end_date >= \Carbon\Carbon::now()->format('Y-m-d'))
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <h5 class="text-danger">{{$orderDetail->start_date}} ~ {{$orderDetail->end_date}}</h5>
