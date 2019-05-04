@@ -268,4 +268,9 @@ class OrderService
     {
         return $this->orderTypeRoom->find($id);
     }
+
+    public function getOrdersByUser($userId)
+    {
+        return $this->order->whereUserId($userId)->get();
+    }
 }

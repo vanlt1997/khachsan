@@ -11,7 +11,6 @@ use App\Http\Requests\UserRequest;
 use App\Models\Card;
 use App\Models\Order;
 use App\Models\User;
-use App\Notifications\Booking;
 use App\Service\ContactService;
 use App\Service\OrderService;
 use App\Models\Service;
@@ -27,6 +26,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Session;
 use Stripe\Charge;
 use Stripe\Stripe;
@@ -225,7 +225,14 @@ class IndexController extends Controller
         $oldCard = Session::has('card') ? Session::get('card') : null;
         $card = new Card($oldCard);
         $promotion = Session::has('code') ? Session::get('code')['price'] : 0;
-        $card->updateTypeRoom($typeRoom->id, $typeRoom, $request->startDate, $request->endDate, $request->number_people, $promotion);
+        $card->updateTypeRoom(
+            $typeRoom->id,
+            $typeRoom,
+            $request->startDate,
+            $request->endDate,
+            $request->number_people,
+            $promotion
+        );
         Session::put('card', $card);
 
         return redirect()->route('client.booking')->with('message', "Have $total_room type $nameType  you can choose !")
@@ -344,29 +351,57 @@ class IndexController extends Controller
         $slidebars = $this->slideBarService->getSlideBars();
         $images = $this->imageService->getImagesFooter();
 
-        return view('client.information', compact('user', 'slidebars', 'images'));
+        return view('client.profile.information', compact('user', 'slidebars', 'images'));
     }
 
-    public function updateInformation(UserRequest $request)
+    public function updateInformation()
+    {
+        $user = Auth::user();
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
+
+        return view('client.profile.update-information', compact('user', 'slidebars', 'images'));
+    }
+
+    public function actionUpdateInformation(UserRequest $request)
     {
         $this->userService->createOrUpdate($request, Auth::id());
 
-        return redirect()->back()->with('message', 'Update information successfully !');
+        return redirect()->route('client.information')->with('message', 'Update information successfully !');
     }
 
-    public function updatePassword(Request $request)
+    public function updatePassword()
     {
-        $this->validate(
-            $request,
-            [
-                'password_old' => 'required|string|min:6',
-                'password' => 'required|string|min:6|confirmed',
-            ]
-        );
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
+
+        return view('client.profile.update-password', compact('slidebars', 'images'));
+    }
+
+    public function actionUpdatePassword(InformationRequest $request)
+    {
+        $user = Auth::user();
+        if ($user && password_verify($request->password_old, $user['password'])) {
+            if ($request->password === $request->password_confirmation) {
+                User::find($user->id)->update([
+                    'password' => Hash::make($request->password),
+                ]);
+                Auth::logout();
+                return redirect()->route('login');
+            }
+        } else {
+            return redirect()->route('client.information')->with('message', 'Password error !');
+        }
+        return redirect()->route('client.information')->with('message', 'Update password successfully !');
     }
 
     public function history()
     {
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
+        $user = Auth::user();
+        $orders = $this->orderService->getOrdersByUser($user->id);
 
+        return view('client.profile.history', compact('user', 'orders', 'slidebars', 'images'));
     }
 }
