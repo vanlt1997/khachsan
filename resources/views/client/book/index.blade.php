@@ -164,7 +164,7 @@
     <script>
         $(document).on("ready", function () {
             $('html, body').animate({
-                scrollTop: $("#Booking").offset().top
+                scrBookingNotification $("#Booking").offset().top
             }, 1000);
         });
     </script>

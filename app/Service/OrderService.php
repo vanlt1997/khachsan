@@ -194,7 +194,7 @@ class OrderService
             'customer' => $customer,
             'card' => $card
         ], function ($message) use ($customer) {
-            $message->to($customer['email'], $customer['name'])->subject('Booking Success');
+            $message->to($customer['email'], $customer['name'])->subject('BookingNotification Success');
         });
     }
 
@@ -271,6 +271,26 @@ class OrderService
 
     public function getOrdersByUser($userId)
     {
-        return $this->order->whereUserId($userId)->get();
+        return $this->order->whereUserId($userId)->paginate(5);
+    }
+
+    public function searchHistory($data, $userId)
+    {
+        if ($data->from && !$data->to) {
+            return $this->order->where('date', '>=', $data->from)
+                ->whereUserId($userId)
+                ->paginate(5);
+        }
+        if (!$data->from && $data->to) {
+            return $this->order->where('date', '<=', $data->to)
+                ->whereUserId($userId)
+                ->paginate(5);
+        }
+        if (!$data->from && !$data->to) {
+            return $this->order->whereUserId($userId)->paginate(5);
+        }
+
+        return $this->order->where('date', '>=', $data->from)
+                            ->where('date', '<=', $data->to)->whereUserId($userId)->paginate(5);
     }
 }

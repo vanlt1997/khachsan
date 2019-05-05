@@ -3,7 +3,6 @@
 @section('css')
     <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/order.css')}}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('header')
     <div class="container">
@@ -233,17 +232,11 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/admin/order.js')}}"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://checkout.stripe.com/checkout.js"></script>
     <script type="text/javascript" src="{{asset('js/client/checkout.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
-        /*$(document).ready(function () {
-            $('.select-user').select2();
-        });*/
-
         $('#selectUser').on('change', function () {
            var userID = $(this).val();
            console.log(userID);

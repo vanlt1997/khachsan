@@ -9,6 +9,7 @@ Route::post('/information/update-information', 'IndexController@actionUpdateInfo
 Route::get('/information/update-password', 'IndexController@updatePassword')->name('client.update-password');
 Route::post('/information/update-password', 'IndexController@actionUpdatePassword')->name('client.update-password');
 Route::get('/history', 'IndexController@history')->name('client.history');
+Route::post('/history', 'IndexController@actionSearchHistory')->name('client.history');
 Route::get('/search', 'IndexController@searchRoom')->name('client.search');
 Route::get('introduction', 'IndexController@introduction')->name('client.introduction');
 Route::get('contact', 'IndexController@contact')->name('client.contact');
@@ -41,8 +42,10 @@ Route::group(['prefix' => 'typerooms'], function () {
     Route::get('{typeRoom}/booking/{startDate?}/{endDate?}/{number_people?}', 'IndexController@booking')
         ->name('client.typerooms.booking');
 });
+
+Route::post('notifications-booking', 'IndexController@notificationBooking')->name('client.notifications-booking');
 /*Admin*/
-Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
+Route::prefix('admin')->middleware(['admin', 'auth'])->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', 'IndexController@index')->name('index');
 
     Route::prefix('diagram')->name('diagram.')->group(function () {

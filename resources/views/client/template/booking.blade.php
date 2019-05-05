@@ -27,7 +27,6 @@
                 <td>$ {{$typeRoom['total']}}</td>
                 <td>{{$typeRoom['startDate']}}</td>
                 <td>{{$typeRoom['endDate']}}</td>
-                <td></td>
             </tr>
         @endforeach
         <tr>

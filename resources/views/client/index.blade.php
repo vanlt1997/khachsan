@@ -168,7 +168,7 @@
                     <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
                         <span class="subheading">Our Conference</span>
                         <h2 class="h1 font-weight-bold">Conference Centre</h2>
-                        <p><a href="#" class="btn btn-primary btn-outline-white mt-3 py-3 px-4">View more details</a>
+                        <p><a href="{{route('client.services.index')}}" class="btn btn-primary btn-outline-white mt-3 py-3 px-4">View more details</a>
                         </p>
                     </div>
                 </div>

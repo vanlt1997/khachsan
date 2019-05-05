@@ -114,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 mb-5">
                         <a href="{{route('client.booking')}}" class="btn btn-sm btn-outline-primary">Back</a>
                         <button class="btn btn-sm btn-outline-success" id="btnConfirm">Confirm</button>
                     </div>

@@ -11,6 +11,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\Card;
 use App\Models\Order;
 use App\Models\User;
+use App\Notifications\BookingNotification;
 use App\Service\ContactService;
 use App\Service\OrderService;
 use App\Models\Service;
@@ -24,6 +25,7 @@ use App\Service\TypeRoomService;
 use App\Service\UserService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -283,6 +285,7 @@ class IndexController extends Controller
             'phone' => $request->phone,
             'sex' => $request->sex,
             'address' => $request->address,
+            'password' => Auth::user()->password,
             'payment' => $paymentMethod,
             'stripeToken' => $request->stripeToken ?? null,
         ];
@@ -337,6 +340,8 @@ class IndexController extends Controller
             }
             $this->orderService->sendMailBooking($customer, $card);
         });
+
+        \Notification::send($this->userService->getUserByEmai('admin@gmail.com'), new BookingNotification(Order::latest('id')->first(), Auth::user()));
 
         Session::forget('card');
         Session::forget('infoBooking');
@@ -403,5 +408,20 @@ class IndexController extends Controller
         $orders = $this->orderService->getOrdersByUser($user->id);
 
         return view('client.profile.history', compact('user', 'orders', 'slidebars', 'images'));
+    }
+
+    public function actionSearchHistory(Request $request)
+    {
+        $orders = $this->orderService->searchHistory($request, Auth::id());
+        $slidebars = $this->slideBarService->getSlideBars();
+        $images = $this->imageService->getImagesFooter();
+        $user = Auth::user();
+
+        return view('client.profile.history', compact('user', 'orders', 'slidebars', 'images', 'request'));
+    }
+
+    public function notificationBooking()
+    {
+        return Auth::user()->unreadNotifications;
     }
 }

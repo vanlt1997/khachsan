@@ -73,10 +73,10 @@ $services = Service::all();
                         <ul class="dropdown-menu">
                             @if(Auth::user()->role == 1)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('admin.index')}}" style="color: black">Admin</a>
+                                    <a class="nav-link" href="{{route('admin.index')}}" style="color: black">Go To Admin</a>
                                 </li>
                             @endif
-                            @if(Auth::check())
+                            @if(Auth::user()->role != 1)
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{route('client.information')}}" style="color: black">Information</a>
                                 </li>

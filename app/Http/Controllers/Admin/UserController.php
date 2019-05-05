@@ -37,8 +37,7 @@ class UserController extends Controller
         return DataTables::of($this->userService->users())
             ->addColumn('action', function ($user) {
                 return
-                    '<a href="users/' . $user->id . '/detail" class="btn btn-sm btn-outline-warning"> <i class="fa fa-info"></i></a>
-                    <a href="users/' . $user->id . '/edit" class="btn btn-sm btn-outline-primary" > <i class="fa fa-pencil"></i></a>
+                    '<a href="users/' . $user->id . '/edit" class="btn btn-sm btn-outline-primary" > <i class="fa fa-pencil"></i></a>
                     <a href="users/' . $user->id . '/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Are you sure ?\')"> <i class="fa fa-trash-o"></i></a>
                     ';
             })

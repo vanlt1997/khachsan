@@ -8,6 +8,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window._ = require('lodash');
+window.$ = window.jQuery = require('jquery');
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,7 +22,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('booking', require('./components/BookingNotification.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,5 +31,26 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        order: '',
+        user: ''
+    },
+    created(){
+        if (window.Laravel.userId) {
+            axios.post('/notifications-booking').then(res => {
+                this.order = res.data['order'];
+                user.user = res.data['user'];
+                console.log(res.data)
+            })
+        };
+        Echo.private("App.Models.User."+ window.Laravel.userId).notification((res) => {
+            data = {
+                "data": res
+            }
+            this.order.push(data['order']);
+            this.user.push(data['user']);
+            console.log(res);
+        });
+    }
 });
