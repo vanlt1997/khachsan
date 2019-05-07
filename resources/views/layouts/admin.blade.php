@@ -11,26 +11,27 @@
     @yield('css')
 </head>
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
-    @include('common.admin.header')
-    <div class="content-wrapper">
-        <div class="content-header">
-            <div class="container-fluid">
-                @yield('header')
-            </div>
-        </div>
-        <div class="content">
-            <div class="container-fluid">
-                @yield('content')
-            </div>
-        </div>
-    </div>
-    <aside class="control-sidebar control-sidebar-dark">
-    </aside>
-    @include('common.admin.footer')
+    <div class="wrapper">
 
-</div>
-    @include('common.admin.js')
+        @include('common.admin.header')
+
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    @yield('header')
+                </div>
+            </div>
+            <div class="content">
+                <div class="container-fluid">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+        <aside class="control-sidebar control-sidebar-dark">
+        </aside>
+        @include('common.admin.footer')
+        @include('common.admin.js')
+    </div>
 </body>
 </html>
 

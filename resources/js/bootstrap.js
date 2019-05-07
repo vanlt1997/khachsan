@@ -45,12 +45,13 @@ if (token) {
  */
 
 // import Echo from 'laravel-echo'
-
+//
 // window.Pusher = require('pusher-js');
-
+//
 // window.Echo = new Echo({
+//     authEndpoint : 'http://127.0.0.1:8000/admin',
 //     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     key: 'b67c689fd9e28c2bb330',
+//     cluster: "mt1",
 //     encrypted: true
 // });

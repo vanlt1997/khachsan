@@ -16,7 +16,7 @@
                     <!-- small box -->
                     <div class="small-box bg-primary">
                         <div class="inner">
-                            <h3>{{count($orders)}}</h3>
+                            <h3 id="orders"></h3>
 
                             <p>Orders</p>
                         </div>
@@ -46,7 +46,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{count($users)}}</h3>
+                            <h3 id="users"></h3>
 
                             <p>User Registrations</p>
                         </div>
@@ -61,7 +61,7 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{count($rooms)}}</h3>
+                            <h3 id="rooms"></h3>
 
                             <p>Rooms</p>
                         </div>
@@ -80,7 +80,7 @@
 
                         <div class="info-box-content">
                             <a href="{{route('admin.type-rooms.index')}}"><span class="info-box-text">Type Room</span></a>
-                            <span class="info-box-number">{{count($typeRooms)}}</span>
+                            <span class="info-box-number" id="typeRooms"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -93,7 +93,7 @@
 
                         <div class="info-box-content">
                             <a href="{{route('admin.promotions.index')}}"><span class="info-box-text">Promotions</span></a>
-                            <span class="info-box-number">{{count($promotions)}}</span>
+                            <span class="info-box-number" id="promotions"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -110,7 +110,7 @@
 
                         <div class="info-box-content">
                             <a href="{{route('admin.contacts.index')}}"><span class="info-box-text">Contacts</span></a>
-                            <span class="info-box-number">{{count($contacts)}}</span>
+                            <span class="info-box-number" id="contacts"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -123,7 +123,7 @@
 
                         <div class="info-box-content">
                             <a href="{{route('admin.library-images.index')}}"><span class="info-box-text">Images</span></a>
-                            <span class="info-box-number">{{count($images)}}</span>
+                            <span class="info-box-number" id="images"></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -153,11 +153,17 @@
     <script>
         google.charts.load('current', {'packages':['corechart']});
         google.charts.load("current", {packages:["timeline"]});
-        google.charts.setOnLoadCallback(chartYear);
-        google.charts.setOnLoadCallback(drawChart);
+        $(document).ready(function () {
+            setInterval(function () {
+                this.loadData()
+            }, 1000);
+            setInterval(function () {
 
-        function chartYear() {
-            var data = google.visualization.arrayToDataTable(<?= json_encode($chartYear) ?>);
+            }, 1000);
+        });
+
+        function chartYear(chartYear) {
+            var data = google.visualization.arrayToDataTable(JSON.parse(chartYear));
 
             var options = {
                 title: 'Report',
@@ -170,32 +176,39 @@
             chart.draw(data, options);
         }
 
-        function drawChart() {
-            console.log(new Date(0,0,0,12,0,0));
+        function drawChart(data) {
             var container = document.getElementById('calendar-room');
             var chart = new google.visualization.Timeline(container);
             var dataTable = new google.visualization.DataTable();
-            dataTable.addColumn({ type: 'string', id: 'Type Room' });
-            dataTable.addColumn({ type: 'string', id: 'Room' });
-            dataTable.addColumn({ type: 'date', id: 'Start' });
-            dataTable.addColumn({ type: 'date', id: 'End' });
-            dataTable.addRows([
-                            @foreach($data as $item)
-                    [
-                        '{{$item[0]}}',
-                        '{{$item[1]}}',
-                        new Date({{\Carbon\Carbon::parse($item[2])->format('Y')}},{{\Carbon\Carbon::parse($item[2])->format('m-1')}}, {{\Carbon\Carbon::parse($item[2])->format('d')}}),
-                        new Date({{\Carbon\Carbon::parse($item[3])->format('Y')}},{{\Carbon\Carbon::parse($item[3])->format('m-1')}}, {{\Carbon\Carbon::parse($item[3])->format('d')}})
-                    ],
-                        @endforeach
-                ]
-            );
+            dataTable.addColumn({type: 'string', id: 'Type Room'});
+            dataTable.addColumn({type: 'string', id: 'Room'});
+            dataTable.addColumn({type: 'date', id: 'Start'});
+            dataTable.addColumn({type: 'date', id: 'End'});
+            var drawCharts = [];
+            data.forEach(function (item) {
+                var e = [item[0], item[1], new Date(item[2].date), new Date(item[3].date)];
+                drawCharts.push(e);
+            });
+            dataTable.addRows(drawCharts);
+            chart.draw(dataTable);
+        }
 
-            var options = {
-                timeline: { colorByRowLabel: true }
-            };
-
-            chart.draw(dataTable, options);
+        function loadData() {
+            $.ajax({
+                type: 'post',
+                url: '{{route('admin.index')}}',
+                success: function (data) {
+                    $('#orders').text(data['orders']);
+                    $('#users').text(data['users']);
+                    $('#rooms').text(data['rooms']);
+                    $('#typeRooms').text(data['typeRooms']);
+                    $('#promotions').text(data['promotions']);
+                    $('#contacts').text(data['contacts']);
+                    $('#images').text(data['images']);
+                    google.charts.setOnLoadCallback(chartYear(data['chartYear']));
+                    google.charts.setOnLoadCallback(drawChart(data['data']));
+                }
+            });
         }
     </script>
 @endpush

@@ -13,6 +13,7 @@ use App\Service\RoomService;
 use App\Service\TypeRoomService;
 use App\Service\UserService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
@@ -50,7 +51,13 @@ class IndexController extends Controller
 
     public function index()
     {
+        return view('admin.index');
+    }
+
+    public function getData()
+    {
         $orders = $this->orderService->orders();
+        $orderWait = $this->orderService->getOrderWait();
         $users = $this->userService->users();
         $rooms = $this->roomService->rooms();
         $typeRooms = $this->typeRoomService->getTypeRooms();
@@ -74,7 +81,22 @@ class IndexController extends Controller
                 Carbon::parse($room->end_date)
             ];
         }
+        return response()->json([
+            'orders' => count($orders),
+            'users' => count($users),
+            'rooms' => count($rooms),
+            'typeRooms' => count($typeRooms),
+            'contacts' => count($contacts),
+            'images' => count($images),
+            'promotions' => count($promotions),
+            'data' => $data,
+            'chartYear' => json_encode($chartYear),
+            'orderWait' => count($orderWait)
+        ]);
+    }
 
-        return view('admin.index', compact('orders', 'users', 'rooms', 'chartYear', 'data', 'typeRooms', 'promotions', 'contacts', 'images'));
+    public function notificationBooking()
+    {
+        return Auth::user()->unreadNotifications;
     }
 }

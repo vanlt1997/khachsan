@@ -43,10 +43,10 @@ Route::group(['prefix' => 'typerooms'], function () {
         ->name('client.typerooms.booking');
 });
 
-Route::post('notifications-booking', 'IndexController@notificationBooking')->name('client.notifications-booking');
 /*Admin*/
 Route::prefix('admin')->middleware(['admin', 'auth'])->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', 'IndexController@index')->name('index');
+    Route::post('/', 'IndexController@getData')->name('index');
 
     Route::prefix('diagram')->name('diagram.')->group(function () {
         Route::get('/', 'DiagramController@index')->name('index');

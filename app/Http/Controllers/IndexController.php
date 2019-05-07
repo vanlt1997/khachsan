@@ -341,8 +341,6 @@ class IndexController extends Controller
             $this->orderService->sendMailBooking($customer, $card);
         });
 
-        \Notification::send($this->userService->getUserByEmai('admin@gmail.com'), new BookingNotification(Order::latest('id')->first(), Auth::user()));
-
         Session::forget('card');
         Session::forget('infoBooking');
         Session::forget('code');
@@ -418,10 +416,5 @@ class IndexController extends Controller
         $user = Auth::user();
 
         return view('client.profile.history', compact('user', 'orders', 'slidebars', 'images', 'request'));
-    }
-
-    public function notificationBooking()
-    {
-        return Auth::user()->unreadNotifications;
     }
 }
