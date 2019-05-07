@@ -21,4 +21,35 @@
         toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons'
     })
 </script>
+<script>
+    $(document).ready(function () {
+        setInterval(function () {
+            this.loadData()
+        }, 1000);
+        setInterval(function () {
+
+        }, 1000);
+    });
+
+    function loadData() {
+        $.ajax({
+            type: 'post',
+            url: '{{route('admin.index')}}',
+            success: function (data) {
+                var html = '';
+                $('.item-wait').remove();
+                $('.orderWait').text(data['dataWait'].length);
+                $('.orderWaitMessage').text(data['dataWait'].length + ' Notifications');
+                data['dataWait'].forEach(function (order, i) {
+                    url = "{{route('admin.orders.wait.edit', ':order')}}";
+                    url = url.replace(':order', order.id);
+                    if (i < 5) {
+                        html += '<a href="'+ url +'" class="dropdown-item item-wait" ><i class="fa fa-star-o mr-2"></i>'+ order.user.name +' <span class="float-right text-muted text-sm">'+ order.date +'</span></a>'
+                    }
+                });
+                $('#showOrderWait').append(html);
+            }
+        });
+    }
+</script>
 @stack('scripts')

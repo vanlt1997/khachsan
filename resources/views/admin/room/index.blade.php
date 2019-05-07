@@ -33,16 +33,8 @@
                 <p>Free</p>
             </div>
             <div class="col-md-3">
-                <div class="bg-status-2"></div>
-                <p>Reserved</p>
-            </div>
-            <div class="col-md-3">
                 <div class="bg-status-3"></div>
                 <p>Using</p>
-            </div>
-            <div class="col-md-3">
-                <div class="bg-status-4"></div>
-                <p>Expired</p>
             </div>
         </div>
         <div class="row col-md-12">

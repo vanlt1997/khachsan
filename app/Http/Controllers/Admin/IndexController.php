@@ -91,7 +91,7 @@ class IndexController extends Controller
             'promotions' => count($promotions),
             'data' => $data,
             'chartYear' => json_encode($chartYear),
-            'orderWait' => count($orderWait)
+            'dataWait' => $orderWait
         ]);
     }
 

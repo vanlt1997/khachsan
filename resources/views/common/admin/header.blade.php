@@ -13,16 +13,13 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fa fa-bell-o"></i>
-                <span class="badge badge-warning navbar-badge" id="numberOrder">0</span>
+                <span class="badge badge-warning navbar-badge orderWait">0</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">0 Notifications</span>
+                <span class="dropdown-item dropdown-header orderWaitMessage">0 Notifications</span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fa fa-star-o mr-2"></i>Van
-                    <span class="float-right text-muted text-sm">LT</span>
-                </a>
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                <div id="showOrderWait"></div>
+                <a href="{{route('admin.orders.wait')}}" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li>
         <li class="nav-item">

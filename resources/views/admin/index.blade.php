@@ -15,10 +15,13 @@
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-primary">
-                        <div class="inner">
+                        <div class="inner col-md-6" style="float: left;">
                             <h3 id="orders"></h3>
-
                             <p>Orders</p>
+                        </div>
+                        <div class="inner col-md-6" style="float: right;">
+                            <h3 class="orderWait"></h3>
+                            <p>Orders Wait</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-shopping-cart"></i>
@@ -198,6 +201,10 @@
                 type: 'post',
                 url: '{{route('admin.index')}}',
                 success: function (data) {
+                    var html = '', url;
+                    $('.item-wait').remove();
+                    $('.orderWait').text(data['dataWait'].length);
+                    $('.orderWaitMessage').text(data['dataWait'].length + ' Notifications');
                     $('#orders').text(data['orders']);
                     $('#users').text(data['users']);
                     $('#rooms').text(data['rooms']);
@@ -207,6 +214,14 @@
                     $('#images').text(data['images']);
                     google.charts.setOnLoadCallback(chartYear(data['chartYear']));
                     google.charts.setOnLoadCallback(drawChart(data['data']));
+                    data['dataWait'].forEach(function (order, i) {
+                        url = "{{route('admin.orders.wait.edit', ':order')}}";
+                        url = url.replace(':order', order.id);
+                        if (i <5 ) {
+                            html += '<a href="'+ url +'" class="dropdown-item item-wait" ><i class="fa fa-star-o mr-2 text-danger"></i>'+ order.user.name +' <span class="float-right text-muted text-sm">'+ order.date +'</span></a>'
+                        }
+                    });
+                    $('#showOrderWait').append(html);
                 }
             });
         }

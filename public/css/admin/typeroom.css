@@ -87,19 +87,21 @@ label span{
 .alert-custom-success {
      background-color: rgba(14, 160, 5, 0.73) !important;
      border: 1px solid rgba(32, 148, 22, 0.8);
-     margin-top: 1%;
+     margin-top: 5%;
      margin-right: 2.1%;
      font-weight: bold;
      font-size: 16px !important;
+    z-index: 1;
  }
 
 .alert-custom-error {
     background-color: rgba(160, 27, 17, 0.73) !important;
     border: 1px solid rgba(148, 41, 29, 0.8);
-    margin-top: 1%;
+    margin-top: 5%;
     margin-right: 2.1%;
     font-weight: bold;
     font-size: 16px !important;
+    z-index: 1;
 }
 /*Panel*/
 .panel {
