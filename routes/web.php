@@ -48,10 +48,6 @@ Route::prefix('admin')->middleware(['admin', 'auth'])->namespace('Admin')->name(
     Route::get('/', 'IndexController@index')->name('index');
     Route::post('/', 'IndexController@getData')->name('index');
 
-    Route::prefix('diagram')->name('diagram.')->group(function () {
-        Route::get('/', 'DiagramController@index')->name('index');
-    });
-
     Route::prefix('type-rooms')->name('type-rooms.')->group(function () {
         Route::get('/', 'TypeRoomController@index')->name('index');
         Route::get('/getListTypeRoom', 'TypeRoomController@getListTypeRoom')->name('getListTypeRoom');
@@ -80,10 +76,6 @@ Route::prefix('admin')->middleware(['admin', 'auth'])->namespace('Admin')->name(
         Route::get('/', 'LibraryImageController@index')->name('index');
         Route::post('/', 'LibraryImageController@actionSaveImage')->name('index');
         Route::post('/{id?}', 'LibraryImageController@actionDeleteImage')->name('delete');
-    });
-
-    Route::prefix('diagrams')->name('diagrams.')->group(function () {
-        Route::get('/', 'DiagramController@index')->name('index');
     });
 
     Route::prefix('devices')->name('devices.')->group(function () {

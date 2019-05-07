@@ -6,10 +6,13 @@ use App\Http\Requests\RoomRequest;
 use App\Models\Room;
 use App\Models\TypeRoom;
 use App\Service\ImageService;
+use App\Service\OrderService;
 use App\Service\RoomService;
 use App\Service\StatusService;
 use App\Http\Controllers\Controller;
 use App\Service\TypeRoomService;
+use Illuminate\Support\Facades\DB;
+use Session;
 use Yajra\DataTables\DataTables;
 
 class RoomController extends Controller
@@ -69,7 +72,9 @@ class RoomController extends Controller
     {
         $this->roomService->create($typeRoom->id, $roomRequest);
 
-        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $typeRoom->id)->with('message', 'Create Room Successfully !');
+
+        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $typeRoom->id)
+            ->with('message', 'Create Room Successfully !');
     }
 
     public function edit(TypeRoom $typeRoom, Room $room)
@@ -84,11 +89,21 @@ class RoomController extends Controller
     {
         $this->roomService->actionCreateOrUpdate($request, $typeRoom->id, $room->id);
 
-        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $typeRoom->id)->with('message', 'Update Room Successfully !');
+        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $typeRoom->id)
+            ->with('message', 'Update Room Successfully !');
     }
 
-    public function delete($id, $roomId)
+    public function delete(TypeRoom $typeRoom, Room $room)
     {
+        $orderDetails = $room->orderDetails;
+        if ($orderDetails->isEmpty()) {
+            $this->roomService->delete($typeRoom->id, $room);
 
+            return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $typeRoom->id)
+                ->with('message', 'Delete Room Successfully !');
+        }
+
+        return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $typeRoom->id)
+            ->with('error', 'Can\'t Delete Room !');
     }
 }

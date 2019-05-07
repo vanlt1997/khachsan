@@ -14,11 +14,6 @@ class ServiceService
         $this->service = $service;
     }
 
-    public function getServices()
-    {
-        return $this->service->whereStatus(1)->get();
-    }
-
     public function getAllList()
     {
         return $this->service->all();
@@ -28,11 +23,8 @@ class ServiceService
     {
         $action = $this->service->find($id) ?? new Service();
         $action->name = $service->name;
-        $action->status = $service->status;
-        $action->price = $service->price;
-        $action->sale = $service->sale;
-        $action->quantity = $service->quantity;
         $action->description = $service->description;
+        $action->icon = $service->icon ?? null;
         $action->save();
     }
 

@@ -32,6 +32,7 @@
                 <th>ID</th>
                 <th>Type</th>
                 <th>People Number</th>
+                <th>Number Room</th>
                 <th>Price</th>
                 <th>Sale (%)</th>
                 <th>Action</th>
@@ -58,6 +59,7 @@
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'people', name: 'people'},
+                    {data: 'number_room', name: 'number_room'},
                     {data: 'price', name: 'price'},
                     {data: 'sale', name: 'sale'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},

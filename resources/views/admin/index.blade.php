@@ -15,11 +15,11 @@
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-primary">
-                        <div class="inner col-md-6" style="float: left;">
+                        <div class="inner col-md-6" style="float: left;" href="{{route('admin.orders.index')}}">
                             <h3 id="orders"></h3>
-                            <p>Orders</p>
+                            <p >Orders</p>
                         </div>
-                        <div class="inner col-md-6" style="float: right;">
+                        <div class="inner col-md-6" style="float: right;" href="{{route('admin.orders.wait')}}">
                             <h3 class="orderWait"></h3>
                             <p>Orders Wait</p>
                         </div>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-3 col-xs-6">
+                <div class="col-lg-3 col-xs-6" >
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-3 col-xs-6">
+                <div class="col-lg-3 col-xs-6" >
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-3 col-xs-6">
+                <div class="col-lg-3 col-xs-6" >
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
@@ -90,7 +90,7 @@
                     <!-- /.info-box -->
                 </div>
                 <!-- /.col -->
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12" >
                     <div class="info-box">
                         <span class="info-box-icon bg-dark"><i class="fa fa-safari"></i></span>
 
@@ -107,7 +107,7 @@
                 <!-- fix for small devices only -->
                 <div class="clearfix visible-sm-block"></div>
 
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12" >
                     <div class="info-box">
                         <span class="info-box-icon bg-info-gradient"><i class="fa fa-envelope"></i></span>
 
@@ -120,7 +120,7 @@
                     <!-- /.info-box -->
                 </div>
                 <!-- /.col -->
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12" >
                     <div class="info-box">
                         <span class="info-box-icon bg-primary-gradient"><i class="fa fa-image"></i></span>
 

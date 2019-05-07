@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <div class="row col-md-12">
                         <div class="col-md-3 text-right">
-                            <label for="sale">Sale (%) <span>&hercon;</span></label>
+                            <label for="sale">Sale ($) <span>&hercon;</span></label>
                         </div>
                         <div class="col-md-9">
                             <input type="number" name="sale" id="sale" class="form-control" placeholder="Sale" value="{{$promotion->sale ?? null}}">
@@ -82,7 +82,7 @@
                             <label for="sale">Code <span>&hercon;</span></label>
                         </div>
                         <div class="col-md-7">
-                            <input type="text" name="code" id="code" class="form-control" placeholder="Sale" value="{{$promotion->code ?? null}}">
+                            <input type="text" name="code" id="code" class="form-control" placeholder="Sale" value="{{$promotion->code ?? null}}" readonly>
                             <div class="error-content">
                                 @if($errors->has('code'))
                                     <p class="text-danger"><i

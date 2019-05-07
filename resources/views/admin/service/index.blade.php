@@ -31,9 +31,6 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Price</th>
-                <th>Sale(%)</th>
-                <th>Number</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -58,9 +55,6 @@
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
-                    {data: 'price', name: 'price'},
-                    {data: 'sale', name: 'sale'},
-                    {data: 'quantity', name: 'quantity'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });

@@ -2,6 +2,7 @@
 @section('title','Rooms')
 @section('css')
     <link rel="stylesheet" href="{{asset('css/admin/alert.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
 @endsection
 @section('header')
     <div class="container">

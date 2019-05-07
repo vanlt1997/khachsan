@@ -72,7 +72,7 @@ class IndexController extends Controller
 
     public function index()
     {
-        $services = $this->serviceService->getServices();
+        $services = $this->serviceService->getAllList();
         $slidebars = $this->slideBarService->getSlideBars();
         $typeRooms = $this->typeRoomService->getTypeRooms();
         $images = $this->imageService->getImagesFooter();
@@ -100,7 +100,7 @@ class IndexController extends Controller
     public function services()
     {
         $slidebars = $this->slideBarService->getSlideBars();
-        $services = $this->serviceService->getServices();
+        $services = $this->serviceService->getAllList();
         $images = $this->imageService->getImagesFooter();
 
         return view('client.service.index', compact('slidebars', 'services', 'images'));

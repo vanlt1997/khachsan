@@ -27,7 +27,15 @@ class RoomService
     {
         return DB::transaction(function () use ($id, $room) {
             $this->actionCreateOrUpdate($room, $id);
-            $this->updateTypeRoom($id);
+            $this->updateAddTypeRoom($id);
+        });
+    }
+
+    public function delete($id, $room)
+    {
+        return DB::transaction(function () use ($id, $room) {
+            $this->deleteRoom($room);
+            $this->updateDecrementTypeRoom($id);
         });
     }
 
@@ -41,10 +49,21 @@ class RoomService
         $action->save();
     }
 
-    protected function updateTypeRoom($id)
+    public function deleteRoom($room)
+    {
+        return $this->room->whereId($room->id)->delete();
+    }
+
+    protected function updateAddTypeRoom($id)
     {
         $typeRoom = $this->typeRoom->find($id);
         $typeRoom->increment('number_room');
+    }
+
+    protected function updateDecrementTypeRoom($id)
+    {
+        $typeRoom = $this->typeRoom->find($id);
+        $typeRoom->decrement('number_room');
     }
 
     public function find($id)

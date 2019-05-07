@@ -29,22 +29,6 @@
                                     <td>{{$service->name}}</td>
                                 </tr>
                                 <tr class="table-info">
-                                    <th>Price</th>
-                                    <td>{{$service->price}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Sale (%)</th>
-                                    <td>{{$service->sale}}</td>
-                                </tr>
-                                <tr class="table-info">
-                                    <th>Number</th>
-                                    <td>{{$service->quantity}}</td>
-                                </tr>
-                                <tr>
-                                    <th>Status</th>
-                                    <td>{{$service->status === 1? 'General Service' : 'Room Service'}}</td>
-                                </tr>
-                                <tr class="table-info">
                                     <th>Description</th>
                                     <td>{!! $service->description !!}</td>
                                 </tr>
