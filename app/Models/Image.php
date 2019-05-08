@@ -26,8 +26,7 @@ class Image extends Model
     {
         parent::boot();
 
-        self::deleting( function ($model)
-        {
+        self::deleting(function ($model) {
             ImageTypeRoom::where('image_id', $model->id)->delete();
         });
     }

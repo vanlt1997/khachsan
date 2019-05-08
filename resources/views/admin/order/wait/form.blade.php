@@ -182,7 +182,7 @@
                                 <div class="row col-md-12 mt-5" id="showRoom{{$orderTypeRoom->type_room_id}}">
                                 </div>
                             @endforeach
-                                <input type="text" name="nameRoom"  id="nameRoom">
+                                <input type="text" name="nameRoom"  id="nameRoom" hidden>
                             <div class="row col-md-12 text-danger">
                                 <h6 id="infoTotal">Total : $ {{$order->total ?? 0}}</h6>
                             </div>
@@ -193,7 +193,9 @@
                                 <h6 id="infoTotal">Total : $ {{$order->payment_total ?? 0}}</h6>
                             </div>
                             <div class="col-md-12 mt-5">
-                                <button type="submit" class="btn btn-sm btn-outline-success">Save</button>
+                                <a href="{{route('admin.orders.wait')}}"
+                                   class="btn btn-sm btn-outline-success">Back</a>
+                                <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                             </div>
                         </div>
                     </div>

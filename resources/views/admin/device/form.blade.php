@@ -34,26 +34,10 @@
                 </div>
                 <div class="form-group">
                     <div class="row col-md-12">
-                        <div class="col-md-4 text-right">
-                            <label for="name">Number <span>&hercon;</span></label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="number" name="quantity" id="quantity" class="form-control" placeholder="Number" value="{{$device->quantity ?? null}}">
-                            <div class="error-content">
-                                @if($errors->has('quantity'))
-                                    <p class="text-danger"><i
-                                            class="fa fa-exclamation-circle"></i> {{$errors->first('quantity')}}</p>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row col-md-12">
                         <div class="col-md-4 text-right"></div>
                         <div class="col-md-8">
                             <a href="{{route('admin.devices.index')}}"
-                               class="btn btn-sm btn-outline-danger">Back</a>
+                               class="btn btn-sm btn-outline-success">Back</a>
                             <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                         </div>
                     </div>

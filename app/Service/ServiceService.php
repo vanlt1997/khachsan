@@ -4,14 +4,18 @@ namespace App\Service;
 
 
 use App\Models\Service;
+use App\Models\ImageService;
 
 class ServiceService
 {
     protected $service;
+    protected $imageService;
 
-    public function __construct(Service $service)
+    public function __construct(Service $service, ImageService $imageService)
     {
         $this->service = $service;
+        $this->imageService = $imageService;
+
     }
 
     public function getAllList()
@@ -38,4 +42,8 @@ class ServiceService
         return $this->find($id)->delete();
     }
 
+    public function getItemLast()
+    {
+        return $this->service->all()->last();
+    }
 }

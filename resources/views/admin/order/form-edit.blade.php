@@ -208,7 +208,9 @@
                                         <h6 id="infoTotal">Payment Old : $ {{$order->payment_total ?? 0}}</h6>
                                     </div>
                                     <div class="col-md-12 mt-5">
-                                        <button type="submit" class="btn btn-sm btn-outline-success">Next</button>
+                                        <a href="{{route('admin.orders.handled')}}"
+                                           class="btn btn-sm btn-outline-success">Back</a>
+                                        <button type="submit" class="btn btn-sm btn-outline-info">Next</button>
                                     </div>
                                 </div>
                         </div>

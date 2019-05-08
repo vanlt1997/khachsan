@@ -42,9 +42,7 @@ class DeviceController extends Controller
 
     public function create()
     {
-        $images = $this->imageService->getImages();
-
-        return view('admin.device.form', compact('images'));
+        return view('admin.device.form');
     }
 
     public function actionCreate(DeviceRequest $request)
@@ -93,8 +91,4 @@ class DeviceController extends Controller
         return $pdf->download('devices'.Carbon::now().'.pdf');
     }
 
-    public function importExcel()
-    {
-
-    }
 }

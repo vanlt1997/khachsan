@@ -113,7 +113,7 @@
                         <div class="col-md-3 text-right"></div>
                         <div class="col-md-8">
                             <a href="{{route('admin.promotions.index')}}"
-                               class="btn btn-sm btn-outline-danger">Back</a>
+                               class="btn btn-sm btn-outline-success">Back</a>
                             <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                         </div>
                     </div>

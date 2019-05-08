@@ -39,10 +39,6 @@
                                     <th>Name</th>
                                     <td>{{$device->name}}</td>
                                 </tr>
-                                <tr class="table-info">
-                                    <th>Number</th>
-                                    <td>{{$device->quantity}}</td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>

@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-md-12 text-center">
         <h3 class="text-danger">Hotel MayStar</h3>
+        <h4>Date: {{\Carbon\Carbon::now()->format('Y-m-d H:m:s')}}</h4>
     </div>
 </div>
 <div class="row">
@@ -23,7 +24,7 @@
         <p>Payment Total: $ {{$order->payment_total}}</p>
     </div>
     <div class="col-md-12">
-        <h4>Detail Order</h4>
+        <h4>Information Detail Order</h4>
         <table border="1" cellspacing="0" cellpadding="15px" width="100%">
             <tr>
                 <th>Type Room</th>
@@ -57,5 +58,9 @@
                 </tr>
             @endforeach
         </table>
+    </div>
+    <div class="col-md-12">
+        <br>
+        <p class="text-center">-------------------------------------- Thank you for coming with us. See you laster ! --------------------------------------</p>
     </div>
 </div>

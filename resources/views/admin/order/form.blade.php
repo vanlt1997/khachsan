@@ -222,6 +222,7 @@
                                 <h6 id="infoTotal">Total : $ {{$order->total ?? 0}}</h6>
                             </div>
                             <div class="col-md-12 mt-5">
+                                <a href="{{route('admin.orders.handled')}}" class="btn btn-sm btn-outline-success mr-3">Back</a>
                                 <button type="submit" class="btn btn-sm btn-outline-success" id="btnNext" disabled >Next</button>
                             </div>
                         </div>

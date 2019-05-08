@@ -80,8 +80,11 @@
                                 <a class="nav-link px-4 @if($key == 0) active @endif" id="{{$service->id}}-tab" data-toggle="pill"
                                    href="#{{$service->id}}" role="tab" aria-controls="{{$service->id}}"
                                    aria-selected="true">
-                                    @if($service->icon !== ''  && $service->icon !== null)<img
-                                        src="{{asset('images/services')}}/{{$service->icon}}">@endif {{$service->name}}
+                                    @if($service->icon !== ''  && $service->icon !== null)
+                                        <img src="{{asset('images/services')}}/{{$service->icon}}">@else
+                                        <img src="{{asset('images/admin/library-images')}}/{{$service->images->first()['url']}}">
+                                        @endif
+                                        {{$service->name}}
                                 </a>
                         @endforeach
                     </div>
@@ -96,7 +99,7 @@
                                     <img src="{{asset('images/services/')}}/{{$service->icon}}">@endif
                                 <h2 class="mb-4">{{$service->name}}</h2>
                                 <p>{!! $service->description !!}</p>
-                                <p><a href="{{route('client.services.detail',$service->aliases)}}"
+                                <p><a href="{{route('client.services.detail',$service->id)}}"
                                       class="btn btn-primary">Xem thêm</a></p>
                             </div>
                         @endforeach

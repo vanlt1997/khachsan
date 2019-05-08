@@ -31,7 +31,6 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Number</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -41,7 +40,6 @@
         <a href="{{route('admin.devices.create')}}" class="btn btn-sm btn-outline-info"><i
                 class="fa fa-plus-circle"></i> Add</a>
         <a href="{{route('admin.devices.export-pdf')}}" class="btn btn-sm btn-outline-info"><i class="fa fa-file-pdf-o"></i> Export PDF</a>
-        <a href="{{route('admin.devices.import-excel')}}" class="btn btn-sm btn-outline-primary"><i class="fa fa-file-excel-o"></i> Import Excel</a>
     </div>
 @endsection
 @push('scripts')
@@ -56,7 +54,6 @@
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
-                    {data: 'quantity', name: 'quantity'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]
             });

@@ -97,6 +97,7 @@
                     <div class="row col-md-12">
                         <div class="col-md-4 text-right"></div>
                         <div class="col-md-8">
+                            <a href="{{route('admin.users.index')}}" class="btn btn-sm btn-outline-success mr-3">Back</a>
                             <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                         </div>
                     </div>

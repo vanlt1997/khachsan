@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     public $timestamps = false;
-    protected $table = "services";
+    protected $table = 'services';
     protected $fillable = [
-        'name','aliases','price','sale','quantity','description','status','icon'
+        'name','aliases','description','icon'
     ];
 
     public function images()
@@ -21,7 +21,7 @@ class Service extends Model
     {
         parent::boot();
 
-        self::saving(function ($model){
+        self::saving(function ($model) {
             $data = explode(' ', $model->name);
             $model->aliases = implode('-', $data);
         });

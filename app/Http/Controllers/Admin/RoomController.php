@@ -62,10 +62,9 @@ class RoomController extends Controller
 
     public function create(TypeRoom $typeRoom)
     {
-        $idTypeRoom = $typeRoom->id;
         $status = $this->statusService->getStatus();
         $images = $this->imageService->getImages();
-        return view('admin.room.form', compact('idTypeRoom', 'status', 'images'));
+        return view('admin.room.form', compact('typeRoom', 'status', 'images'));
     }
 
     public function actionCreate(TypeRoom $typeRoom, RoomRequest $roomRequest)
@@ -82,7 +81,7 @@ class RoomController extends Controller
         $room = $this->roomService->find($room->id);
         $status = $this->statusService->getStatus();
 
-        return view('admin.room.form', compact('room', 'status'));
+        return view('admin.room.form', compact('room', 'status', 'typeRoom'));
     }
 
     public function actionEdit(TypeRoom $typeRoom, Room $room, RoomRequest $request)

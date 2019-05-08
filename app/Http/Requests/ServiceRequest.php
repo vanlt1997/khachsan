@@ -27,19 +27,6 @@ class ServiceRequest extends FormRequest
 
         return [
             'name'     => 'required|unique:services,name,'.$id,
-            'price'    => 'required|integer',
-            'sale'     => 'required|integer',
-            'quantity' => 'required|integer',
-            'status'   => 'required'
-        ];
-    }
-
-    public function messages()
-    {
-        parent::messages();
-
-        return [
-            'status.required' => 'Choose status service'
         ];
     }
 }

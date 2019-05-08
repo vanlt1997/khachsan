@@ -9,7 +9,7 @@ class Device extends Model
     public $timestamps = false;
     protected $table = "devices";
     protected $fillable = [
-      'name','quantity'
+      'name'
     ];
 
     public function typeRooms()

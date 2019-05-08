@@ -9,11 +9,13 @@ class ImageService
 {
     protected $image;
     protected $imageTypeRoom;
+    protected $imageService;
 
-    public function __construct(Image $image,ImageTypeRoom $imageTypeRoom )
+    public function __construct(Image $image, ImageTypeRoom $imageTypeRoom, \App\Models\ImageService $imageService)
     {
         $this->image = $image;
         $this->imageTypeRoom = $imageTypeRoom;
+        $this->imageService = $imageService;
     }
 
     public function create($imageInput)
@@ -36,11 +38,9 @@ class ImageService
     public function saveImageTypeRoom($idTypeRoom, $images)
     {
         $this->imageTypeRoom->whereTypeRoomId($idTypeRoom)->delete();
-        if ($images !== null)
-        {
-            $images = explode(',',$images);
-            foreach ($images as $image)
-            {
+        if ($images !== null) {
+            $images = explode(',', $images);
+            foreach ($images as $image) {
                 $image = $this->image->whereUrl($image)->first();
                 $this->imageTypeRoom->create([
                     'type_room_id' => $idTypeRoom,
@@ -53,6 +53,21 @@ class ImageService
     public function getImagesFooter()
     {
         return $this->getImages()->take(6);
+    }
+
+    public function saveImageService($id, $images)
+    {
+        $this->imageService->whereServiceId($id)->delete();
+        if ($images !== null) {
+            $images = explode(',', $images);
+            foreach ($images as $image) {
+                $image = $this->image->whereUrl($image)->first();
+                $this->imageService->create([
+                    'service_id' => $id,
+                    'image_id' => $image->id
+                ]);
+            }
+        }
     }
 
 }

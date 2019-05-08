@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Service\DeviceService;
 use App\Service\ImageService;
 use App\Service\TypeRoomService;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class TypeRoomController extends Controller
@@ -55,10 +56,13 @@ class TypeRoomController extends Controller
 
     public function actionCreateTypeRoom(TypeRoomRequest $request)
     {
-        $this->typeRoomService->createOrUpdate($request);
-        $typeRoom = $this->typeRoomService->getItemLast();
-        $this->deviceService->saveDeviceTypeRoom($typeRoom->id, $request->devices);
-        $this->imageService->saveImageTypeRoom($typeRoom->id, $request->images);
+
+        DB::transaction(function () use ($request) {
+            $this->typeRoomService->createOrUpdate($request);
+            $typeRoom = $this->typeRoomService->getItemLast();
+            $this->deviceService->saveDeviceTypeRoom($typeRoom->id, $request->devices);
+            $this->imageService->saveImageTypeRoom($typeRoom->id, $request->images);
+        });
 
         return redirect()->route('admin.type-rooms.index')->with('message', 'Create TypeRoom Successfully !');
     }
@@ -93,9 +97,11 @@ class TypeRoomController extends Controller
 
     public function actionEdit($id, TypeRoomRequest $request)
     {
-        $this->typeRoomService->createOrUpdate($request, $id);
-        $this->imageService->saveImageTypeRoom($id, $request->images);
-        $this->deviceService->saveDeviceTypeRoom($id, $request->devices);
+        DB::transaction(function () use ($request, $id) {
+            $this->typeRoomService->createOrUpdate($request, $id);
+            $this->imageService->saveImageTypeRoom($id, $request->images);
+            $this->deviceService->saveDeviceTypeRoom($id, $request->devices);
+        });
 
         return redirect()->route('admin.type-rooms.index')->with('message', 'Update TypeRoom Successfully !');
     }

@@ -99,11 +99,9 @@
                     </tr>
                 </tbody>
             </table>
-                <a href="{{route('admin.orders.handled.finish')}}" class="btn btn-sm btn-outline-success  mr-3" id="btnFinish">Finish</a>
+                <a href="{{route('admin.orders.handled.finish')}}" class="btn btn-sm btn-outline-info  mr-3" id="btnFinish">Finish</a>
             @endif
-            <a href="{{route('admin.orders.handled.edit', $order['orderOld']->id)}}" class="btn btn-sm btn-outline-info">Back</a>
-
-
+            <a href="{{route('admin.orders.handled.edit', $order['orderOld']->id)}}" class="btn btn-sm btn-outline-success">Back</a>
         </div>
     </div>
 @endsection

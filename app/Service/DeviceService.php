@@ -50,10 +50,8 @@ class DeviceService
     public function saveDeviceTypeRoom($id, $devices)
     {
         $this->deviceTypeRoom->whereTypeRoomId($id)->delete();
-        if ($devices !== null)
-        {
-            foreach ($devices as $device)
-            {
+        if ($devices !== null) {
+            foreach ($devices as $device) {
                 $this->deviceTypeRoom->create([
                     'device_id' => $device,
                     'type_room_id' => $id
