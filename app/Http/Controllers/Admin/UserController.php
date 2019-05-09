@@ -56,11 +56,6 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('message', 'Create User Successfully !');
     }
 
-    public function detail(User $user)
-    {
-
-    }
-
     public function edit(User $user)
     {
         return view('admin.user.form', compact('user'));

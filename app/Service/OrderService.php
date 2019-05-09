@@ -194,7 +194,7 @@ class OrderService
             'customer' => $customer,
             'card' => $card
         ], function ($message) use ($customer) {
-            $message->to($customer['email'], $customer['name'])->subject('BookingNotification Success');
+            $message->to($customer['email'], $customer['name'])->subject('Booking Notification Success');
         });
     }
 
@@ -292,5 +292,19 @@ class OrderService
 
         return $this->order->where('date', '>=', $data->from)
                             ->where('date', '<=', $data->to)->whereUserId($userId)->paginate(5);
+    }
+
+    public function sendMailDeleteOrderWait($order)
+    {
+        Mail::send('admin.order.mail-template.delete-wait', ['order' => $order], function ($message) use ($order) {
+            $message->to($order->user->email, $order->user->name)->subject('Confirm Order');
+        });
+    }
+
+    public function sendMailHandelOrderWait($order)
+    {
+        Mail::send('admin.order.mail-template.handle-success', ['order' => $order], function ($message) use ($order) {
+            $message->to($order->user->email, $order->user->name)->subject('Confirm Order');
+        });
     }
 }

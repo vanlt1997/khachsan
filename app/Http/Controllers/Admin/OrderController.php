@@ -406,11 +406,14 @@ class OrderController extends Controller
 
     public function deleteOrder(Order $order)
     {
+        if ($order->status_order_id === self::WAIT) {
+            $this->orderService->sendMailDeleteOrderWait($order);
+        }
         if ($this->orderService->deleteOrder($order)) {
-            return redirect()->back()->with('message', 'Delete order successfully !');
+            return redirect()->route('admin.orders.wait')->with('message', 'Delete order successfully !');
         }
 
-        return redirect()->back()->with('error', 'Don\'t order delete !');
+        return redirect()->route('admin.orders.wait')->with('error', 'Don\'t order delete !');
     }
 
     public function editWait(Order $order)

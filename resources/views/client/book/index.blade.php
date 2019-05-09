@@ -138,7 +138,7 @@
             <div class="row col-md-12">
                 <div class="col-md-12 mb-5 text-left">
                     <h5 class="text-dark">Total : ${{$card->total}}</h5>
-                    <h5 class="text-dark">Promotion : ${{$card->promotion}}</h5>
+                    <h5 class="text-dark">Promotion : ${{$card->promotion ?? 0}}</h5>
                     <h5 class="text-dark">Payment Total : ${{$card->paymentTotal}}</h5>
                 </div>
                 <div class="col-md-12 text-left">
@@ -164,7 +164,7 @@
     <script>
         $(document).on("ready", function () {
             $('html, body').animate({
-                scrBookingNotification $("#Booking").offset().top
+                scrollTop: $("#Booking").offset().top
             }, 1000);
         });
     </script>

@@ -93,7 +93,7 @@
                     </tr>
                     <tr class="text-danger">
                         <td colspan="7" class="text-right">Promotion</td>
-                        <td>$ {{$card->promotion}}</td>
+                        <td>$ {{$card->promotion ?? 0}}</td>
                     </tr>
                     <tr class="text-danger">
                         <td colspan="7" class="text-right">Payment Total</td>

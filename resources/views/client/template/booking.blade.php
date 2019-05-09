@@ -35,7 +35,7 @@
         </tr>
         <tr>
             <td colspan="5">Promotion</td>
-            <td>$ {{$card->promotion}}</td>
+            <td>$ {{$card->promotion ?? 0}}</td>
         </tr>
         <tr>
             <td colspan="5">Payment Total</td>
