@@ -8,4 +8,4 @@
 <p class="text-primary">Address: Hotel MayStar, Da Nang</p>
 <p class="text-primary">Website: <a href="http://127.0.0.1:8000">maystar.com</a> </p>
 <br>
-<h4>Thank you for welcom MayStar</h4>
+<h4>Thank you for welcome MayStar</h4>

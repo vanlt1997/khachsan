@@ -445,6 +445,7 @@ class OrderController extends Controller
             }
             $order->status_order_id = self::HANDLED;
             $this->orderService->createOrUpdate($order, $order->id);
+            $this->orderService->sendMailHandelOrderWait($order);
         });
 
 

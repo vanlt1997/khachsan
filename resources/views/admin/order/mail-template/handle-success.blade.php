@@ -1,4 +1,5 @@
-<h3>Thank {{$order->user->name}} you for our booking </h3>
+<h3>Thank {{$order->user->name}} for our booking </h3>
+<strong>We have booked for you.Please come to the hotel before 12:00 the day for checkin go in hotel</strong>
 </br>
 <h4>Refund Amount : {{$order->payment_total}}</h4>
 <br>
@@ -10,4 +11,4 @@
 <p class="text-primary">Address: Hotel MayStar, Da Nang</p>
 <p class="text-primary">Website: <a href="http://127.0.0.1:8000">maystar.com</a> </p>
 <br>
-<h4>Thank you for welcom MayStar</h4>
+<h4>Thank you for welcome  MayStar</h4>
