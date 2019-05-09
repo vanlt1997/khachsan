@@ -25,16 +25,13 @@
     $(document).ready(function () {
         setInterval(function () {
             this.loadData()
-        }, 1000);
-        setInterval(function () {
-
-        }, 1000);
+        }, 1000*60*2);
     });
 
     function loadData() {
         $.ajax({
-            type: 'post',
-            url: '{{route('admin.index')}}',
+            type: 'get',
+            url: '{{route('admin.get-data')}}',
             success: function (data) {
                 var html = '';
                 $('.item-wait').remove();

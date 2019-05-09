@@ -54,7 +54,7 @@ class RoomController extends Controller
                 return
                     '<a href="rooms/'.$room->id.'/detail" class="btn btn-sm btn-outline-warning"> <i class="fa fa-info"></i></a>
                     <a href="rooms/'.$room->id.'/edit" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i></a>
-                    <a href="rooms/'.$room->id.'/delete" class="btn btn-sm btn-outline-danger"> <i class="fa fa-trash-o"></i></a>
+                    <a href="rooms/'.$room->id.'/delete" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Are you sure ?\')"> <i class="fa fa-trash-o"></i></a>
                     ';
             })
             ->make();
@@ -103,6 +103,20 @@ class RoomController extends Controller
         }
 
         return redirect()->route('admin.type-rooms.rooms.getRoomByTypeRoom', $typeRoom->id)
+            ->with('error', 'Can\'t Delete Room !');
+    }
+
+    public function deleteRoom(Room $room)
+    {
+        $orderDetails = $room->orderDetails;
+        if ($orderDetails->isEmpty()) {
+            $this->roomService->delete($room->type_room_id, $room);
+
+            return redirect()->back()
+                ->with('message', 'Delete Room Successfully !');
+        }
+
+        return redirect()->back()
             ->with('error', 'Can\'t Delete Room !');
     }
 }

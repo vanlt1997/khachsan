@@ -27,7 +27,6 @@ class DeviceRequest extends FormRequest
 
         return [
             'name' => 'required|unique:devices,name,'.$id,
-            'quantity' => 'required|min:1|numeric'
         ];
     }
 }

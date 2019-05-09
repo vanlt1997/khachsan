@@ -45,7 +45,7 @@ class PromotionService
 
     public function delete($promotionId)
     {
-        return $this->promotion->find($promotionId)->delete();
+        return $this->promotion->whereId($promotionId)->delete();
     }
 
     public function sendMailByPromotion($Ids)

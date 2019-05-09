@@ -33,7 +33,6 @@ class DeviceService
     {
         $action = $this->device->find($id)?? new Device();
         $action->name = $device->name;
-        $action->quantity = $device->quantity;
         $action->save();
     }
 

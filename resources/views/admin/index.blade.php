@@ -156,12 +156,14 @@
     <script>
         google.charts.load('current', {'packages':['corechart']});
         google.charts.load("current", {packages:["timeline"]});
-        $(document).ready(function () {
+        /*$(document).on("ready",function () {
             setInterval(function () {
                 this.loadData()
             }, 1000);
+        });*/
+        $(document).ready(function () {
             setInterval(function () {
-
+                this.loadData()
             }, 1000);
         });
 
@@ -198,30 +200,35 @@
 
         function loadData() {
             $.ajax({
-                type: 'post',
-                url: '{{route('admin.index')}}',
+                type: 'get',
+                url: '{{route('admin.get-data')}}',
                 success: function (data) {
-                    var html = '', url;
-                    $('.item-wait').remove();
-                    $('.orderWait').text(data['dataWait'].length);
-                    $('.orderWaitMessage').text(data['dataWait'].length + ' Notifications');
-                    $('#orders').text(data['orders']);
-                    $('#users').text(data['users']);
-                    $('#rooms').text(data['rooms']);
-                    $('#typeRooms').text(data['typeRooms']);
-                    $('#promotions').text(data['promotions']);
-                    $('#contacts').text(data['contacts']);
-                    $('#images').text(data['images']);
-                    google.charts.setOnLoadCallback(chartYear(data['chartYear']));
-                    google.charts.setOnLoadCallback(drawChart(data['data']));
-                    data['dataWait'].forEach(function (order, i) {
-                        url = "{{route('admin.orders.wait.edit', ':order')}}";
-                        url = url.replace(':order', order.id);
-                        if (i <5 ) {
-                            html += '<a href="'+ url +'" class="dropdown-item item-wait" ><i class="fa fa-star-o mr-2 text-danger"></i>'+ order.user.name +' <span class="float-right text-muted text-sm">'+ order.date +'</span></a>'
+                        var html = '', url;
+                        $('.item-wait').remove();
+                        $('.orderWait').text(data['dataWait'].length);
+                        $('.orderWaitMessage').text(data['dataWait'].length + ' Notifications');
+                        $('#orders').text(data['orders']);
+                        $('#users').text(data['users']);
+                        $('#rooms').text(data['rooms']);
+                        $('#typeRooms').text(data['typeRooms']);
+                        $('#promotions').text(data['promotions']);
+                        $('#contacts').text(data['contacts']);
+                        $('#images').text(data['images']);
+                        if (data['chartYear'].length) {
+                            google.charts.setOnLoadCallback(chartYear(data['chartYear']));
                         }
-                    });
-                    $('#showOrderWait').append(html);
+                        if (data['data'].length) {
+                            google.charts.setOnLoadCallback(drawChart(data['data']));
+                        }
+
+                        data['dataWait'].forEach(function (order, i) {
+                            url = "{{route('admin.orders.wait.edit', ':order')}}";
+                            url = url.replace(':order', order.id);
+                            if (i <5 ) {
+                                html += '<a href="'+ url +'" class="dropdown-item item-wait" ><i class="fa fa-star-o mr-2 text-danger"></i>'+ order.user.name +' <span class="float-right text-muted text-sm">'+ order.date +'</span></a>'
+                            }
+                        });
+                        $('#showOrderWait').append(html);
                 }
             });
         }

@@ -73,7 +73,7 @@
                                                class="form-control" hidden name="typeRoom">
                                         <label for="startDate">
                                             From <input type="date" name="startDate" value="{{$typeRoom['startDate']}}"
-                                                        class="form-control">
+                                                        class="form-control" min="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
                                         </label>
                                         @if($errors->has('startDate') && !$typeRoom['startDate'])
                                             <p class="text-danger"><i
@@ -83,7 +83,7 @@
                                     <div class="col-md-3">
                                         <label for="endDate">
                                             To <input type="date" name="endDate" value="{{$typeRoom['endDate']}}"
-                                                      class="form-control">
+                                                      class="form-control" min="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
                                         </label>
                                         @if($errors->has('endDate') && !$typeRoom['endDate'])
                                             <p class="text-danger"><i

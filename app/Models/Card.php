@@ -36,7 +36,7 @@ class Card extends Model
         }
         $startDate = $startDate !== null ? Carbon::parse($card['startDate']): 0;
         $endDate = $endDate !== null ? Carbon::parse($card['endDate']) : 0;
-        $sum_day= $startDate && $endDate ? (int)($endDate->diffInDays($startDate)) : 0;
+        $sum_day= $startDate && $endDate ? (int)($endDate->diffInDays($startDate)) : 1;
         if ($typeRoom->sale > 0) {
             $card['total'] = $typeRoom->price*$card['number_people']*$sum_day*(100 - $typeRoom->sale)/100;
         } else {

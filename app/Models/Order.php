@@ -52,9 +52,6 @@ class Order extends Model
                 foreach ($typeRooms as $typeRoom) {
                     $orderDetails = OrderDetail::whereOrderTypeRoomId($typeRoom->id)->get();
                     if (!$orderDetails->isEmpty()) {
-                        foreach ($orderDetails as $orderDetail) {
-                            OrderService::whereOrderDetailId($orderDetail->id)->delete();
-                        }
                         OrderDetail::whereOrderTypeRoomId($typeRoom->id)->delete();
                     }
                 }

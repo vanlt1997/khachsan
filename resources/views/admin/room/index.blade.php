@@ -13,10 +13,23 @@
         }
     </style>
     <link rel="stylesheet" href="{{asset('css/admin/typeroom.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin/alert.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin/device.css')}}">
 @endsection
 @section('header')
     <div class="container">
+        @if(Session::has('message'))
+            <div class="alert alert-success alert-dismissible fade show alert-custom-success" role="alert">
+                <i class="fa fa-check"></i>
+                {{Session::get('message')}}
+            </div>
+        @endif
+        @if(Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show alert-custom-error" role="alert">
+                <i class="fa fa-warning"></i>
+                {{Session::get('error')}}
+            </div>
+        @endif
         <div class="title-header">
             <h3 class="text-center">Rooms</h3>
         </div>
@@ -57,8 +70,8 @@
                                                 class="fa fa-info"></i></button>
                                         <a href="{{route('admin.type-rooms.rooms.edit',['id' => $room->typeRoom, 'idRoom' => $room->id])}}" class="btn btn-sm btn-outline-primary"><i
                                                 class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-sm btn-outline-danger"><i
-                                                class="fa fa-trash"></i></a>
+                                        <a href="{{route('admin.rooms.delete', $room->id)}}" class="btn btn-sm btn-outline-danger"><i
+                                                class="fa fa-trash" onclick="return confirm('Are you sure ?')"></i></a>
                                     </div>
                                     <h4>Room {{$room->name}}</h4>
                                 </div>

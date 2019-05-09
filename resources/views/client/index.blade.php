@@ -28,7 +28,7 @@
                             <div class="fields d-block">
                                 <div class="book-date one-third">
                                     <label for="check-in">Checkin:</label>
-                                    <input type="date" name="startDate" class="form-control" placeholder="M/D/YYYY">
+                                    <input type="date" name="startDate" class="form-control" placeholder="M/D/YYYY" min="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
                                     @if($errors->has('startDate'))
                                         <p class="text-danger"><i
                                                     class="fa fa-exclamation-circle"></i> {{$errors->first('startDate')}}</p>
@@ -37,7 +37,7 @@
 
                                 <div class="book-date one-third">
                                     <label for="check-out">Checkout:</label>
-                                    <input type="date" name="endDate" class="form-control" placeholder="M/D/YYYY">
+                                    <input type="date" name="endDate" class="form-control" placeholder="M/D/YYYY" min="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
                                     @if($errors->has('endDate'))
                                         <p class="text-danger"><i
                                                     class="fa fa-exclamation-circle"></i> {{$errors->first('endDate')}}</p>

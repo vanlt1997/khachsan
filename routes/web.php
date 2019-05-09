@@ -24,10 +24,6 @@ Route::group(['prefix' => 'booking'], function () {
     Route::post('next', 'IndexController@confirm')->name('client.booking.next');
     Route::get('finish', 'IndexController@finish')->name('client.booking.finish');
     Route::post('check', 'IndexController@checkCodePromotion')->name('client.booking.check');
-    Route::get('/pusher', function (Illuminate\Http\Request $request) {
-        event(new App\Events\BookingPusherEvent($request));
-        return redirect()->route('client.booking.finish');
-    });
 });
 
 Route::group(['prefix' => 'services'], function () {
@@ -46,7 +42,7 @@ Route::group(['prefix' => 'typerooms'], function () {
 /*Admin*/
 Route::prefix('admin')->middleware(['admin', 'auth'])->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', 'IndexController@index')->name('index');
-    Route::post('/', 'IndexController@getData')->name('index');
+    Route::get('/get-data', 'IndexController@getData')->name('get-data');
 
     Route::prefix('type-rooms')->name('type-rooms.')->group(function () {
         Route::get('/', 'TypeRoomController@index')->name('index');
@@ -70,6 +66,7 @@ Route::prefix('admin')->middleware(['admin', 'auth'])->namespace('Admin')->name(
 
     Route::prefix('list-rooms')->name('rooms.')->group(function () {
         Route::get('/', 'RoomController@index')->name('index');
+        Route::get('{room}/delete', 'RoomController@deleteRoom')->name('delete');
     });
 
     Route::prefix('library-images')->name('library-images.')->group(function () {
@@ -150,10 +147,12 @@ Route::prefix('admin')->middleware(['admin', 'auth'])->namespace('Admin')->name(
 //        Wait
         Route::get('/wait/{order}/edit', 'OrderController@editWait')->name('wait.edit');
         Route::post('/wait/{order}/edit', 'OrderController@actionEditWait')->name('wait.edit');
+        //Route::get('/wait/{order}/delete', 'OrderController@deleteOrder')->name('wait.delete');
 //        Handle
         Route::get('/handled/{order}/edit', 'OrderController@editHandled')->name('handled.edit');
         Route::post('/handled/{order}/edit', 'OrderController@confirm')->name('handled.edit');
         Route::get('/handled/finish', 'OrderController@finishEditHandled')->name('handled.finish');
+        //Route::get('/handled/{order}/delete', 'OrderController@deleteOrder')->name('handled.delete');
 
         Route::get('/{order}/delete', 'OrderController@deleteOrder')->name('delete');
         Route::post('/select-user', 'OrderController@selectUser')->name('select-user');

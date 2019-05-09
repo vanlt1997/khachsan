@@ -25,5 +25,8 @@ class Service extends Model
             $data = explode(' ', $model->name);
             $model->aliases = implode('-', $data);
         });
+        self::deleting(function ($model) {
+            ImageService::whereServiceId($model->id)->delete();
+        });
     }
 }
