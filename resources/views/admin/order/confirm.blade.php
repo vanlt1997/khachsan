@@ -58,31 +58,14 @@
                 <tbody>
                     @foreach($card->typeRooms as $typeRoom)
                         <tr id="order-{{$typeRoom['typeRoom']->id}}">
-                            <td>
-                                <select name="typeRoom" class="form-control" id="selectTypeRoom">
-                                    @foreach($typeRooms as $item)
-                                        <option value="{{$item->id}}" @if($item->id === $typeRoom['typeRoom']->id) selected @endif>{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <input type="text" name="price" id="price" value="{{$typeRoom['price']}}" class="form-control" readonly>
-                            </td>
-                            <td>
-                                <input type="text" name="sale" id="sale" value="{{$typeRoom['sale']}}" class="form-control" readonly>
-                            </td>
-                            <td>
-                                <input type="text" name="number_people" id="number_people" value="{{$typeRoom['number_people']}}" class="form-control">
-                            </td>
-                            <td>
-                                <input type="date" name="startDate" id="startDate" value="{{$typeRoom['startDate']}}" class="form-control">
-                            </td>
-                            <td>
-                                <input type="date" name="endDate" id="endDate" value="{{$typeRoom['endDate']}}" class="form-control">
-                            </td>
+                            <td>{{$typeRoom['typeRoom']->name}}</td>
+                            <td>{{$typeRoom['price']}}</td>
+                            <td>{{$typeRoom['sale']}}</td>
+                            <td>{{$typeRoom['number_people']}}</td>
+                            <td>{{$typeRoom['startDate']}}</td>
+                            <td>{{$typeRoom['endDate']}}</td>
                             <td>{{$typeRoom['total']}}</td>
                             <td>
-                                <button onclick="editTypeRoom('{{$typeRoom['typeRoom']->id}}')" type="button" class="btn btn-sm btn-outline-primary mb-2"><i class="fa fa-pencil-square-o"></i></button>
                                 <button onclick="deleteTypeRoom('{{$typeRoom['typeRoom']->id}}')" type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash-o"></i></button>
                             </td>
                         </tr>

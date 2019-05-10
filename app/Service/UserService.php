@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class UserService
@@ -29,7 +30,7 @@ class UserService
         $action = $this->user->find($id) ?? new User();
         $action->name = $user['name'];
         $action->email = $user['email'];
-        $action->password = $user['password']?? null;
+        $action->password = $user['password'] ?? Hash::make($user['phone']);
         $action->sex = $user['sex'];
         $action->phone = $user['phone'];
         $action->address = $user['address'];

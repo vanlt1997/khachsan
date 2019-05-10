@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\InformationRequest;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use App\Service\CalendarService;
 use App\Service\ContactService;
 use App\Service\ImageService;
@@ -14,6 +17,7 @@ use App\Service\TypeRoomService;
 use App\Service\UserService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
 {
@@ -95,8 +99,47 @@ class IndexController extends Controller
         ]);
     }
 
-    public function notificationBooking()
+    public function info()
     {
-        return Auth::user()->unreadNotifications;
+        $user = Auth::user();
+
+        return view('admin.profile.index', compact('user'));
+    }
+
+    public function editInfo()
+    {
+        $user = Auth::user();
+
+        return view('admin.profile.update-information', compact('user'));
+    }
+
+    public function actionEditInfo(UserRequest $request)
+    {
+        $this->userService->createOrUpdate($request, Auth::id());
+
+        return redirect()->route('admin.info')->with('message', 'Update information successfully !');
+    }
+
+    public function editPassword()
+    {
+        $user = Auth::user();
+
+        return view('admin.profile.update-password', compact('user'));
+    }
+
+    public function actionEditPassword(InformationRequest $request)
+    {
+        $user = Auth::user();
+        if ($user && password_verify($request->password_old, $user->password)) {
+            if ($request->password === $request->password_confirmation) {
+                $user->password = Hash::make($request->password);
+                $user->save();
+                Auth::logout();
+                return redirect()->route('admin.index');
+            }
+        } else {
+            return redirect()->route('admin.info')->with('error', 'Update password error !');
+        }
+        return redirect()->route('admin.info')->with('message', 'Update password successfully !');
     }
 }

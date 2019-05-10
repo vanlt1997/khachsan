@@ -228,6 +228,10 @@
             let startDate = $('[name=startDate'+typeRoomId+']').val();
             let endData = $('[name=endDate'+typeRoomId+']').val();
             let number_people = $('[name=number_people'+typeRoomId+']').val();
+            if (number_people == 0 || number_people === null) {
+                number_people = 1;
+                $('[name=number_people'+typeRoomId+']').val(1);
+            }
             let nameRooms = $('#nameRoom').val();
             let arrNameRooms= [];
             if (nameRooms) {

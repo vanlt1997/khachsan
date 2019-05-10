@@ -310,7 +310,7 @@ class OrderController extends Controller
             $typeRoom = $orderTypeRoom->typeRoom;
             $startDate =Carbon::parse($request['startDate'.$orderTypeRoom->type_room_id]);
             $endDate =Carbon::parse($request['endDate'.$orderTypeRoom->type_room_id]);
-            $sum_day=(int)($endDate->diffInDays($startDate));
+            $sum_day=$startDate && $endDate ? ((int)($endDate->diffInDays($startDate)) == 0?1:(int)($endDate->diffInDays($startDate))):1;
             if ($typeRoom->sale > 0) {
                 $totalType = $typeRoom->price * $sum_day * $request['number_people'.$orderTypeRoom->type_room_id]
                     * (100 - $typeRoom->sale) /100;
@@ -419,7 +419,6 @@ class OrderController extends Controller
         $payments = $this->paymentService->payments();
         $infoTypeRooms = $this->orderService->getNumberRoomsMoreDateNow();
         $typeRooms = $this->typeRoomService->getTypeRooms();
-        //dd($order->orderTypeRooms[0]->typeRoom->name);
 
         return view('admin.order.wait.form', compact('order', 'status', 'payments', 'typeRooms', 'infoTypeRooms'));
     }

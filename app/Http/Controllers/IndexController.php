@@ -386,9 +386,8 @@ class IndexController extends Controller
         $user = Auth::user();
         if ($user && password_verify($request->password_old, $user['password'])) {
             if ($request->password === $request->password_confirmation) {
-                User::find($user->id)->update([
-                    'password' => Hash::make($request->password),
-                ]);
+                $user->password = Hash::make($request->password);
+                $user->save();
                 Auth::logout();
                 return redirect()->route('login');
             }

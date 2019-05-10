@@ -210,7 +210,7 @@
                             <div class="col-md-12 mt-2">
                                 <button type="button" class="btn btn-outline-primary btn-sm" id="btnSearchRoom">Search</button>
                                 <button type="button" class="btn btn-outline-success btn-sm ml-3" id="btnCalculate" disabled>Add</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm ml-3" id="btnDelete">Delete</button>
+                                <button type="button" class="btn btn-outline-danger btn-sm ml-3" id="btnDelete">Delete All</button>
                             </div>
                             <div class="row col-md-12 mt-5" id="showRoom">
                                 <input type="text" name="nameRoom" id="nameRoom" hidden>
@@ -275,6 +275,10 @@
             let startDate = $('[name=startDate]').val();
             let endData = $('[name=endDate]').val();
             let number_people = $('[name=number_people]').val();
+            if (number_people == 0 || number_people === null) {
+                number_people = 1;
+                $('[name=number_people]').val(1);
+            }
             let nameRooms = $('#nameRoom').val();
             let arrNameRooms= [];
             if (nameRooms) {
@@ -287,7 +291,6 @@
                 contentType: 'application/json;charset=utf8',
                 data: JSON.stringify({'typeRoom': typeRoom , 'startDate': startDate, 'endDate': endData, 'number_people': number_people}),
                 success: function (data) {
-                    console.log(data);
                     var html = '';
                     if (data == 0) {
                         html +='<p class="mb-4 text-danger img-modal">Can\'t room for you !</p>'
@@ -339,7 +342,6 @@
                             html += '<li>'+ name +'</li>'
                         });
                         html += '</ul>';
-                        console.log(html);
                         $('#nameChooseTypeRoom').append(html);
                         $('#btnNext').removeAttr('disabled');
                     } else {

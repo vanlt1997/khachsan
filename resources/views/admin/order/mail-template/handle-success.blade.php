@@ -1,7 +1,7 @@
 <h3>Thank {{$order->user->name}} for our booking </h3>
 <strong>We have booked for you.Please come to the hotel before 12:00 the day for checkin go in hotel</strong>
 </br>
-<h4>Refund Amount : {{$order->payment_total}}</h4>
+<h4>Amount : {{$order->payment_total}}</h4>
 <br>
 <p>Date: {{\Carbon\Carbon::now()->format('Y-m-d H:m:s')}}</p>
 <br>

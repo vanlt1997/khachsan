@@ -24,8 +24,9 @@
 <script>
     $(document).ready(function () {
         setInterval(function () {
-            this.loadData()
-        }, 1000*60*2);
+            loadData();
+        }, 1000*60);
+        loadData();
     });
 
     function loadData() {

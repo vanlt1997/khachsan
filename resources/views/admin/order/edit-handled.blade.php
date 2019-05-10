@@ -66,7 +66,7 @@
                             <td>{{$orderTypeRoom['total']}}</td>
                         </tr>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="7">
                                 <ul class="text-info">
                                     @foreach($orderTypeRoom['rooms'] as $room)
                                         <li>Room {{$room->name}}</li>

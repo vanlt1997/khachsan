@@ -5,7 +5,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{route('admin.index')}}" class="nav-link">Admin</a>
+            <a href="{{route('admin.index')}}" class="nav-link">Dashboard</a>
         </li>
     </ul>
 
@@ -41,7 +41,7 @@
                 <img src="{{asset('images/admin/van.jpg')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="{{route('admin.index')}}" class="d-block">Admin</a>
+                <a href="{{route('admin.info')}}" class="d-block">Admin</a>
             </div>
         </div>
 

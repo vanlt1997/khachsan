@@ -42,6 +42,11 @@ Route::group(['prefix' => 'typerooms'], function () {
 /*Admin*/
 Route::prefix('admin')->middleware(['admin', 'auth'])->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', 'IndexController@index')->name('index');
+    Route::get('/info', 'IndexController@info')->name('info');
+    Route::get('/info/edit', 'IndexController@editInfo')->name('edit.info');
+    Route::post('/info/edit', 'IndexController@actionEditInfo')->name('edit.info');
+    Route::get('/info/edit-password', 'IndexController@editPassword')->name('edit.password');
+    Route::post('/info/edit-password', 'IndexController@actionEditPassword')->name('edit.password');
     Route::get('/get-data', 'IndexController@getData')->name('get-data');
 
     Route::prefix('type-rooms')->name('type-rooms.')->group(function () {
