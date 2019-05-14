@@ -54,7 +54,7 @@
                             <label for="startDate">Start Date <span>&hercon;</span></label>
                         </div>
                         <div class="col-md-3">
-                            <input type="date" name="startDate" id="startDate" class="form-control" value="{{$promotion->startDate ?? null}}">
+                            <input type="date" name="startDate" id="startDate" class="form-control" value="{{$promotion->startDate ?? null}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                             <div class="error-content">
                                 @if($errors->has('startDate'))
                                     <p class="text-danger"><i
@@ -66,7 +66,7 @@
                             <label for="endDate">End Date <span>&hercon;</span></label>
                         </div>
                         <div class="col-md-3">
-                            <input type="date" name="endDate" id="endDate" class="form-control" value="{{$promotion->endDate ?? null}}">
+                            <input type="date" name="endDate" id="endDate" class="form-control" value="{{$promotion->endDate ?? null}}" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d') }}">
                             <div class="error-content">
                                 @if($errors->has('endDate'))
                                     <p class="text-danger"><i

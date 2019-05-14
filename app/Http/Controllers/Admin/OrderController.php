@@ -125,7 +125,7 @@ class OrderController extends Controller
 
     public function create()
     {
-        $users = $this->userService->users();
+        $users = $this->userService->getCustomers();
         $status = $this->statusOrderService->statusOrders();
         $payments = $this->paymentService->payments();
         $infoTypeRooms = $this->orderService->getNumberRoomsMoreDateNow();

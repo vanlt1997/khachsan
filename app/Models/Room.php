@@ -26,13 +26,4 @@ class Room extends Model
     {
         return $this->belongsToMany('App\Models\OrderTypeRoom');
     }
-
-    /*protected static function boot()
-    {
-        parent::boot();
-        self::deleted(function ($model) {
-            TypeRoom::find($model->type_room_id)->decrement('number_room', 1);
-        });
-    }*/
-
 }

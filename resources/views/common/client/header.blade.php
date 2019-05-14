@@ -71,12 +71,13 @@ $services = Service::all();
                             HELLO : {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            @if(Auth::user()->role == 1)
+
+                            @if(!Auth::user()->roles->isEmpty() && (Auth::user()->roles->first()->name == 'admin' || Auth::user()->roles->first()->name == 'employee'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{route('admin.index')}}" style="color: black">Go To Admin</a>
                                 </li>
                             @endif
-                            @if(Auth::user()->role != 1)
+                            @if(Auth::user()->roles->isEmpty() || Auth::user()->roles->first()->name == 'customer')
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{route('client.information')}}" style="color: black">Information</a>
                                 </li>

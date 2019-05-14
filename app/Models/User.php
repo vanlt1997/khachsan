@@ -35,4 +35,18 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Order');
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::deleted(function ($model) {
+            RoleUser::whereUserId($model->id)->delete();
+        });
+    }
+
 }

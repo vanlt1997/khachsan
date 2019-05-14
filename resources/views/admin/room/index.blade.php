@@ -54,7 +54,9 @@
             @foreach($typeRooms as $typeRoom)
                 <div class="col-md-12 detail-typeRoom">
                     <h3>{{$typeRoom->name}}</h3>
+                    @if(Auth::user()->roles->first()->name == 'admin')
                     <a href="{{route('admin.type-rooms.rooms.create',$typeRoom->id)}}" class="btn btn-outline-primary btn-sm right"><i class="fa fa-plus-circle"></i></a>
+                    @endif
                 </div>
                 <div class="row col-md-12" style="margin-top: 50px">
                     @foreach($typeRoom->rooms as $room)
@@ -64,6 +66,7 @@
                                                                 @elseif($room->status_id === 2) bg-status-2
                                                                 @elseif($room->status_id === 3) bg-status-3
                                                                 @else bg-status-4 @endif">
+                                    @if(Auth::user()->roles->first()->name == 'admin')
                                     <div style="float: right;">
                                         <button class="btn btn-sm btn-outline-warning" data-toggle="modal"
                                                 data-target="#room-{{$room->id}}"><i
@@ -73,6 +76,7 @@
                                         <a href="{{route('admin.rooms.delete', $room->id)}}" class="btn btn-sm btn-outline-danger"><i
                                                 class="fa fa-trash" onclick="return confirm('Are you sure ?')"></i></a>
                                     </div>
+                                    @endif
                                     <h4>Room {{$room->name}}</h4>
                                 </div>
                             </div>
@@ -127,7 +131,9 @@
 @endsection
 @push('scripts')
     <script>
-
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 60000);
     </script>
 
 @endpush

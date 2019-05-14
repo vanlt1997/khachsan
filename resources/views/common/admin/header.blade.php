@@ -4,9 +4,11 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
         </li>
+        @if(Auth::user()->roles->first()->name == 'admin')
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{route('admin.index')}}" class="nav-link">Dashboard</a>
         </li>
+            @endif
     </ul>
 
     <ul class="navbar-nav ml-auto">
@@ -41,7 +43,7 @@
                 <img src="{{asset('images/admin/van.jpg')}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="{{route('admin.info')}}" class="d-block">Admin</a>
+                <a href="{{route('admin.info')}}" class="d-block">{{Auth::user()->name}}</a>
             </div>
         </div>
 
@@ -75,6 +77,7 @@
                         </li>
                     </ul>
                 </li>
+                @if(Auth::user()->roles->first()->name === 'admin')
                 <li class="nav-item">
                     <a href="{{route('admin.type-rooms.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-building-o"></i>
@@ -83,6 +86,8 @@
                         </p>
                     </a>
                 </li>
+                @endif
+
                 <li class="nav-item">
                     <a href="{{route('admin.rooms.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-home"></i>
@@ -91,6 +96,7 @@
                         </p>
                     </a>
                 </li>
+                @if(Auth::user()->roles->first()->name === 'admin')
                 <li class="nav-item has-treeview">
                     <a href="{{route('admin.devices.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-cogs"></i>
@@ -131,6 +137,7 @@
                         </p>
                     </a>
                 </li>
+
                 <li class="nav-item has-treeview">
                     <a href="{{route('admin.revenues.index')}}" class="nav-link">
                         <i class="fa fa-line-chart"></i>
@@ -171,6 +178,7 @@
                         </p>
                     </a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a href="{{route('client.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-undo"></i>

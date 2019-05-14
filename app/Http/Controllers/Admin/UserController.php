@@ -12,6 +12,7 @@ use App\Service\UserService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use PDF;
 use Excel;
@@ -46,24 +47,35 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.user.form');
+        $roles = $this->userService->roles();
+
+        return view('admin.user.form', compact('roles'));
     }
 
     public function actionCreate(UserRequest $request)
     {
-        $this->userService->createOrUpdate($request);
+        DB::transaction(function () use ($request) {
+            $this->userService->createOrUpdate($request);
+            $this->userService->saveRoleUser(User::max('id'), $request->role);
+        });
 
         return redirect()->route('admin.users.index')->with('message', 'Create User Successfully !');
     }
 
     public function edit(User $user)
     {
-        return view('admin.user.form', compact('user'));
+        $roles = $this->userService->roles();
+
+        return view('admin.user.form', compact('user', 'roles'));
     }
 
     public function actionEdit(UserRequest $request, User $user)
     {
-        $this->userService->createOrUpdate($request, $user->id);
+
+        DB::transaction(function () use ($request, $user) {
+            $this->userService->createOrUpdate($request, $user->id);
+            $this->userService->saveRoleUser($user->id, $request->role);
+        });
 
         return redirect()->route('admin.users.index')->with('message', 'Edit User Successfully !');
     }

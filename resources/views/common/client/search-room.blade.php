@@ -7,7 +7,7 @@
             <div class="form-group row col-md-12 ">
                 <div class="col-md-4 mt-4">
                     <label for="startDate">Checkin</label>
-                    <input type="date" name="startDate" class="form-control" value="{{old('startDate')}}">
+                    <input type="date" name="startDate" class="form-control" value="{{old('startDate')}}" min="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
                     @if($errors->has('startDate'))
                         <p class="text-danger"><i
                                     class="fa fa-exclamation-circle"></i> {{$errors->first('startDate')}}</p>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-md-4 mt-4">
                     <label for="endDate">Checkout</label>
-                    <input type="date" name="endDate" class="form-control" value="{{old('endDate')}}">
+                    <input type="date" name="endDate" class="form-control" value="{{old('endDate')}}"  min="{{\Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}}">
                     @if($errors->has('endDate'))
                         <p class="text-danger"><i
                                     class="fa fa-exclamation-circle"></i> {{$errors->first('endDate')}}</p>

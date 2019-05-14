@@ -202,7 +202,7 @@
                                 From <input type="date" name="startDate" class="form-control" value="{{$order->orderTypeRooms[0]->start_date ?? null}}" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                             </div>
                             <div class="col-md-3">
-                                To <input type="date" name="endDate" class="form-control" value="{{$order->orderTypeRooms[0]->end_date ?? null}}">
+                                To <input type="date" name="endDate" class="form-control" value="{{$order->orderTypeRooms[0]->end_date ?? null}}" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d') }}">
                             </div>
                             <div class="col-md-3">
                                 Number <input type="number" name="number_people" class="form-control" value="{{$order->orderTypeRooms[0]->number_people ?? null}}">

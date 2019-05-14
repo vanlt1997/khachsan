@@ -84,6 +84,20 @@
                 <div class="form-group">
                     <div class="row col-md-12">
                         <div class="col-md-4 text-right">
+                            <label for="r">Role</label>
+                        </div>
+                        <div class="col-md-8">
+                            <select name="role" id="role" class="form-control">
+                                @foreach($roles as $role)
+                                    <option value="{{$role->id}}" @if(isset($user) && $user->roles->first()['id'] === $role->id) selected @endif>{{$role->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row col-md-12">
+                        <div class="col-md-4 text-right">
                             <label for="address">Address</label>
                         </div>
                         <div class="col-md-8">

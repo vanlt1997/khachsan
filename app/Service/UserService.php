@@ -2,22 +2,40 @@
 
 namespace App\Service;
 
+use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class UserService
 {
     protected $user;
+    protected $role;
+    protected $roleUser;
+    const CUSTOMER = 'customer';
 
-    public function __construct(User $user)
+    public function __construct(User $user, Role $role, RoleUser $roleUser)
     {
         $this->user = $user;
+        $this->role = $role;
+        $this->roleUser = $roleUser;
     }
 
     public function users()
     {
         return $this->user->all();
+    }
+
+    public function getCustomers()
+    {
+        return DB::table('users')
+            ->leftJoin('role_user', 'users.id', '=', 'role_user.user_id')
+            ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
+            ->orWhereNull('user_id')
+            ->orWhere('roles.name', self::CUSTOMER)
+            ->get();
     }
 
     public function find($userID)
@@ -66,6 +84,20 @@ class UserService
     public function getUserByEmai($email)
     {
         return $this->user->whereEmail($email)->first();
+    }
+
+    public function roles()
+    {
+        return $this->role->all();
+    }
+
+    public function saveRoleUser($id, $roleId)
+    {
+        $this->roleUser->whereUserId($id)->delete();
+        $this->roleUser->create([
+            'user_id' => $id,
+            'role_id' => $roleId
+        ]);
     }
 }
 

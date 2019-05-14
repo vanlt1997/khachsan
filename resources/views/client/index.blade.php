@@ -37,7 +37,7 @@
 
                                 <div class="book-date one-third">
                                     <label for="check-out">Checkout:</label>
-                                    <input type="date" name="endDate" class="form-control" placeholder="M/D/YYYY" min="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                                    <input type="date" name="endDate" class="form-control" placeholder="M/D/YYYY" min="{{\Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}}">
                                     @if($errors->has('endDate'))
                                         <p class="text-danger"><i
                                                     class="fa fa-exclamation-circle"></i> {{$errors->first('endDate')}}</p>

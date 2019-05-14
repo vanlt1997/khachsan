@@ -45,12 +45,10 @@ class WordOfTheDay extends Command
         $orderDetails = OrderDetail::all();
         foreach ($orderDetails as $orderDetail) {
             $room = Room::find($orderDetail->room_id);
-            if ($orderDetail->start_date == Carbon::now()->format('Y-m-d') && $orderDetail->start_date != $orderDetail->end_date) {
+            if ($orderDetail->start_date == Carbon::now()->format('Y-m-d')) {
                 $room->status_id = self::USING;
-            } elseif ($orderDetail->end_date == Carbon::now()->format('Y-m-d') && $orderDetail->start_date != $orderDetail->end_date) {
+            } elseif ($orderDetail->end_date == Carbon::now()->format('Y-m-d')) {
                 $room->status_id = self::FREE;
-            } elseif ($orderDetail->start_date == $orderDetail->end_date && $orderDetail->end_date == Carbon::now()->format('Y-m-d')) {
-                $room->status_id = self::USING;
             }
 
             $room->save();
