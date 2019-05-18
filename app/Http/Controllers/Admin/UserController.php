@@ -71,7 +71,6 @@ class UserController extends Controller
 
     public function actionEdit(UserRequest $request, User $user)
     {
-
         DB::transaction(function () use ($request, $user) {
             $this->userService->createOrUpdate($request, $user->id);
             $this->userService->saveRoleUser($user->id, $request->role);

@@ -187,8 +187,12 @@ class IndexController extends Controller
             return redirect()->back()->with('checkCode', 'Code don\'t use')->withInput();
         }
         $card->promotion = $promotion->sale;
+        $card->updatePromotion(
+            $promotion->sale
+        );
         Session::put('card', $card);
         Session::put('code', ['code' => $request->promotion, 'price' => $promotion->sale]);
+
 
         return redirect()->back()->withInput();
     }

@@ -69,4 +69,10 @@ class Card extends Model
         $this->deleteTypeRoom($id);
         $this->addTypeRoom($id, $typeRoom, $startDate, $endDate, $number_people, $promotion, $rooms);
     }
+
+    public function updatePromotion($promotion = 0)
+    {
+        $this->promotion = $promotion;
+        $this->paymentTotal = $this->total - $this->promotion > 0 ? $this->total - $this->promotion : 0;
+    }
 }

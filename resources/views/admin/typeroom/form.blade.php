@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="number" name="number_room" class="form-control"
-                                           placeholder="0" value="{{$typeRoom->number_room ?? null}}" disabled>
+                                           placeholder="0" value="{{$typeRoom->number_room ?? null}}" readonly>
                                     <div class="error-content">
                                         @if($errors->has('number_room'))
                                             <p class="text-danger"><i

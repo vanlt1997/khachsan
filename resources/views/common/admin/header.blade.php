@@ -4,11 +4,9 @@
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
         </li>
-        @if(Auth::user()->roles->first()->name == 'admin')
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{route('admin.index')}}" class="nav-link">Dashboard</a>
         </li>
-            @endif
     </ul>
 
     <ul class="navbar-nav ml-auto">
@@ -129,6 +127,7 @@
                         </p>
                     </a>
                 </li>
+                @endif
                 <li class="nav-item has-treeview">
                     <a href="{{route('admin.contacts.index')}}" class="nav-link">
                         <i class="fa fa-envelope"></i>
@@ -137,7 +136,7 @@
                         </p>
                     </a>
                 </li>
-
+                @if(Auth::user()->roles->first()->name === 'admin')
                 <li class="nav-item has-treeview">
                     <a href="{{route('admin.revenues.index')}}" class="nav-link">
                         <i class="fa fa-line-chart"></i>
@@ -161,6 +160,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a href="{{route('admin.calendars.rooms')}}" class="nav-link">
                         <i class="nav-icon fa fa-calendar-check-o"></i>
@@ -178,7 +178,6 @@
                         </p>
                     </a>
                 </li>
-                @endif
                 <li class="nav-item">
                     <a href="{{route('client.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-undo"></i>
@@ -187,6 +186,16 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                    <a href="{{ route('logout') }}" class="nav-link">
+                        <i class="fa fa-sign-out"></i>
+                        <p>Logout</p>
+                    </a>
+                </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
             </ul>
         </nav>
     </div>

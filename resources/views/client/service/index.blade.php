@@ -27,7 +27,10 @@
                     @if($key%2 == 0)
                         <div class="amenities d-md-flex ftco-animate" style="margin: 30px">
                             <div class="one-half order-first img" id="service">
-                                <img src="{{asset('images/services/')}}/{{$service->icon}}" alt="">
+                                @if($service->icon !== ''  && $service->icon !== null)
+                                    <img src="{{asset('images/services')}}/{{$service->icon}}">@else
+                                    <img src="{{asset('images/admin/library-images')}}/{{$service->images->first()['url']}}" style="width: 100%">
+                                @endif
                             </div>
                             <div class="one-half order-last text">
                                 <h2>{{$service->name}}</h2>
@@ -38,7 +41,10 @@
                     @else
                         <div class="amenities d-md-flex ftco-animate" style="margin: 30px">
                             <div class="one-half order-last img" id="service">
-                                <img src="{{asset('images/services/')}}/{{$service->icon}}" alt="">
+                                @if($service->icon !== ''  && $service->icon !== null)
+                                    <img src="{{asset('images/services')}}/{{$service->icon}}">@else
+                                    <img src="{{asset('images/admin/library-images')}}/{{$service->images->first()['url']}}" style="width: 100%">
+                                @endif
                             </div>
                             <div class="one-half order-first text">
                                 <h2  @if($key%2 != 0)class="mb-4" @endif>{{$service->name}}</h2>

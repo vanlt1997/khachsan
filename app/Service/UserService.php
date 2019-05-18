@@ -49,6 +49,9 @@ class UserService
         $action->name = $user['name'];
         $action->email = $user['email'];
         $action->password = $user['password'] ?? Hash::make($user['phone']);
+        if ($id) {
+            $action->password = $user['password'] ?? $this->user->find($id)->password;
+        }
         $action->sex = $user['sex'];
         $action->phone = $user['phone'];
         $action->address = $user['address'];

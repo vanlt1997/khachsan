@@ -25,7 +25,6 @@
         google.charts.load("current", {packages:["timeline"]});
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
-            console.log(new Date(0,0,0,12,0,0));
             var container = document.getElementById('calendar-room');
             var chart = new google.visualization.Timeline(container);
             var dataTable = new google.visualization.DataTable();

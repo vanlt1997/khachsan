@@ -38,13 +38,13 @@
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">Open</h2>
                     <ul class="list-unstyled">
-                        <li><a class="py-2 d-block">Monday: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Tuesday: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Wednesday: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Thursday: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Friday: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Saturday: <span>08:00 - 22:00</span></a></li>
-                        <li><a class="py-2 d-block">Sunday: <span>08:00 - 22:00</span></a></li>
+                        <li><a class="py-2 d-block">Monday: <span>24/24</span></a></li>
+                        <li><a class="py-2 d-block">Tuesday: <span>24/24</span></a></li>
+                        <li><a class="py-2 d-block">Wednesday: <span>24/24</span></a></li>
+                        <li><a class="py-2 d-block">Thursday: <span>24/24</span></a></li>
+                        <li><a class="py-2 d-block">Friday: <span>24/24</span></a></li>
+                        <li><a class="py-2 d-block">Saturday: <span>24/24</span></a></li>
+                        <li><a class="py-2 d-block">Sunday: <span>24/24</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     <ul class="list-unstyled">
                         <li><a class="py-2 d-block">Đà Nẵng</a></li>
                         <li><a class="py-2 d-block">0335833102</a></li>
-                        <li><a class="py-2 d-block">maystar@gmail.com</a></li>
+                        <li><a class="py-2 d-block">maystarhotel@gmail.com</a></li>
                     </ul>
                 </div>
             </div>

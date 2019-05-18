@@ -59,7 +59,7 @@
                             </tr>
                             <tr>
                                 <th width="50px">Sale</th>
-                                <td class="text-danger">{{$typeRoom->sale != 0 ?$typeRoom->sale : '0%'}}</td>
+                                <td class="text-danger">{{$typeRoom->sale != 0 ?$typeRoom->sale.' %': '0 %'}}</td>
                             </tr>
                         </thead>
                     </table>

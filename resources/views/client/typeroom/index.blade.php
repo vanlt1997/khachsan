@@ -36,6 +36,7 @@
                                     <div class="row">
                                         <h2>{{$typeRoom->name}}</h2>
                                         <p>{!! $typeRoom->description !!}</p>
+                                        <h3 class="text-danger">Price: ${{$typeRoom->price}}@if($typeRoom->sale > 0) &divideontimes; Sale: {{$typeRoom->sale}}% @endif</h3>
                                     </div>
                                     <div class="row booking">
                                         <a href="{{route('client.typerooms.detail', $typeRoom->id)}}" class="btn btn-primary btn-xs">View...</a>
