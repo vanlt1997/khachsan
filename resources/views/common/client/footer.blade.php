@@ -52,7 +52,7 @@
                 <div class="ftco-footer-widget mb-4">
                     <h2 class="ftco-heading-2">Infomation contact</h2>
                     <ul class="list-unstyled">
-                        <li><a class="py-2 d-block">Đà Nẵng</a></li>
+                        <li><a class="py-2 d-block">Da Nang</a></li>
                         <li><a class="py-2 d-block">0335833102</a></li>
                         <li><a class="py-2 d-block">maystarhotel@gmail.com</a></li>
                     </ul>
