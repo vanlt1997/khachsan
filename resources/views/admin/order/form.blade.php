@@ -240,7 +240,7 @@
     <script>
         $('#selectUser').on('change', function () {
            var userID = $(this).val();
-           console.log(userID);
+           console.log(userID)
            if (userID !== null){
                $.ajax({
                    url: '{{route('admin.orders.select-user')}}',
@@ -248,6 +248,7 @@
                    contentType: 'application/json;charset=utf8',
                    data: JSON.stringify({'userID': userID}),
                    success: function (data) {
+                       console.log(data)
                         $('[name=name]').val(data.name);
                         $('[name=email]').val(data.email);
                         $('#sex option[value='+data.sex+']').attr('selected', 'selected');

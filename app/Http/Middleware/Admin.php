@@ -20,6 +20,7 @@ class Admin
             if (Auth::user()->roles && (strtolower(Auth::user()->roles->first()->name) == 'admin' || strtolower(Auth::user()->roles->first()->name) == 'employee')) {
                 return $next($request);
             }
+            dd(123);
             return redirect()->route('login');
         }
 

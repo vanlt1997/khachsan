@@ -37,8 +37,8 @@
                     [
                     '{{$item[0]}}',
                     '{{$item[1]}}',
-                    new Date({{\Carbon\Carbon::parse($item[2])->format('Y')}},{{\Carbon\Carbon::parse($item[2])->format('m-1')}}, {{\Carbon\Carbon::parse($item[2])->format('d')}}),
-                    new Date({{\Carbon\Carbon::parse($item[3])->format('Y')}},{{\Carbon\Carbon::parse($item[3])->format('m-1')}}, {{\Carbon\Carbon::parse($item[3])->format('d')}})
+                    new Date({{\Carbon\Carbon::parse($item[2])->format('Y')}}, {{\Carbon\Carbon::parse($item[2])->format('m-1')}}, {{\Carbon\Carbon::parse($item[2])->format('d')}}),
+                    new Date({{\Carbon\Carbon::parse($item[3])->format('Y')}}, {{\Carbon\Carbon::parse($item[3])->format('m-1')}}, {{\Carbon\Carbon::parse($item[3])->format('d')}})
                     ],
                 @endforeach
                 ]

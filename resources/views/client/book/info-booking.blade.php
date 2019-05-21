@@ -86,7 +86,7 @@
                                     <label for="address">Address</label>
                                 </div>
                                 <div class="col-md-10">
-                                    <textarea name="address" class="form-control" cols="30" rows="5"></textarea>
+                                    <textarea name="address" class="form-control" cols="30" rows="5">{{Auth::user()->address}}</textarea>
                                 </div>
                             </div>
                         </div>

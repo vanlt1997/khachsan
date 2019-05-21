@@ -258,25 +258,23 @@ class OrderController extends Controller
         $order->total = $card->total;
         $order->payment_total = $card->paymentTotal;
         $order->date = Carbon::now()->format('Y-m-d');
-        DB::transaction(function () use ($order, $card, $customer) {
-            $this->orderService->createOrUpdate($order);
-            $orderID = Order::max('id');
-            foreach ($card->typeRooms as $typeRoom) {
-                $this->orderService->createOrUpdateOrderTypeRoom($orderID, $typeRoom, count($typeRoom['typeRoom']->rooms) ?? 0);
-                if ($typeRoom['typeRoom']->rooms) {
-                    foreach ($typeRoom['typeRoom']->rooms as $room) {
-                        $orderTypeRoomId = OrderTypeRoom::max('id');
-                        $orderDetail = new OrderTypeRoom();
-                        $orderDetail->order_type_room_id = $orderTypeRoomId;
-                        $orderDetail->room_id = $room->id;
-                        $orderDetail->date = Carbon::now()->format('Y-m-d');
-                        $orderDetail->start_date = $typeRoom['startDate'];
-                        $orderDetail->end_date = $typeRoom['endDate'];
-                        $this->orderService->createOrUpdateOrderDetail($orderDetail);
-                    }
+        $this->orderService->createOrUpdate($order);
+        $orderID = Order::max('id');
+        foreach ($card->typeRooms as $typeRoom) {
+            $this->orderService->createOrUpdateOrderTypeRoom($orderID, $typeRoom, count($typeRoom['rooms']) ?? 0);
+            if ($typeRoom['rooms']) {
+                foreach ($typeRoom['rooms'] as $room) {
+                    $orderTypeRoomId = OrderTypeRoom::max('id');
+                    $orderDetail = new OrderTypeRoom();
+                    $orderDetail->order_type_room_id = $orderTypeRoomId;
+                    $orderDetail->room_id = $room->id;
+                    $orderDetail->date = Carbon::now()->format('Y-m-d');
+                    $orderDetail->start_date = $typeRoom['startDate'];
+                    $orderDetail->end_date = $typeRoom['endDate'];
+                    $this->orderService->createOrUpdateOrderDetail($orderDetail);
                 }
             }
-        });
+        }
 
         Session::forget('card');
         Session::forget('infoBooking');

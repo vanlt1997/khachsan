@@ -35,6 +35,7 @@ class UserService
             ->leftJoin('roles', 'role_user.role_id', '=', 'roles.id')
             ->orWhereNull('user_id')
             ->orWhere('roles.name', self::CUSTOMER)
+            ->select('users.id as id', 'users.email as email')
             ->get();
     }
 

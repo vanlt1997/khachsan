@@ -63,8 +63,11 @@
             </div>
             <div class="row block-9">
                 @foreach($orders as $order)
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <h5 class="text-info"><span>&bigstar;</span> Date : {{$order->date}}</h5>
+                    </div>
+                    <div class="col-md-6 right">
+                        <h5 class="text-danger"><span>&divideontimes; Status: </span> {{$order->statusOrder->name}}</h5>
                     </div>
                     <div class="col-md-12">
                         <table class="table table-striped table-hover">

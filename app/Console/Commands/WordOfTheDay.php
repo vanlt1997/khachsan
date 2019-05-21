@@ -43,6 +43,10 @@ class WordOfTheDay extends Command
     public function handle()
     {
         $orderDetails = OrderDetail::all();
+        foreach (Room::all() as $room) {
+            $room->status_id = self::FREE;
+            $room->save();
+        }
         foreach ($orderDetails as $orderDetail) {
             $room = Room::find($orderDetail->room_id);
             if ($orderDetail->start_date == Carbon::now()->format('Y-m-d')) {

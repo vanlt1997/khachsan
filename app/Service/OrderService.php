@@ -271,7 +271,7 @@ class OrderService
 
     public function getOrdersByUser($userId)
     {
-        return $this->order->whereUserId($userId)->paginate(5);
+        return $this->order->whereUserId($userId)->orderBy('status_order_id', 'asc')->paginate(5);
     }
 
     public function searchHistory($data, $userId)
