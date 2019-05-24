@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RoomRequest;
+use App\Models\OrderDetail;
 use App\Models\Room;
 use App\Models\TypeRoom;
 use App\Service\ImageService;
