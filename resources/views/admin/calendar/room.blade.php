@@ -14,7 +14,7 @@
                 <h3 class="text-danger pl-3 mt-5 mb-5" style="border-left: 3px solid #0b93d5">Calendar all room</h3>
             </div>
             <div class="col-md-12">
-                <div id="calendar-room"></div>
+                <div id="calendar-room" style="min-height: 500px"></div>
             </div>
         </div>
     </div>

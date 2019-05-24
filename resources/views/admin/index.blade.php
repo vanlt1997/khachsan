@@ -164,7 +164,7 @@
                        style="border-left: 3px solid #0b93d5">Calendar</a>
                 </div>
                 <div class="col-md-12 mt-5">
-                    <div id="calendar-room"></div>
+                    <div id="calendar-room" style="min-height: 500px"></div>
                 </div>
             </div>
         </section>
