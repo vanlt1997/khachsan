@@ -41,8 +41,10 @@
     <div class="container" style="clear: both">
         <a id="btnDeleteContact" href="javascript:;" class="btn btn-sm btn-outline-info"><i
                     class="fa fa-trash-o"></i> Delete</a>
+        @if(Auth::user()->roles->first()->name === 'admin')
         <a id="btnSendMail" href="javascript:;" class="btn btn-sm btn-outline-success"><i
                     class="fa fa-send"></i> Send Mail</a>
+        @endif
         <p class="text-danger">
             Choose row for delete or send mail promotions.
         </p>

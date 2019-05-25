@@ -40,7 +40,7 @@
                     <p><span>Phone:</span> <a href="tel://1234567920">0335833102</a></p>
                 </div>
                 <div class="col-md-3">
-                    <p><span>Email:</span> <a href="mailto:info@yoursite.com">maystar@gmail.com</a></p>
+                    <p><span>Email:</span> <a href="mailto:info@yoursite.com">maystarhotel@gmail.com</a></p>
                 </div>
             </div>
             <div class="row block-9">
