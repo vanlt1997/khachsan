@@ -39,7 +39,7 @@
                         </div>
                         <div class="col-md-10">
                             <input type="text" name="name" class="form-control"
-                                   placeholder="Name" value="{{ $order->user->name?? null}}">
+                                   placeholder="Name" value="{{ $order->user->name?? old('name')}}">
                             <div class="error-content">
                                 @if($errors->has('name'))
                                     <p class="text-danger"><i
@@ -174,9 +174,9 @@
                                             <ul>
                                                 <li>Free rooms : {{$typeRoom->total_room}}</li>
                                                 <li>Number/Room : {{$typeRoom->number_people}}</li>
-                                                <li>Price : {{$typeRoom->price}}</li>
+                                                <li>Price : ${{$typeRoom->price}}</li>
                                                 <li>Sale : {{$typeRoom->sale}} %</li>
-                                                <li>acreage : {{$typeRoom->acreage ?? 0}} m <sup>2</sup></li>
+                                                <li>Acreage : {{$typeRoom->acreage ?? 0}} m <sup>2</sup></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -216,14 +216,22 @@
                                 <input type="text" name="nameRoom" id="nameRoom" hidden>
                             </div>
                             <div class="row col-md-12 text-success">
-                                <p id="nameChooseTypeRoom"></p>
+                                <p id="nameChooseTypeRoom">
+                                    @if(Session::has('card'))
+                                    <ul class="nameTypeRoom">
+                                        @foreach(Session::get('card')->typeRooms as $typeRoom)
+                                            <li>{{$typeRoom['typeRoom']->name}}</li>
+                                        @endforeach
+                                    </ul>
+                                    @endif
+                                </p>
                             </div>
                             <div class="row col-md-12 text-danger">
-                                <h6 id="infoTotal">Total : $ {{$order->total ?? 0}}</h6>
+                                <h6 id="infoTotal">Total : $ {{$order->total ?? Session::has('card') ? Session::get('card')->total : 0}}</h6>
                             </div>
                             <div class="col-md-12 mt-5">
                                 <a href="{{route('admin.orders.handled')}}" class="btn btn-sm btn-outline-success mr-3">Back</a>
-                                <button type="submit" class="btn btn-sm btn-outline-success" id="btnNext" disabled >Next</button>
+                                <button type="submit" class="btn btn-sm btn-outline-success" id="btnNext" @if(!Session::has('card'))disabled @endif>Next</button>
                             </div>
                         </div>
                     </div>
@@ -360,7 +368,7 @@
                 contentType: 'application/json;charset=utf8',
                 success: function () {
                     $("#btnNext").prop('disabled', true);
-                    $('#infoTotal').text('');
+                    $('#infoTotal').text('Total : $ 0');
                     $('.nameTypeRoom').remove();
                     $('.img-modal').remove();
                 }

@@ -44,7 +44,7 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
-        self::deleted(function ($model) {
+        self::deleting(function ($model) {
             RoleUser::whereUserId($model->id)->delete();
         });
     }

@@ -125,6 +125,8 @@ class OrderController extends Controller
 
     public function create()
     {
+        //Session::forget('card');
+        //Session::forget('infoBooking');
         $users = $this->userService->getCustomers();
         $status = $this->statusOrderService->statusOrders();
         $payments = $this->paymentService->payments();
