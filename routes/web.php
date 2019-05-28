@@ -1,6 +1,10 @@
-<?php
 
+<?php
 use Illuminate\Support\Facades\Route;
+if (env('APP_ENV') === 'production') {
+    \Illuminate\Support\Facades\URL::forceSchema('https');
+}
+
 /*Client*/
 Route::get('/', 'IndexController@index')->name('client.index');
 Route::get('/information', 'IndexController@information')->name('client.information');
