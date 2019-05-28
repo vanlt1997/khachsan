@@ -68,7 +68,7 @@ return [
     |
     */
 
-    'encryption' =>  'ssl',
+    'encryption' =>  'tls',
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +109,7 @@ return [
     */
     'pretend' => false,
     'stream' => [
-        'ssl' => [
+        'tls' => [
             'allow_self_signed' => true,
             'verify_peer' => false,
             'verify_peer_name' => false,
