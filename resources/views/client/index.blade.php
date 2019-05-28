@@ -100,7 +100,7 @@
                                 <h2 class="mb-4">{{$service->name}}</h2>
                                 <p>{!! $service->description !!}</p>
                                 <p><a href="{{route('client.services.detail',$service->id)}}"
-                                      class="btn btn-primary">Xem thêm</a></p>
+                                      class="btn btn-primary">View</a></p>
                             </div>
                         @endforeach
                     </div>
@@ -152,7 +152,7 @@
                                             <span class="d-block mb-2"><i class="icon-check mr-2"></i> Full facilities</span>
                                             <span class="d-block mb-2"><i class="icon-check mr-2"></i> 24-hour reception</span>
                                         </p>
-                                        <p><a href="{{route('client.typerooms.booking', $typeRoom->id)}}" class="btn btn-primary">Book room</a></p>
+                                        <p><a href="{{route('client.typerooms.booking', $typeRoom->id)}}" class="btn btn-primary">Booking Now</a></p>
                                     </div>
                                 </div>
                             </div>
