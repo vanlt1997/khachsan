@@ -63,5 +63,5 @@
     <p class="text-primary">Email: maystarhotel@gmail.com</p>
     <p class="text-primary">Hotline : 0335833102</p>
     <p class="text-primary">Address: Hotel MayStar, Da Nang</p>
-    <p class="text-primary">Website: <a href="http://127.0.0.1:8000">maystar.com</a> </p>
+    <p class="text-primary">Website: <a href="http://quanlykhachsanmaystar.herokuapp.com">quanlykhachsanmaystar.herokuapp.com</a> </p>
 </figure>
