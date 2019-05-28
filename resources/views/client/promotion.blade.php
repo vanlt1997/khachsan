@@ -26,7 +26,7 @@
         <div class="container">
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4 text-center header-title">
-                    <h2><a href="{{route('client.promotions')}}">Promotions</a></h2>
+                    <h2 class="text-danger"><a href="{{route('client.promotions')}}">Promotions</a></h2>
                     <h5>Great deals at DaNang Central Hotel | Hotel MayStar</h5>
                 </div>
                 <div class="row">

@@ -25,7 +25,7 @@
         <div class="container">
             <div class="col-md">
                 <div class="ftco-footer-widget mb-4 text-center header-title">
-                    <h2 class="ftco-heading-2">{{$service->name}}</h2>
+                    <h2 class="ftco-heading-2 text-danger">{{$service->name}}</h2>
                     <h5>Hotel <a href="{{route('client.index')}}">MayStar</a></h5>
                 </div>
                 <div class="row">

@@ -3,7 +3,7 @@
 @section('header')
     <div class="container">
         <div class="title-header">
-            <h3 class="text-center">VanStar</h3>
+            <h3 class="text-center">Hotel MayStar</h3>
         </div>
     </div>
 

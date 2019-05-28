@@ -28,7 +28,7 @@
                 <div class="text col-lg-6 order-first ftco-animate">
                     <div class="text-inner align-self-start">
                         <span class="subheading">Information MayStar</span>
-                        <h3 class="heading">Welcom to MayStar</h3>
+                        <h3 class="heading text-danger">Welcom to MayStar</h3>
                         <p>Located in a beautiful location in the heart of Da Nang, Vietnam, Danang MayStar Hotel welcomes all guests looking for a luxurious base with top amenities and the most attentive service at Vietnam.</p>
 
                         <p>Luxurious and comfortable rooms, from the modern conference room to the international buffet restaurant, MayStar hotel becomes the perfect choice for work or leisure. Maystar Da Nang also brings a world
@@ -51,7 +51,7 @@
         <div class="container">
             <div class="row justify-content-center mb-5 pb-5">
                 <div class="col-md-7 text-center heading-section ftco-animate">
-                    <h2>Hotel MayStar</h2>
+                    <h2 class="text-danger">Hotel MayStar</h2>
                 </div>
             </div>
             <div class="row">
@@ -114,7 +114,7 @@
         <div class="container">
             <div class="row justify-content-center mb-5 pb-5">
                 <div class="col-md-7 text-center heading-section ftco-animate">
-                    <h2>Cosy</h2>
+                    <h2 class="text-danger">Cosy</h2>
                 </div>
             </div>
             <div class="row">
@@ -178,7 +178,7 @@
         <div class="container">
             <div class="row justify-content-center mb-5 pb-5">
                 <div class="col-md-7 text-center heading-section ftco-animate">
-                    <h2>Location & Contact</h2>
+                    <h2 class="text-danger">Location & Contact</h2>
                 </div>
             </div>
             <div class="row">

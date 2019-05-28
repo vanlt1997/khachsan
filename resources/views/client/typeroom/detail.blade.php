@@ -26,7 +26,7 @@
         <div class="container">
             <div class="col-md-12">
                 <div class="ftco-footer-widget mb-4 text-center header-title">
-                    <h2>{{$typeRoom->name}}</h2>
+                    <h2 class="text-danger">{{$typeRoom->name}}</h2>
                     <h5>All rooms in the hotel are designed and decorated in a modern and luxurious style with the most
                         modern facilities to create a cozy,
                         luxurious and impressive space.</h5>

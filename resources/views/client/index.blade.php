@@ -97,7 +97,7 @@
                                  aria-labelledby="{{$service->id}}-tab">
                                 @if($service->icon !== '' && $service->icon !== null)
                                     <img src="{{asset('images/services/')}}/{{$service->icon}}">@endif
-                                <h2 class="mb-4">{{$service->name}}</h2>
+                                <h2 class="mb-4 text-danger">{{$service->name}}</h2>
                                 <p>{!! $service->description !!}</p>
                                 <p><a href="{{route('client.services.detail',$service->id)}}"
                                       class="btn btn-primary">View</a></p>
@@ -114,7 +114,7 @@
             <div class="row justify-content-center mb-5 pb-5">
                 <div class="col-md-7 text-center heading-section ftco-animate">
                     <span class="subheading">OUR ROOM</span>
-                    <h2>Discover the rooms</h2>
+                    <h2 class="text-danger">Discover the rooms</h2>
                 </div>
             </div>
             <div class="row">
@@ -170,7 +170,7 @@
                 <div class="row desc d-flex justify-content-center">
                     <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
                         <span class="subheading">Our Conference</span>
-                        <h2 class="h1 font-weight-bold">Conference Centre</h2>
+                        <h2 class="h1 font-weight-bold text-danger">Conference Centre</h2>
                         <p><a href="{{route('client.services.index')}}" class="btn btn-primary btn-outline-white mt-3 py-3 px-4">View more details</a>
                         </p>
                     </div>
@@ -184,7 +184,7 @@
             <div class="row justify-content-center mb-5 pb-5">
                 <div class="col-md-7 text-center heading-section ftco-animate">
                     <span class="subheading">Our Menu</span>
-                    <h2>Restaurant &amp; Bar</h2>
+                    <h2 class="text-danger">Restaurant &amp; Bar</h2>
                 </div>
             </div>
             <div class="row">
