@@ -71,11 +71,11 @@
                                 @if($typeRoom->description !== null)
                                     <div class="row col-md-12">
                                         <div class="col-md-3"><h5>Description</h5></div>
-                                        <div class="col-md-9"><h5>{!! $typeRoom->description !!}}}</h5></div>
+                                        <div class="col-md-9"><h5>{!! $typeRoom->description !!}</h5></div>
                                     </div>
                                 @endif
                                 <div class="col-md-12 booking text-right">
-                                    <a href="{{route('client.typerooms.detail', $typeRoom->id)}}" class="btn btn-primary btn-xs">View...</a>
+                                    <a href="{{route('client.typerooms.detail', $typeRoom->id)}}" class="btn btn-primary btn-xs">View</a>
                                     <a href="{{route('client.typerooms.booking', ['typeRoom' => $typeRoom->id, 'startDate' => $request->startDate, 'endDate' => $request->endDate, 'number_people' => $request->number_people] )}}" class="btn btn-outline-danger btn-xs">Booking Now</a>
                                 </div>
                             </div>
