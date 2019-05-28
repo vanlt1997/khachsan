@@ -1,5 +1,5 @@
 <h3>Thank {{$customer['name']}} booked room of us . We will phone with us for confirm.</h3>
-<h4>Infomation type room</h4>
+<h4>Information type room</h4>
 </br>
 <p>Payment method : {{$customer['payment']->name}}</p>
 <p>Name : {{$customer['name']}}</p>
