@@ -2,7 +2,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 if (env('APP_ENV') === 'production') {
-    \Illuminate\Support\Facades\URL::forceSchema('https');
+    \Illuminate\Support\Facades\URL::forceSchema('http');
 }
 
 /*Client*/
