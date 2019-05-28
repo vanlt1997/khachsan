@@ -1,11 +1,12 @@
+RewriteEngine On
+    RewriteCond %{HTTPS} on
+    RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
-    RewriteCond %{HTTPS} on
-    RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
