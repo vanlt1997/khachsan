@@ -47,6 +47,7 @@ class Order extends Model
         parent::boot();
 
         self::deleting(function ($model) {
+            OrderPromotion::whereOrderId($model->id)->delete();
             $typeRooms = OrderTypeRoom::whereOrderId($model->id)->get();
             if (!$typeRooms->isEmpty()) {
                 foreach ($typeRooms as $typeRoom) {

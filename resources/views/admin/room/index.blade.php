@@ -132,8 +132,25 @@
 @push('scripts')
     <script>
         setTimeout(function(){
-            window.location.reload(1);
+            window.location.reload();
         }, 60000);
+        {{--$(document).ready(function () {--}}
+            {{--setInterval(function () {--}}
+                {{--loadData();--}}
+            {{--}, 1000*60);--}}
+            {{--loadData();--}}
+        {{--});--}}
+        {{--function loadData() {--}}
+            {{--$.ajax({--}}
+                {{--type: 'get',--}}
+                {{--url: '{{route('admin.update-status-room')}}',--}}
+                {{--success: function (data) {--}}
+                    {{--setTimeout(function(){--}}
+                        {{--window.location.reload();--}}
+                    {{--}, 60000);--}}
+                {{--}--}}
+            {{--});--}}
+        {{--}--}}
     </script>
 
 @endpush

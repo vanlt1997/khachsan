@@ -73,14 +73,16 @@ class OrderService
         if ($data->typeRoom !== null) {
             $query->where('type_rooms.id', $data->typeRoom);
         }
-        $query->whereIn('rooms.id', function ($query) use ($data) {
+        $query->whereNotIn('rooms.id', function ($query) use ($data) {
             $query->select('rooms.id')
-                ->from('type_rooms')
-                ->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
-                ->leftjoin('order_detail', 'rooms.id', '=', 'order_detail.room_id')
-                ->whereNull('order_detail.start_date')
-                ->orWhere('order_detail.start_date', '>=', $data->endDate)
-                ->orWhere('order_detail.end_date', '<=', $data->startDate);
+                ->from('rooms')
+                ->join('order_detail', 'rooms.id', '=', 'order_detail.room_id')
+                ->orWhere('order_detail.end_date', '>=', $data->startDate)
+                ->where('order_detail.start_date', '<=', $data->startDate)
+                ->orWhere('order_detail.end_date', '<=', $data->endDate)
+                ->where('order_detail.start_date', '>=', $data->startDate)
+                ->orWhere('order_detail.end_date', '>=', $data->endDate)
+                ->where('order_detail.start_date', '<=', $data->endDate);
         })->select(
             DB::raw('count(*) as total_room'),
             'type_rooms.id as id',
@@ -101,13 +103,7 @@ class OrderService
     {
         $query = DB::table('type_rooms')->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
             ->where('rooms.status_id', '!=', 4)
-            ->orWhereIn('rooms.type_room_id', function ($query) {
-                $query->select('rooms.type_room_id')
-                    ->from('rooms')
-                    ->leftjoin('order_detail', 'rooms.id', '=', 'order_detail.room_id')
-                    ->whereNull('order_detail.start_date')
-                    ->orWhere('order_detail.start_date', '>=', Carbon::now()->format('Y-m-d'));
-            })->select(
+            ->select(
                 DB::raw('count(*) as total_room'),
                 'type_rooms.id as id',
                 'type_rooms.name as type_room_name',
@@ -127,17 +123,21 @@ class OrderService
     public function getRoomsWhenSearchInAdmin($data)
     {
         $query = DB::table('rooms')
+            ->join('type_rooms', 'rooms.type_room_id', '=', 'type_rooms.id')
             ->where('rooms.type_room_id', $data->typeRoom)
             ->where('rooms.status_id', '!=', 4)
-            ->whereIn('rooms.id', function ($query) use ($data) {
+            ->whereNotIn('rooms.id', function ($query) use ($data) {
                 $query->select('rooms.id')
                     ->from('rooms')
-                    ->leftjoin('order_detail', 'rooms.id', '=', 'order_detail.room_id')
-                    ->whereNull('order_detail.start_date')
-                    ->orWhere('order_detail.start_date', '>=', $data->endDate)
-                    ->orWhere('order_detail.end_date', '<=', $data->startDate);
+                    ->join('order_detail', 'rooms.id', '=', 'order_detail.room_id')
+                    ->orWhere('order_detail.end_date', '>=', $data->startDate)
+                    ->where('order_detail.start_date', '<=', $data->startDate)
+                    ->orWhere('order_detail.end_date', '<=', $data->endDate)
+                    ->where('order_detail.start_date', '>=', $data->startDate)
+                    ->orWhere('order_detail.end_date', '>=', $data->endDate)
+                    ->where('order_detail.start_date', '<=', $data->endDate);
             })
-            ->join('type_rooms', 'rooms.type_room_id', '=', 'type_rooms.id')
+
             ->select(
                 'rooms.id as id',
                 'rooms.name as name',

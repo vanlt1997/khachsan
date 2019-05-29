@@ -6,6 +6,7 @@ use App\Http\Requests\OrderRequest;
 use App\Models\Card;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\OrderPromotion;
 use App\Models\OrderTypeRoom;
 use App\Service\OrderService;
 use App\Http\Controllers\Controller;
@@ -191,9 +192,15 @@ class OrderController extends Controller
         $card = Session::get('card');
         $typeRooms = $this->typeRoomService->getTypeRooms();
         $promotion = $this->promotionService->checkCode(trim($request->promotion));
+        $user = $this->userService->getUserByEmai($request->email);
+        $id = null;
         if ($promotion) {
-            $card->promotion = $promotion->sale;
-            $card->paymentTotal = $card->total - $promotion->sale;
+            $promotionOrder = $this->promotionService->checkOrderPromotion($promotion->id, $user->id);
+            if (!$promotionOrder) {
+                $card->promotion = $promotion->sale;
+                $card->paymentTotal = $card->total - $promotion->sale;
+                $id = $promotion->id;
+            }
         }
         Session::put('card', $card);
         $card = Session::get('card');
@@ -206,6 +213,7 @@ class OrderController extends Controller
             'address' => $request->address,
             'payment' => $request->payment_method,
             'stripeToken' => $request->stripeToken ?? null,
+            'promotionId' => $id
         ];
         Session::put('infoBooking', $infoBooling);
 
@@ -260,6 +268,15 @@ class OrderController extends Controller
         $order->date = Carbon::now()->format('Y-m-d');
         $this->orderService->createOrUpdate($order);
         $orderID = Order::max('id');
+        if ($customer['promotionId']) {
+            $promotionOrder = new OrderPromotion();
+            $promotionOrder->promotion_id = $customer['promotionId'];
+            $promotionOrder->order_id = $orderID;
+            $promotionOrder->user_id = $newUser->id;
+            $promotionOrder->date = Carbon::now()->format('Y-m-d');
+            $promotionOrder->save();
+        }
+
         foreach ($card->typeRooms as $typeRoom) {
             $this->orderService->createOrUpdateOrderTypeRoom($orderID, $typeRoom, count($typeRoom['rooms']) ?? 0);
             if ($typeRoom['rooms']) {
@@ -288,6 +305,7 @@ class OrderController extends Controller
         $payments = $this->paymentService->payments();
         $infoTypeRooms = $this->orderService->getNumberRoomsMoreDateNow();
         $typeRooms = $this->typeRoomService->getTypeRooms();
+        //dd($order->promotions->first());
 
         return view('admin.order.form-edit', compact('order', 'status', 'payments', 'typeRooms', 'infoTypeRooms'));
     }
@@ -343,9 +361,9 @@ class OrderController extends Controller
             'info' => $info,
             'orders' => $orders,
             'total' => $total,
-            'promotion' => $request->promotion,
-            'paymentTotal' => $total - $request->promotion,
-            'paymentNew' => $total - $request->promotion - $order->payment_total
+            'promotion' => $order->promotion,
+            'paymentTotal' => $total - $order->promotion,
+            'paymentNew' => $total - $order->promotion - $order->payment_total
         ]);
 
         $order = Session::get('order');

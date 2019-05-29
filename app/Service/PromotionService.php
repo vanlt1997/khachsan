@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Models\OrderPromotion;
 use App\Models\Promotion;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -11,12 +12,14 @@ class PromotionService
     protected $promotion;
     protected $contactService;
     protected $userService;
+    protected $orderPromotion;
 
-    public function __construct(Promotion $promotion, ContactService $contactService, UserService $userService)
+    public function __construct(Promotion $promotion, ContactService $contactService, UserService $userService, OrderPromotion $orderPromotion)
     {
         $this->promotion = $promotion;
         $this->contactService = $contactService;
         $this->userService = $userService;
+        $this->orderPromotion = $orderPromotion;
     }
 
     public function promotions()
@@ -81,5 +84,9 @@ class PromotionService
         return $this->promotion->where('code', '=', $code)
                     ->where('endDate', '>=', Carbon::now()->format('Y-m-d'))
                     ->first();
+    }
+    public function checkOrderPromotion($promotionsId, $userId)
+    {
+        return $this->orderPromotion->where('promotion_id', $promotionsId)->where('user_id', $userId)->first();
     }
 }

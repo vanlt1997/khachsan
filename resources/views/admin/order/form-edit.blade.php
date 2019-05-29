@@ -128,7 +128,7 @@
                             <label for="payment">Promotion</label>
                         </div>
                         <div class="col-md-10">
-                            <input type="text" name="promotion" class="form-control" id="promotion" value="{{$order->promotion}}">
+                            <input type="text" name="promotion" class="form-control" id="promotion" value="{{ !$order->promotions->isEmpty() ? $order->promotions->first()->code :  null}}" readonly>
                         </div>
                     </div>
                 </div>

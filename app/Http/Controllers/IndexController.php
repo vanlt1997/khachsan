@@ -10,6 +10,7 @@ use App\Http\Requests\SearchRoomRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\Card;
 use App\Models\Order;
+use App\Models\OrderPromotion;
 use App\Models\User;
 use App\Notifications\BookingNotification;
 use App\Service\ContactService;
@@ -165,9 +166,12 @@ class IndexController extends Controller
 
     public function searchRoomOfDetailTypeRoom(TypeRoom $typeRoom, SearchRoomRequest $request)
     {
-        $typeRooms = $this->orderService->actionQuery($request);
-        $totalPeople = (int)$typeRooms[0]->total_room*(int)$typeRooms[0]->number_people;
-        $total_room = $typeRooms[0]->total_room;
+        $typeRooms = $this->orderService->actionQuery($request)->first();
+        if (!$typeRooms) {
+            return redirect()->back()->with('error', 'Haven\'t room for you !');
+        }
+        $totalPeople = (int)$typeRooms->total_room*(int)$typeRooms->number_people;
+        $total_room = $typeRooms->total_room;
         if ($totalPeople < $request->number_people) {
             return redirect()->back()->with('error', 'Haven\'t room for you !');
         }
@@ -180,10 +184,14 @@ class IndexController extends Controller
     {
         $card = Session::get('card');
         $promotion = $this->promotionService->checkCode(trim($request->promotion));
-        if (!$promotion) {
+        $promotionOrder = null;
+        if ($promotion) {
+            $promotionOrder = $this->promotionService->checkOrderPromotion($promotion->id, Auth::id());
+        }
+        if ($promotionOrder) {
             $card->promotion = 0;
             Session::put('card', $card);
-            Session::put('code', ['code' => $request->promotion, 'price' => 0]);
+            Session::put('code', ['code' => $request->promotion, 'price' => 0, 'id' => $promotion->id]);
             return redirect()->back()->with('checkCode', 'Code don\'t use')->withInput();
         }
         $card->promotion = $promotion->sale;
@@ -191,7 +199,7 @@ class IndexController extends Controller
             $promotion->sale
         );
         Session::put('card', $card);
-        Session::put('code', ['code' => $request->promotion, 'price' => $promotion->sale]);
+        Session::put('code', ['code' => $request->promotion, 'price' => $promotion->sale, 'id' => $promotion->id]);
 
 
         return redirect()->back()->withInput();
@@ -336,9 +344,17 @@ class IndexController extends Controller
         $order->payment_total = $card->paymentTotal;
         $order->date = Carbon::now()->format('Y-m-d');
 
-        DB::transaction(function () use ($order, $card, $customer) {
+        DB::transaction(function () use ($order, $card, $customer, $promotion) {
             $this->orderService->createOrUpdate($order);
             $orderID = Order::max('id');
+            if ($promotion['id']) {
+                $promotionOrder = new OrderPromotion();
+                $promotionOrder->promotion_id = $promotion['id'];
+                $promotionOrder->order_id = $orderID;
+                $promotionOrder->user_id = Auth::id();
+                $promotionOrder->date = Carbon::now()->format('Y-m-d');
+                $promotionOrder->save();
+            }
             foreach ($card->typeRooms as $typeRoom) {
                 $this->orderService->createOrUpdateOrderTypeRoom($orderID, $typeRoom, 0);
             }
