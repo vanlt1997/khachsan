@@ -39,13 +39,13 @@
                                         <h3 class="text-danger">Price: ${{$typeRoom->price}}/day &nbsp; @if($typeRoom->sale > 0) &divideontimes; Sale: {{$typeRoom->sale}}% @endif</h3>
                                     </div>
                                     <div class="row booking">
-                                        <a href="{{route('client.typerooms.detail', $typeRoom->id)}}" class="btn btn-primary btn-xs">View...</a>
+                                        <a href="{{route('client.typerooms.detail', $typeRoom->id)}}" class="btn btn-primary btn-xs">View</a>
                                         <a href="#" class="btn btn-outline-danger btn-xs">Booking Now</a>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     @if($typeRoom->images->first() !== null)
-                                        <img src="{{asset("images/admin/library-images")}}/{{$typeRoom->images->first()['url']}}" alt="images" width="300px" height="300px">
+                                        <img src="{{asset("images/admin/library-images")}}/{{$typeRoom->images->first()['url']}}" alt="images" width="100%" height="300px">
                                     @endif
                                 </div>
                             </div>
