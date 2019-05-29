@@ -42,22 +42,19 @@ class WordOfTheDay extends Command
      */
     public function handle()
     {
+        $orderDetails = OrderDetail::where('start_date', '<=', Carbon::now()->format('Y-m-d'))
+                ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))->get();
         $rooms = Room::whereStatusId(self::USING)->get();
         foreach ($rooms as $room) {
             $room->status_id = self::FREE;
             $room->save();
         }
 
-        foreach (OrderDetail::all() as $orderDetail) {
+        foreach ($orderDetails as $orderDetail) {
             $room = Room::find($orderDetail->room_id);
-            if ($orderDetail->start_date <= Carbon::now()->format('Y-m-d') && Carbon::now()->format('Y-m-d') <= $orderDetail->end_date) {
-                $room->status_id = self::USING;
-            } elseif (Carbon::now()->format('Y-m-d') > $orderDetail->end_date) {
-                $room->status_id = self::FREE;
-            }
+            $room->status_id = self::USING;
 
             $room->save();
         }
-
     }
 }
