@@ -23,6 +23,8 @@ class RoomController extends Controller
     protected $statusService;
     protected $imageService;
     protected $typeRoomService;
+    const FREE = 1;
+    const USING = 3;
 
     public function __construct(
         RoomService $roomService,
@@ -120,5 +122,25 @@ class RoomController extends Controller
 
         return redirect()->back()
             ->with('error', 'Can\'t Delete Room !');
+    }
+
+    public function updateStatus()
+    {
+        $orderDetails = OrderDetail::where('start_date', '<=', Carbon::now()->format('Y-m-d'))
+            ->where('end_date', '>=', Carbon::now()->format('Y-m-d'))->get();
+        $rooms = Room::whereStatusId(self::USING)->get();
+        foreach ($rooms as $room) {
+            $room->status_id = self::FREE;
+            $room->save();
+        }
+
+        foreach ($orderDetails as $orderDetail) {
+            $room = Room::find($orderDetail->room_id);
+            $room->status_id = self::USING;
+
+            $room->save();
+        }
+
+        return response()->json(200);
     }
 }

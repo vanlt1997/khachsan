@@ -175,6 +175,7 @@ Route::prefix('admin')->middleware(['admin', 'auth'])->namespace('Admin')->name(
     Route::prefix('calendars')->name('calendars.')->group(function () {
         Route::get('/', 'CalendarController@index')->name('rooms');
     });
+    Route::get('/update-status-room', 'RoomController@updateStatus')->name('update-status-room');
 });
 
 Auth::routes();
