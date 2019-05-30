@@ -68,7 +68,7 @@ class OrderService
 
     public function actionQuery($data)
     {
-        $query = DB::table('type_rooms')->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
+        /*$query = DB::table('type_rooms')->join('rooms', 'type_rooms.id', '=', 'rooms.type_room_id')
                                         ->where('rooms.status_id', '!=', 4);
         if ($data->typeRoom !== null) {
             $query->where('type_rooms.id', $data->typeRoom);
@@ -77,12 +77,18 @@ class OrderService
             $query->select('rooms.id')
                 ->from('rooms')
                 ->join('order_detail', 'rooms.id', '=', 'order_detail.room_id')
-                ->orWhere('order_detail.end_date', '>=', $data->startDate)
-                ->where('order_detail.start_date', '<=', $data->startDate)
-                ->orWhere('order_detail.end_date', '<=', $data->endDate)
-                ->where('order_detail.start_date', '>=', $data->startDate)
-                ->orWhere('order_detail.end_date', '>=', $data->endDate)
-                ->where('order_detail.start_date', '<=', $data->endDate);
+                ->where(function ($query) use ($data) {
+                    $query->where('order_detail.end_date', '>', $data->startDate);
+                    $query->where('order_detail.start_date', '<=', $data->startDate);
+                })
+                ->orWhere(function ($query) use ($data) {
+                    $query->where('order_detail.end_date', '<', $data->endDate);
+                    $query->where('order_detail.start_date', '>', $data->startDate);
+                })
+                ->orWhere(function ($query) use ($data) {
+                    $query->where('order_detail.end_date', '>', $data->endDate);
+                    $query->where('order_detail.start_date', '<=', $data->endDate);
+                });
         })->select(
             DB::raw('count(*) as total_room'),
             'type_rooms.id as id',
@@ -96,7 +102,32 @@ class OrderService
             'type_rooms.description as description',
             'sale'
         )->groupBy('type_rooms.id');
-        return $query->get();
+        return $query->get();*/
+        if ($data->typeRoom !== null) {
+            return DB::select(
+                'select count(*) as total_room, type_rooms.id as id, type_rooms.name as type_room_name, price, type_rooms.people as number_people, bed,extra_bed, acreage, view, type_rooms.description as description, sale from type_rooms inner join rooms on rooms.type_room_id = type_rooms.id where rooms.status_id != 4 and type_rooms.id = :typeRoomId and rooms.id not in (select rooms.id from rooms join order_detail on rooms.id = order_detail.room_id where ( ( order_detail.end_date > :startDate and order_detail.start_date <= :startDate1 ) or  (order_detail.start_date < :endDate and order_detail.end_date > :endDate1) or ( order_detail.start_date >= :startDate2 and order_detail.end_date <= :endDate2  ) )) group by type_rooms.id',
+                [
+                    'typeRoomId' => $data->typeRoom,
+                    'startDate' => $data->startDate,
+                    'startDate1' => $data->startDate,
+                    'endDate' =>  $data->endDate,
+                    'endDate1' =>  $data->endDate,
+                    'startDate2' => $data->startDate,
+                    'endDate2' =>  $data->endDate,
+                ]
+            );
+        }
+        return DB::select(
+            'select count(*) as total_room, type_rooms.id as id, type_rooms.name as type_room_name, price, type_rooms.people as number_people, bed,extra_bed, acreage, view, type_rooms.description as description, sale from type_rooms inner join rooms on rooms.type_room_id = type_rooms.id where rooms.status_id != 4 and rooms.id not in (select rooms.id from rooms join order_detail on rooms.id = order_detail.room_id where ( ( order_detail.end_date > :startDate and order_detail.start_date <= :startDate1 ) or  (order_detail.start_date < :endDate and order_detail.end_date > :endDate1) or ( order_detail.start_date >= :startDate2 and order_detail.end_date <= :endDate2  ) )) group by type_rooms.id',
+            [
+                'startDate' => $data->startDate,
+                'startDate1' => $data->startDate,
+                'endDate' =>  $data->endDate,
+                'endDate1' =>  $data->endDate,
+                'startDate2' => $data->startDate,
+                'endDate2' =>  $data->endDate,
+            ]
+        );
     }
 
     public function getNumberRoomsMoreDateNow()
@@ -122,29 +153,34 @@ class OrderService
 
     public function getRoomsWhenSearchInAdmin($data)
     {
-        $query = DB::table('rooms')
-            ->join('type_rooms', 'rooms.type_room_id', '=', 'type_rooms.id')
-            ->where('rooms.type_room_id', $data->typeRoom)
-            ->where('rooms.status_id', '!=', 4)
-            ->whereNotIn('rooms.id', function ($query) use ($data) {
-                $query->select('rooms.id')
-                    ->from('rooms')
-                    ->join('order_detail', 'rooms.id', '=', 'order_detail.room_id')
-                    ->orWhere('order_detail.end_date', '>=', $data->startDate)
-                    ->where('order_detail.start_date', '<=', $data->startDate)
-                    ->orWhere('order_detail.end_date', '<=', $data->endDate)
-                    ->where('order_detail.start_date', '>=', $data->startDate)
-                    ->orWhere('order_detail.end_date', '>=', $data->endDate)
-                    ->where('order_detail.start_date', '<=', $data->endDate);
-            })
-
-            ->select(
-                'rooms.id as id',
-                'rooms.name as name',
-                'type_rooms.name as name_type_room'
+        if ($data->orderTypeRoomId) {
+            return DB::select(
+                'select rooms.id as id, rooms.name as name, type_rooms.name as name_type_room from rooms inner join type_rooms on rooms.type_room_id = type_rooms.id where rooms.type_room_id = :typeRoomId and rooms.status_id != 4 and rooms.id not in (select rooms.id from rooms join order_detail on rooms.id = order_detail.room_id where order_detail.order_type_room_id != :orderTypeRoomId and ( ( order_detail.end_date > :startDate and order_detail.start_date <= :startDate1 ) or  (order_detail.start_date < :endDate and order_detail.end_date > :endDate1) or ( order_detail.start_date >= :startDate2 and order_detail.end_date <= :endDate2  ) ))',
+                [
+                    'typeRoomId' => $data->typeRoom,
+                    'orderTypeRoomId' => $data->orderTypeRoomId,
+                    'startDate' => $data->startDate,
+                    'startDate1' => $data->startDate,
+                    'endDate' =>  $data->endDate,
+                    'endDate1' =>  $data->endDate,
+                    'startDate2' => $data->startDate,
+                    'endDate2' =>  $data->endDate,
+                ]
             );
-
-        return $query->get();
+        } else {
+            return DB::select(
+                'select rooms.id as id, rooms.name as name, type_rooms.name as name_type_room from rooms inner join type_rooms on rooms.type_room_id = type_rooms.id where rooms.type_room_id = :typeRoomId and rooms.status_id != 4 and rooms.id not in (select rooms.id from rooms join order_detail on rooms.id = order_detail.room_id where ( ( order_detail.end_date > :startDate and order_detail.start_date <= :startDate1 ) or  (order_detail.start_date < :endDate and order_detail.end_date > :endDate1) or ( order_detail.start_date > :startDate2 and order_detail.end_date <= :endDate2  ) ))',
+                [
+                    'typeRoomId' => $data->typeRoom,
+                    'startDate' => $data->startDate,
+                    'startDate1' => $data->startDate,
+                    'endDate' =>  $data->endDate,
+                    'endDate1' =>  $data->endDate,
+                    'startDate2' => $data->startDate,
+                    'endDate2' =>  $data->endDate,
+                ]
+            );
+        }
     }
 
     public function checkRoomWhenBooking($typeRoom)

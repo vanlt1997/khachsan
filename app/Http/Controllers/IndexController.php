@@ -166,18 +166,18 @@ class IndexController extends Controller
 
     public function searchRoomOfDetailTypeRoom(TypeRoom $typeRoom, SearchRoomRequest $request)
     {
-        $typeRooms = $this->orderService->actionQuery($request)->first();
+        $typeRooms = $this->orderService->actionQuery($request);
         if (!$typeRooms) {
             return redirect()->back()->with('error', 'Haven\'t room for you !');
         }
-        $totalPeople = (int)$typeRooms->total_room*(int)$typeRooms->number_people;
-        $total_room = $typeRooms->total_room;
+        $totalPeople = (int)$typeRooms[0]->total_room * (int)$typeRooms[0]->number_people;
+        $totalRoom = $typeRooms[0]->total_room;
         if ($totalPeople < $request->number_people) {
             return redirect()->back()->with('error', 'Haven\'t room for you !');
         }
 
         return redirect()->route('client.typerooms.detail', $typeRoom->id)
-            ->with('message', "Have $total_room rooms you can choose !")->withInput();
+            ->with('message', "Have $totalRoom rooms you can choose !")->withInput();
     }
 
     public function checkCodePromotion(Request $request)
@@ -231,7 +231,7 @@ class IndexController extends Controller
     {
         $typeRooms = $this->orderService->actionQuery($request);
         $nameType = $typeRoom->name;
-        $totalPeople = (int)$typeRooms[0]->total_room*(int)$typeRooms[0]->number_people;
+        $totalPeople = (int)$typeRooms[0]->total_room * (int)$typeRooms[0]->number_people;
         $total_room = $typeRooms[0]->total_room;
         if ($totalPeople < $request->number_people) {
             return redirect()->back()->with('error', 'Haven\'t room for you !')->withInput();

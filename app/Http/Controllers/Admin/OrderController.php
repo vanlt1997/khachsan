@@ -138,8 +138,9 @@ class OrderController extends Controller
     public function searchRoom(Request $request)
     {
         $rooms = $this->orderService->getRoomsWhenSearchInAdmin($request);
-        $typeRoom = $this->orderService->actionQuery($request);
-        if ($typeRoom->isEmpty() || $typeRoom[0]->total_room*$typeRoom[0]->number_people < $request->number_people) {
+        $typeRoom = $this->typeRoomService->find((int) $request->typeRoom);
+
+        if (count($rooms)*$typeRoom->people < $request->number_people) {
             return response()->json(0, 200);
         } else {
             return response()->json($rooms, 200);
@@ -312,6 +313,9 @@ class OrderController extends Controller
 
     public function confirm(Order $order, Request $request)
     {
+        if (!$request->nameRoom) {
+            return redirect()->back()->with('error', 'Please choose room before change!');
+        }
         $total = 0;
         $info = [
             'name' => $request->name,
